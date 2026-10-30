@@ -52,6 +52,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .badge { border: 1px solid var(--line); border-radius: 99px; padding: .12rem .7rem; font-size: .82rem; color: var(--mut); background: var(--soft); }
 .badge.ok { border-color: #9db8a0; color: #3c6b42; background: #eef5ef; }
 
+figure.hero { margin: 1.1rem 0 1.5rem; }
+figure.hero img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+figure.hero figcaption { font-size: .85rem; color: var(--mut); margin-top: .45rem; text-align: center; }
+
 .note { background: var(--acc-soft); border-radius: 6px; padding: .8rem 1rem; margin: 1rem 0; }
 .news li { margin: .3rem 0; }
 ul.links { padding-left: 1.2rem; }
