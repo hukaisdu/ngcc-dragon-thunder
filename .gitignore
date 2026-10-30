@@ -1,0 +1,5 @@
+# NICCS 官方提交包体积过大（Dragon.zip ≈ 141MB），超过 GitHub 单文件 100MB 限制，不入 git。
+# 原件保留在本地 official-archives/；合作者用 official-archives/fetch-archives.sh 下载并校验。
+official-archives/*.zip
+official-archives/*.part
+.DS_Store
