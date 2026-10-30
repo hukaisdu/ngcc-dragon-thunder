@@ -17,7 +17,7 @@ hash 候选 **Dragon Hash Family** 与 **Thunder Hash Family** 的公开材料�
 - `site.css` — 共用样式
 - `dragon/`、`thunder/` — 每个候选五页：
   `index`（概览+新闻+快速事实）、`specification`（参数表+模式+置换）、
-  `implementations`（包结构+构建/KAT+核对注记）、`performance`（x86_1 cycles/byte 表+arm_1 链接）、
+  `implementations`（包结构+构建/KAT+核对注记）、`performance`（设计团队自评估表 S1–S8 主表 + ngcc.dev reference 对照 + arm_1 链接）、
   `analysis`（安全状态+constant-time+规范核对+本组结果占位）
 - `dragon/hero.png`、`thunder/hero.png` — 首页插画（中国龙 / 雷神，AI 生成，
   gpt-image via Codex，2026-10-30，配色与站点一致，无版权第三方元素）

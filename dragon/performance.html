@@ -19,22 +19,74 @@
 </nav>
 </div></header>
 <main>
-<h1>Performance<span class="sub">independent cycle counts — reference implementation</span></h1>
+<h1>Performance<span class="sub">designer self-assessment from the submission package · independent reference check</span></h1>
 
 <div class="zh"><span class="tag">中文摘要</span><br>
-下表是 ngcc.dev 在 x86_1（i7-12700，单核定频 2.1 GHz，gcc 14.2 -O2，Debian 13）上对
-reference 实现的独立测量（先过 KAT 再计时）。Dragon-512 长消息约 17.8 cycles/byte（117 MB/s），
-比同场景的 Thunder-512（32.4 cycles/byte）快约 1.8 倍；完整表与 arm_1 数据见链接。</div>
+主数据取自<b>提交包内</b>的设计团队自评估（<i>Algorithm specifications.pdf</i> §5.1，即本仓库
+<code>hash-07-spec.pdf</code> 第 33–35 页）：performance-optimized 实现、官方 <code>ngcc_bench</code>
+S1–S8 消息长度（32 B–64 KiB）、单核，两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip
+RK3588）。长消息下 Dragon-512 在 x86-64 达 4.87 cycles/byte，低于同表 SHA3-512（12.46）与 SM3
+（8.45）。注意：自评估只覆盖三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现
+（未优化）的独立测量保留在本页下方作对照，两者不可直接比较。</div>
 
-<h2>x86_1 environment</h2>
+<h2>Design-team self-assessment (submission package, spec §5.1)</h2>
+<p>Values are cycles per byte (cpb) measured with the official <code>ngcc_bench</code> in single-core
+mode over the self-assessment message sizes S1–S8 = 32, 128, 512, 1024, 4096, 8192, 16384, 65536 bytes.
+Source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec.pdf</code> §5.1, Tables 13–15 (pp. 33–35)</a>
+— this file is byte-identical to the official <i>Algorithm specifications.pdf</i> in <code>Dragon.zip</code> (MD5 checked).</p>
+
+<table>
+<tr><th>item</th><th>x86-64 platform (Table 13)</th><th>ARM platform (Table 13)</th></tr>
+<tr><td>processor</td><td>Intel Xeon(R) Platinum 8358 CPU @ 2.60 GHz</td><td>Rockchip RK3588 @ 2.0 GHz</td></tr>
+<tr><td>operating system</td><td>Ubuntu 22.04 LTS (kernel 6.8.0)</td><td>Ubuntu 22.04 (kernel 5.10.160)</td></tr>
+<tr><td>compiler / build</td><td>GCC 11.4 / CMake 3.22.1</td><td>GCC 9.4 / CMake 3.16.3</td></tr>
+<tr><td>benchmark mode</td><td>single core</td><td>single core</td></tr>
+</table>
+
+<h3>x86-64 — Intel Xeon Platinum 8358 (spec Table 14)</h3>
+<table>
+<tr><th>instance</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
+<tr><td>SM3(256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.30</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
+<tr><td>SHA3-512</td><td class="num">103.73</td><td class="num">34.97</td><td class="num">20.43</td><td class="num">13.46</td><td class="num">12.49</td><td class="num">12.48</td><td class="num">12.47</td><td class="num">12.46</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">22.96</td><td class="num">11.00</td><td class="num">6.44</td><td class="num">5.65</td><td class="num">5.06</td><td class="num">4.96</td><td class="num">4.91</td><td class="num">4.87</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">23.17</td><td class="num">10.92</td><td class="num">7.66</td><td class="num">6.91</td><td class="num">6.60</td><td class="num">6.57</td><td class="num">6.52</td><td class="num">6.49</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">25.00</td><td class="num">15.62</td><td class="num">11.18</td><td class="num">10.44</td><td class="num">9.88</td><td class="num">9.80</td><td class="num">9.73</td><td class="num">9.70</td></tr>
+</table>
+
+<h3>ARM — Rockchip RK3588 (spec Table 15)</h3>
+<table>
+<tr><th>instance</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
+<tr><td>SM3(256)†</td><td class="num">91.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.32</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.55</td><td class="num">7.88</td></tr>
+<tr><td>SHA3-512†</td><td class="num">67.58</td><td class="num">29.30</td><td class="num">19.21</td><td class="num">17.32</td><td class="num">15.74</td><td class="num">15.60</td><td class="num">15.54</td><td class="num">15.49</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">51.24</td><td class="num">17.27</td><td class="num">7.83</td><td class="num">6.04</td><td class="num">4.94</td><td class="num">4.64</td><td class="num">4.54</td><td class="num">4.47</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">51.85</td><td class="num">17.71</td><td class="num">9.75</td><td class="num">7.18</td><td class="num">5.69</td><td class="num">5.42</td><td class="num">5.26</td><td class="num">5.17</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">51.85</td><td class="num">21.93</td><td class="num">12.19</td><td class="num">10.37</td><td class="num">9.45</td><td class="num">9.15</td><td class="num">9.05</td><td class="num">8.99</td></tr>
+</table>
+<p class="sub">† The SHA3-512 and SM3 baselines are portable software implementations that do not use the
+Armv8.2 SHA3 / SM3 instruction extensions (spec Table 15 footnotes). All three Dragon instances stay below
+both baselines at every tested length on both platforms. The spec also reports that the measured optimized
+x86 implementation costs ≈38.8 cycles per permutation round (design estimate ≈40, spec p. 33). The XOF
+instances are not covered by the software self-assessment.</p>
+
+<h3>Hardware (spec §5.2, Table 16)</h3>
+<p>The three fixed-output instances are also implemented in VHDL and synthesized for ASIC (UMC 55 nm,
+round-based architecture, one round per clock cycle); Table 16 reports area, delay, frequency, power, cycle
+count, throughput and throughput-to-area ratio for 32 B / 1 KiB / 64 KiB messages —
+<a href="../harness/hash-07/hash-07-spec.pdf#page=35">spec p. 35</a>.</p>
+
+<h2>Independent reference-implementation check (ngcc.dev)</h2>
+<p>Separately from the submission package, ngcc.dev measured the <b>reference</b> implementation
+(unoptimized placeholder-quality code) on its own x86_1 system. These numbers characterize the reference
+code, not the design’s optimized speed, and are not comparable with the self-assessment tables above;
+they are kept here as an independent correctness-and-timing cross-check.</p>
+
 <table>
 <tr><th>item</th><th>value</th></tr>
 <tr><td>processor</td><td>Intel Core i7-12700 (Alder Lake), one performance core, turbo off, fixed 2.10 GHz, SMT off</td></tr>
 <tr><td>OS / compiler</td><td>Debian GNU/Linux 13, gcc 14.2.0, cmake 3.31.6</td></tr>
-<tr><td>campaign</td><td>2026-09-25 → 2026-09-28 (UTC), KAT-checked before timing; n ≥ 2450 per data point</td></tr>
+<tr><td>campaign</td><td>2026-09-25 → 2026-09-28 (UTC), KAT-checked before timing; not a submitter self-assessment</td></tr>
 </table>
 
-<h2>Cycles per byte (reference, x86_1)</h2>
 <table>
 <tr><th>instance</th><th class="num">32 B</th><th class="num">1 KiB</th><th class="num">16 KiB</th><th class="num">64 KiB</th><th class="num">MB/s @64 KiB</th></tr>
 <tr><td><code>Dragon-512</code></td><td class="num">76.1</td><td class="num">19.9</td><td class="num">17.9</td><td class="num">17.8</td><td class="num">117.3</td></tr>
@@ -44,29 +96,31 @@ reference 实现的独立测量（先过 KAT 再计时）。Dragon-512 长消息
 <tr><td><code>Dragon-XOF-384</code></td><td class="num">284.8</td><td class="num">31.4</td><td class="num">24.4</td><td class="num">24.0</td><td class="num">87.2</td></tr>
 <tr><td><code>Dragon-XOF-512</code></td><td class="num">261.5</td><td class="num">44.4</td><td class="num">36.7</td><td class="num">36.4</td><td class="num">57.5</td></tr>
 </table>
-<p class="sub">For comparison, on the same machine and campaign, Thunder-512 measures 32.4 cycles/byte at
-64 KiB (<a href="../thunder/performance.html">Thunder performance</a>). The large 32 B figures for the XOF
-instances reflect the one-squeeze fixed digest (160/144/128 bytes) counted over a tiny message.</p>
+<p class="sub">At 64 KiB on the same machine and campaign, the Thunder-512 <em>reference</em> implementation
+measures 32.4 cycles/byte (<a href="../thunder/performance.html">Thunder performance</a>). The large 32 B
+figures for the XOF instances reflect the one-squeeze fixed digest (160/144/128 bytes) counted over a tiny
+message.</p>
 
 <h2>Where the full data lives</h2>
 <ul class="links">
-<li>Full x86_1 table (all 8 message sizes, mean cycles, time, n) and resource proxies:
+<li>Self-assessment source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33">spec §5.1 (pp. 33–35)</a>;
+self-assessment code (Reference / Resource- / Performance-Optimized versions for x86 and ARM, plus the
+official <code>ngcc_bench</code>) ships inside <code>Dragon.zip</code> under <code>Dragon/Others/</code>
+(mirrored at <code>harness/hash-07/Dragon/Others/</code>).</li>
+<li>ngcc.dev full x86_1 table (all 8 message sizes, mean cycles, time, n) and resource proxies:
 <a href="../harness/hash-07/perf_x86_1.md"><code>perf_x86_1.md</code></a> —
 rendered copy: <a href="../ngcc-site/performance/x86_1/hash-07.html">mirrored ngcc.dev page</a>.</li>
-<li>arm_1 (Qualcomm Snapdragon X Elite X1E-78-100, one core pinned at 2.71 GHz):
+<li>ngcc.dev arm_1 (Qualcomm Snapdragon X Elite X1E-78-100, one core pinned at 2.71 GHz):
 <a href="../ngcc-site/performance/arm_1/hash-07.html">mirrored page</a> ·
 <a href="https://ngcc.dev/performance/arm_1/hash-07.html">live</a></li>
 <li>Measurement method: <a href="../ngcc-site/performance/x86_1/method.html">method (x86_1)</a> ·
 <a href="../ngcc-site/performance/arm_1/method.html">method (arm_1)</a></li>
-<li>Raw evidence (per-point JSON with commands, environment, trials): <code>performance/data/x86_1/</code> in the
-<a href="https://github.com/ngcc-dev/ngcc-harness">ngcc-harness</a> repository.</li>
 </ul>
-<p class="sub">Independent measurement following the structure of the NICCS x86 self-assessment guide §3.5;
-not a submitter self-assessment. Measurements by ngcc.dev (M.-J. Saarinen).</p>
 </main>
 <footer class="site"><div class="in">
-<p>Measurements © ngcc.dev (CC-BY style, see source site); mirrored here with attribution for study purposes.</p>
-<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
+<p>Self-assessment data © the Dragon submission team (NICCS Round-1 submission package); independent
+reference-code measurements © ngcc.dev (M.-J. Saarinen).</p>
+<p>Mirrored 2026-10-30 · updated 2026-10-31 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
 </div></footer>
 </body>
 </html>
