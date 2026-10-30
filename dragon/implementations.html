@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implementations — Dragon (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.html">Home</a>
+<a href="specification.html">Specification</a>
+<a href="implementations.html" aria-current="page">Implementations</a>
+<a href="performance.html">Performance</a>
+<a href="analysis.html">Analysis</a>
+<a href="../thunder/index.html">Thunder ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Implementations<span class="sub">package layout, build &amp; KAT, review notes</span></h1>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+提交包内含 x86 与 ARM 两套树，各分 Reference / Additional / Optimized 三种实现；
+ngcc.dev 构建与计时用的是 <code>Dragon-x86</code> 的 Reference（XOF 以定长 1280/1152/1024 bit 构建）。
+在 harness 根目录 <code>make -C hash-07 test</code> 可复现 KAT（6/6 PASS）。
+ngcc.dev 的源码核对结论：<b>未发现与规范的偏差</b>；两条小的使用注意事项见下文。</div>
+
+<h2>Package layout (official Dragon.zip, extracted under <code>harness/hash-07/Dragon/</code>)</h2>
+<pre><code>Dragon/Implementations and Test_vector/
+├── Dragon-x86/Implementations/
+│   ├── Reference_Implementation/      # &lt;- built and timed by ngcc.dev
+│   │   ├── Dragon-512/  Dragon-768/  Dragon-1024/
+│   │   └── Dragon-XOF-256/  Dragon-XOF-384/  Dragon-XOF-512/
+│   ├── Additional_Implementation/{Dragon-512, Dragon-768, Dragon-1024}
+│   └── Optimized_Implementation/{Dragon-512, Dragon-768, Dragon-1024}
+├── Dragon-ARM/Implementations/        # same shape as Dragon-x86
+└── (Test_Vector/ and the Others/ self-assessment tree, see the archive)</code></pre>
+<p class="sub">Each instance directory holds <code>CryptHash_AlgorithmInstance.{c,h}</code>, KAT driver
+(<code>KAT_CryptHash.c</code>) and the ICCS helpers (<code>drng.c/h</code>). The fixed-output instances share one
+191-line <code>.c</code>; the three XOFs share a second, 245-line variant with a real multi-block squeeze loop.
+All instance parameters live in the header.</p>
+
+<h2>Build and KAT</h2>
+<p>From the <code>harness/</code> directory of this repository (the uniform NGCC build):</p>
+<pre><code>cd harness
+make -C hash-07          # build the six instance libraries (reference)
+make -C hash-07 test     # run the KAT harness; summary in results/
+</code></pre>
+<p>All six instances KAT-PASS against the submitted test vectors
+(manifest <a href="../harness/hash-07/kat.sha256"><code>kat.sha256</code></a>, 24 files),
+checked before every timing campaign (x86_1, 2026-09-25 → 09-28).</p>
+
+<h2>Review notes (ngcc.dev source review)</h2>
+<p><b>No deviation from the specification was found for hash-07.</b> Parameter constants, round constants,
+rotation offsets, lane mapping, padding, domain-separation rule, feed-forward and digest order all agree
+(details in <a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a>, “Implementation vs specification”).</p>
+<ul class="links">
+<li><code>CryptHash()</code> in the fixed-output instances ignores <code>digest_len_bits</code> entirely:
+it always writes <code>DIGEST_LANE_NUM</code> lanes and returns 0. A caller passing a smaller value gets a
+buffer overflow; a larger one gets a silently truncated digest.</li>
+<li><code>ROTL64(x, 0)</code> would be undefined behaviour, but no rotation constant is 0, so it is unreachable.</li>
+<li>IVs are stored in reverse spec order in the header; the loader compensates, so each lane receives the
+spec’s <code>IV_j</code> (two 9-lane tables checked entry-by-entry; the spec’s SM3-counter derivation of the
+IVs was not recomputed).</li>
+<li>Partial-byte input is handled correctly (bits beyond <code>msg_len_bits</code> masked before padding).</li>
+</ul>
+
+<h2>Files</h2>
+<ul class="links">
+<li>Reference source tree: <code>harness/hash-07/Dragon/</code> in this repository.</li>
+<li>Official archive <code>Dragon.zip</code> (148,150,104 bytes):
+<a href="../official-archives/fetch-archives.sh">fetch-archives.sh</a> ·
+SHA-256 <code>088759817e3193e0ca02c3a3669fd05ac70e833b0447f336666268b61846b26c</code></li>
+<li>NICCS <a href="https://www.niccs.org.cn/niccs/Round1Submissions4/pc/content/content_2101539781751689216.html">submission page</a> ·
+<a href="https://list.niccs.org.cn/archives/list/crypthashforum@list.niccs.org.cn/thread/GRAHTRUNRC25N7P5QVCBH7CZG47REYZS/">forum thread</a></li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>Reference code © the Dragon submission team, distributed by NICCS. Build/KAT instructions follow the ngcc-harness.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
+</div></footer>
+</body>
+</html>

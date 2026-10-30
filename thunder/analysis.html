@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analysis — Thunder (hash-33)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="thunder">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Thunder<span class="id">NGCC Round-1 · hash-33</span></a>
+<nav class="cand">
+<a href="index.html">Home</a>
+<a href="specification.html">Specification</a>
+<a href="implementations.html">Implementations</a>
+<a href="performance.html">Performance</a>
+<a href="analysis.html" aria-current="page">Analysis</a>
+<a href="../dragon/index.html">Dragon ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Analysis<span class="sub">third-party status, constant-time audit, review notes</span></h1>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+截至 ngcc.dev 2026-10-28 快照，Thunder <b>没有已公开的 vulnerability finding</b>（这不是安全性背书）。
+constant-time 审查：XOF 输出位拷贝的 <code>if (src_bit)</code> 在 C 源里有分支，但 GCC -O2 编成
+<code>cmovne</code> 且地址固定，未升级为问题（其他编译器/目标仍需检查）。
+规范-实现核对无误；domain separation 三机制确认。IV 常数（Table 6）规范未给出导出规则——
+是一个透明度缺口，不是 break。我们的分析结果将放在本页。</div>
+
+<h2>Security status</h2>
+<p><b>No vulnerability finding is currently published for this candidate</b>
+(<a href="https://ngcc.dev/reports/hash-33.html">ngcc.dev security report</a>, snapshot 2026-10-28).
+This records only the present state of the public finding inventory and is not a security endorsement;
+the candidate remains under review.</p>
+
+<h2>Constant-time audit (ngcc.dev)</h2>
+<p>Scope: archived reference implementation, fixed digest parameters and fixed message length; message
+contents and intermediate state treated as secret. Two source points examined:</p>
+<ul class="links">
+<li>Reference entry: <code>Thunder-ARM/…/Reference_Implementation/Thunder-1024/CryptHash_AlgorithmInstance.c:175</code>.</li>
+<li>The XOF output-bit copy has <code>if (src_bit)</code>
+(<code>Thunder-X86/…/Thunder-XOF-256/CryptHash_AlgorithmInstance.c:187</code>). GCC <code>-O2</code>
+compiles this to a <code>cmovne</code> with fixed-address accesses, so it is not a compiled branch in the
+reviewed build — other compilers and targets still require checking.</li>
+</ul>
+<p>Status: no issue promoted for the reviewed GCC build. Full text:
+<a href="../ngcc-site/constant-time/hash-33.html">mirrored audit page</a> ·
+<a href="https://ngcc.dev/constant-time/hash-33.html">live</a>.</p>
+
+<h2>Implementation-vs-specification review</h2>
+<p><b>No parameter or constant mismatch found.</b> The whole permutation was checked entry by entry;
+capacities, rates, IV placement (reverse-order array with compensating loader), feed-forward, message
+layout, padding and the final-block constant all match the spec.</p>
+
+<h2>Output-length domain separation — verified (ngcc.dev)</h2>
+<ul class="links">
+<li><b>Distinct IVs</b> per instance (spec Table 6) — all six load completely different IV lane sets,
+including the pairs that share a capacity (512/XOF-256, 768/XOF-384, 1024/XOF-512).</li>
+<li><b>Distinct rate/capacity split</b> per security level (576/832/1088).</li>
+<li><b>Final-block constant</b> C = 0^{c−1}‖1 — also the length-extension defence, which matters more than
+usual because the digest is read from the inner part.</li>
+</ul>
+<p>Caveat inherent to XOFs: within one instance, outputs of different lengths are prefixes of one another;
+the three harness-exposed fixed lengths (1280/1152/1024 bits) are not separate hash functions.</p>
+
+<h2>Notes worth remembering</h2>
+<ul class="links">
+<li>IV constants (spec Table 6) have <b>no published derivation rule</b> — a transparency gap worth noting,
+not a break.</li>
+<li>ψ has algebraic degree 3 (Keccak’s χ has degree 2) and θ uses two column parities — relevant when
+setting up trail/differential search.</li>
+<li>Related: “Chinese NGCC Algorithms: The First Week of AI Cryptanalysis”,
+<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>.</li>
+</ul>
+
+<h2>Our results</h2>
+<p><em>Placeholder — cryptanalysis results of our group will be collected here
+(本组分析结果将放在这一节)。</em></p>
+</main>
+<footer class="site"><div class="in">
+<p>Third-party analysis © ngcc.dev (M.-J. Saarinen); “our results” section reserved for this study group.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Thunder home</a></p>
+</div></footer>
+</body>
+</html>

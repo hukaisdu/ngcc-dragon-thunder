@@ -9,6 +9,19 @@ hash 候选 **Dragon Hash Family** 与 **Thunder Hash Family** 的公开材料�
 | Dragon Hash Family | `hash-07` | Symmetric (permutation-based) | No finding（仍在评审，非安全背书） |
 | Thunder Hash Family | `hash-33` | Symmetric (permutation-based) | No finding（仍在评审，非安全背书） |
 
+## 网页 (study pages)
+
+仓库根目录是一个可直接浏览的静态站（GitHub Pages 可直接托管）：
+
+- `index.html` — 双候选 landing 页
+- `site.css` — 共用样式
+- `dragon/`、`thunder/` — 每个候选五页：
+  `index`（概览+新闻+快速事实）、`specification`（参数表+模式+置换）、
+  `implementations`（包结构+构建/KAT+核对注记）、`performance`（x86_1 cycles/byte 表+arm_1 链接）、
+  `analysis`（安全状态+constant-time+规范核对+本组结果占位）
+
+英文为主、每页配中文摘要；数据均出自本仓库镜像的材料（harness 快照与 ngcc.dev 页面）。
+
 ## 目录结构
 
 ### `ngcc-site/` — ngcc.dev 相关页面离线副本

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dragon Hash Family (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.html" aria-current="page">Home</a>
+<a href="specification.html">Specification</a>
+<a href="implementations.html">Implementations</a>
+<a href="performance.html">Performance</a>
+<a href="analysis.html">Analysis</a>
+<a href="../thunder/index.html">Thunder ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Dragon Hash Family<span class="sub">NGCC Round-1 cryptographic hash candidate <code>hash-07</code> · symmetric (permutation-based)</span></h1>
+
+<div class="badges">
+<span class="badge">NGCC Round 1</span>
+<span class="badge">hash-07</span>
+<span class="badge ok">KAT 6/6 PASS</span>
+<span class="badge">no published finding*</span>
+</div>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+Dragon 是 NGCC Round 1 的 hash 候选（编号 <code>hash-07</code>）。核心是
+<em>sponge-forward</em> 模式：sponge 的 capacity（inner）部分在每次置换前被保存、置换后 XOR 回去，
+把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c, h}，因此 1600-bit 状态即可支撑 1024-bit
+preimage 目标。置换 Dragon-p 是 5×5×64 lane 上的 16 轮 ARX。共六个实例：
+Dragon-512/768/1024（定长 hash）与 Dragon-XOF-256/384/512（XOF）。
+本站汇总其规范、参考实现、KAT、性能与第三方分析，素材镜像自 ngcc.dev 与 NICCS（2026-10-30）。</div>
+
+<h2>News</h2>
+<ul class="news">
+<li>2026-10-30 — study pages created; all materials mirrored into this repository.</li>
+</ul>
+
+<h2>Quick facts</h2>
+<table>
+<tr><th>item</th><th>value</th></tr>
+<tr><td>mode</td><td>sponge-forward <code>Sponge-F^{P,pd10*}</code> (Guo et al., CRYPTO 2026, per the specification) — capacity fed forward and XORed back after every permutation call</td></tr>
+<tr><td>permutation</td><td><b>Dragon-p</b>: 16-round ARX on a 5×5 array of 64-bit lanes (1600-bit state); rotations (1, 10, 24, 33, 49)</td></tr>
+<tr><td>instances</td><td>Dragon-512 / -768 / -1024 (fixed-output hash) and Dragon-XOF-256 / -384 / -512 (XOF)</td></tr>
+<tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF generic level log₂Q = 256/384/512</td></tr>
+<tr><td>KAT</td><td>6/6 instances PASS (ngcc.dev harness, x86_1 campaign 2026-09-25 → 09-28)</td></tr>
+<tr><td>implementation review</td><td>no deviation from the specification found (ngcc.dev source review)</td></tr>
+<tr><td>speed (reference, x86_1)</td><td>17.8 cycles/byte, 117 MB/s (Dragon-512, 64 KiB message)</td></tr>
+</table>
+
+<h2>Where to go</h2>
+<ul class="links">
+<li><a href="specification.html">Specification</a> — parameter table, mode and permutation summary, spec PDF.</li>
+<li><a href="implementations.html">Implementations</a> — package layout, build &amp; KAT instructions, review notes.</li>
+<li><a href="performance.html">Performance</a> — independent cycle counts on x86_1, links to arm_1.</li>
+<li><a href="analysis.html">Analysis</a> — security status, constant-time audit, implementation-vs-spec review.</li>
+</ul>
+
+<ul class="links">
+<li>Specification PDF: <a href="../harness/hash-07/hash-07-spec.pdf"><code>hash-07-spec.pdf</code></a> (42 pages, English) ·
+full algorithm summary: <a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a></li>
+<li>Official NICCS <a href="https://www.niccs.org.cn/niccs/Round1Submissions4/pc/content/content_2101539781751689216.html">submission page</a> ·
+submission archive <code>Dragon.zip</code> (see <a href="../official-archives/fetch-archives.sh">fetch-archives.sh</a>, 148,150,104 bytes)</li>
+<li>ngcc.dev: <a href="https://ngcc.dev/reports/hash-07.html">security report</a> ·
+<a href="https://ngcc.dev/constant-time/hash-07.html">constant-time audit</a> ·
+<a href="https://ngcc.dev/performance/x86_1/hash-07.html">x86_1</a> /
+<a href="https://ngcc.dev/performance/arm_1/hash-07.html">arm_1</a> performance
+(local copies under <code>../ngcc-site/</code>)</li>
+</ul>
+
+<p class="sub">* “No published finding” is the current state of the public finding inventory at
+<a href="https://ngcc.dev">ngcc.dev</a> (snapshot 2026-10-28). It is not a security endorsement.</p>
+</main>
+<footer class="site"><div class="in">
+<p>Specification and reference code © the Dragon submission team, distributed by NICCS.
+Independent analysis and measurements by <a href="https://ngcc.dev">ngcc.dev</a> (M.-J. Saarinen).
+This study mirror is maintained by Kai Hu (胡凯) for research collaboration.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="../index.html">repo home</a></p>
+</div></footer>
+</body>
+</html>

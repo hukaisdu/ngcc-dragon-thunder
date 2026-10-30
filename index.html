@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGCC Round-1 hash candidates — Dragon &amp; Thunder</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="landing">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Dragon &amp; Thunder<span class="id">NGCC Round-1 hash candidates</span></a>
+<nav class="cand">
+<a href="dragon/index.html">Dragon ↗</a>
+<a href="thunder/index.html">Thunder ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Dragon &amp; Thunder<span class="sub">NGCC Round-1 cryptographic hash candidates — study pages</span></h1>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+Dragon（候选编号 <code>hash-07</code>）与 Thunder（<code>hash-33</code>）是中国 Next Generation
+Commercial Cryptographic (NGCC) algorithms program Round 1 的两个 hash 候选。本站为研究用资料镜像与导读：
+每个候选一套页面（规范 / 实现 / 性能 / 分析），素材取自 ngcc.dev 的独立分析与 NICCS 官方提交包，
+镜像日期 2026-10-30。</div>
+
+<div class="cards">
+<div class="card dragon">
+<h3><a href="dragon/index.html">Dragon Hash Family</a></h3>
+<p><code>hash-07</code> · permutation-based (ARX)</p>
+<p>1600-bit state, 16-round Dragon-p, sponge-forward mode. Six instances:
+Dragon-512/768/1024 and Dragon-XOF-256/384/512. ≈17.8 cycles/byte (Dragon-512, 64 KiB, x86_1).</p>
+</div>
+<div class="card thunder">
+<h3><a href="thunder/index.html">Thunder Hash Family</a></h3>
+<p><code>hash-33</code> · permutation-based</p>
+<p>1600-bit state, 12-round Thunder-p with degree-3 nonlinearity, sponge-forward mode. Six instances:
+Thunder-512/768/1024 and Thunder-XOF-256/384/512. ≈32.4 cycles/byte (Thunder-512, 64 KiB, x86_1).</p>
+</div>
+</div>
+
+<h2>What is in this repository</h2>
+<ul class="links">
+<li><code>dragon/</code>, <code>thunder/</code> — these study pages (static HTML, one shared stylesheet).</li>
+<li><code>harness/</code> — snapshot of the <a href="https://github.com/ngcc-dev/ngcc-harness">ngcc-harness</a> repository at
+<code>dc66c6cb</code>: specification PDFs, algorithm summaries, constant-time notes, KAT manifests and the
+full extracted submission trees (<code>hash-07/</code>, <code>hash-33/</code>), plus the top-level build files.</li>
+<li><code>ngcc-site/</code> — offline copy of the ngcc.dev pages for both candidates
+(security reports, constant-time audits, x86_1 / arm_1 performance details and the measurement method).</li>
+<li><code>official-archives/</code> — the official NICCS Round-1 submission packages
+(each ≈140&nbsp;MB, above GitHub's 100&nbsp;MB per-file limit, so fetched by
+<code>fetch-archives.sh</code> and checked against <code>SHA256SUMS.txt</code>).</li>
+</ul>
+
+<h2>Sources and credit</h2>
+<ul class="links">
+<li>Specifications, reference code and test vectors: the Dragon and Thunder submission teams, distributed by
+<a href="https://www.niccs.org.cn/en/">NICCS</a> (official Round-1
+<a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Dragon.zip">Dragon</a> /
+<a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Thunder.zip">Thunder</a> archives).</li>
+<li>Independent security review, constant-time audits and performance measurements:
+<a href="https://ngcc.dev">ngcc.dev</a> (Markku-Juhani Saarinen), site update 2026-10-28;
+see also <a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>.</li>
+<li>This mirror and the study pages are maintained by Kai Hu (胡凯) for research collaboration.</li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>Materials © NICCS and the submission teams · analysis by ngcc.dev · pages maintained for research collaboration.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="README.md">repository README</a></p>
+</div></footer>
+</body>
+</html>

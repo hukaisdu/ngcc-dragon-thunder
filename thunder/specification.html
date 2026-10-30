@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specification — Thunder (hash-33)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="thunder">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Thunder<span class="id">NGCC Round-1 · hash-33</span></a>
+<nav class="cand">
+<a href="index.html">Home</a>
+<a href="specification.html" aria-current="page">Specification</a>
+<a href="implementations.html">Implementations</a>
+<a href="performance.html">Performance</a>
+<a href="analysis.html">Analysis</a>
+<a href="../dragon/index.html">Dragon ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Specification<span class="sub">Thunder Hash Family — parameters, mode, permutation</span></h1>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+六个实例共享 1600-bit 状态与同一个 12 轮置换 Thunder-p，参数网格与 Dragon 完全相同
+（c = 576/832/1088，r = 1024/768/512）。定长实例 c = h + 64；XOF 的数字同样是安全等级而非输出长度，
+一次性 API 观察到的是一个 squeeze block（1280/1152/1024 bit）。与 Dragon 的差别在置换：
+Thunder-p 的 <code>ψ</code> 是 3 次、<code>θ</code> 是双列校验。</div>
+
+<p>Authoritative source: <a href="../harness/hash-33/hash-33-spec.pdf"><code>hash-33-spec.pdf</code></a>
+(52 pages, English; §2.2 mode, §2.3 Thunder-p, §2.4 hash, §2.5 XOF, §2.6 claims).
+A line-by-line algorithm summary with the full pseudocode is kept at
+<a href="../harness/hash-33/pseudocode.md"><code>pseudocode.md</code></a> (ngcc.dev).</p>
+
+<h2>Parameters (spec Tables 1, 5, 7)</h2>
+<table>
+<tr><th>parameter</th><th class="num">Thunder-512</th><th class="num">Thunder-768</th><th class="num">Thunder-1024</th><th class="num">XOF-256</th><th class="num">XOF-384</th><th class="num">XOF-512</th></tr>
+<tr><td>state width b</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td></tr>
+<tr><td>capacity c</td><td class="num">576</td><td class="num">832</td><td class="num">1088</td><td class="num">576</td><td class="num">832</td><td class="num">1088</td></tr>
+<tr><td>absorb rate r</td><td class="num">1024</td><td class="num">768</td><td class="num">512</td><td class="num">1024</td><td class="num">768</td><td class="num">512</td></tr>
+<tr><td>squeeze rate r′</td><td class="num">h = 512</td><td class="num">768</td><td class="num">1024</td><td class="num">1280</td><td class="num">1152</td><td class="num">1024</td></tr>
+<tr><td>rounds</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="num">12</td></tr>
+<tr><td>digest (spec)</td><td class="num">512</td><td class="num">768</td><td class="num">1024</td><td class="num">ν (any)</td><td class="num">ν (any)</td><td class="num">ν (any)</td></tr>
+<tr><td>claimed collision</td><td class="num">256</td><td class="num">384</td><td class="num">512</td><td class="num">min{256, ν/2}</td><td class="num">min{384, ν/2}</td><td class="num">min{512, ν/2}</td></tr>
+<tr><td>claimed preimage</td><td class="num">512</td><td class="num">768</td><td class="num">1024</td><td class="num">min{256, ν}</td><td class="num">min{384, ν}</td><td class="num">min{512, ν}</td></tr>
+</table>
+<p class="sub">All bit lengths. Message limit 2⁶⁴ bits. Fixed instances use c = h + 64 — the feed-forward
+mode allows this instead of the classical c ≥ 2h.</p>
+
+<div class="note"><b>XOF naming trap.</b> As with Dragon, <code>Thunder-XOF-256/384/512</code> name a
+<em>security level</em>, not an output length. The harness exposes the XOFs through the fixed-length
+<code>CryptHash</code> API at exactly one squeeze block (1280/1152/1024 bits = 160/144/128 bytes).
+Note r′ &gt; c for the XOFs (e.g. 1280 &gt; 576): a squeeze block spans the whole inner part plus part of the
+outer part, which the feed-forward mode permits (spec §2.5). These three fixed lengths are <em>not</em>
+separate hash functions — shorter outputs are prefixes of longer ones.</div>
+
+<h2>Mode: sponge-with-feed-forward (spec §2.2, Fig. 2)</h2>
+<p>The same <code>Sponge-F^{P,pd10*}</code> construction as Dragon (spec ref [GHJ+25]):
+the inner (capacity) part is fed forward across every permutation call, and the digest is squeezed
+<b>from the inner part</b>. Because the output is the inner part, the final-block constant
+C = 0^{c−1}‖1 is what prevents length extension.</p>
+<pre><code>Thunder-h(M):                             # h in {512,768,1024}, c = h+64
+    X &lt;- 0^r || IV                        # IV_j -&gt; lane j
+    Mpad &lt;- M || 1 || 0^{r-((|M|+1) mod r)}   # pd10*
+    for i = 1..l:                          # absorb
+        X &lt;- X XOR (M[i] || (i==l ? C : 0))
+        S &lt;- right_c(X)                    # inner part AFTER the xor
+        X &lt;- P(X) XOR (0^r || S)           # feed-forward
+    return right_h(X)                      # h &lt; c: one read, no extra permutation</code></pre>
+
+<h2>Permutation Thunder-p (spec §2.3, Tables 2–4)</h2>
+<p>12 rounds of <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code> on the 1600-bit 5×5×64 state — the Keccak-p step order,
+with two substitutions:</p>
+<ul class="links">
+<li><code>ψ</code> (for Keccak’s χ) is <em>degree 3</em>:
+<code>D'[x][y] = D[x][y+3] ⊕ ( ¬D[x][y+1] · D[x][y+2] · ¬D[x][y+4] )</code>, indices in Z₅.</li>
+<li><code>θ</code> mixes <em>two</em> column parities P and Q (offsets t = (41, 50, 6, 10, 27),
+u = 26, r = 1, s = 36) instead of Keccak’s single parity.</li>
+</ul>
+<p>Lane layout and serialization follow the spec: message words big-endian into the highest-indexed rate
+lanes (<code>M_{n_r−1}</code> into lane 24), digest <code>D_{n_d−1} ‖ … ‖ D_0</code>, MSB-first per lane.</p>
+
+<h2>Files</h2>
+<ul class="links">
+<li>Specification: <a href="../harness/hash-33/hash-33-spec.pdf"><code>hash-33-spec.pdf</code></a></li>
+<li>Algorithm summary + full pseudocode + implementation cross-check:
+<a href="../harness/hash-33/pseudocode.md"><code>pseudocode.md</code></a></li>
+<li>Official archive: <code>Thunder.zip</code> — <a href="../official-archives/fetch-archives.sh">download &amp; verify</a>
+(SHA-256 <code>db6970d5…b0c8</code> in <a href="../official-archives/SHA256SUMS.txt">SHA256SUMS.txt</a>)</li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>Specification © the Thunder submission team, distributed by NICCS. Summary text follows the ngcc.dev algorithm notes.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Thunder home</a></p>
+</div></footer>
+</body>
+</html>

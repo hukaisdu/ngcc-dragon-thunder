@@ -1,0 +1,73 @@
+/* NGCC Dragon & Thunder study pages — shared stylesheet (file-center style) */
+
+:root {
+  --ink: #1c2733; --mut: #5c6b7a; --line: #d9dee4; --bg: #ffffff; --soft: #f6f7f5;
+}
+body.dragon  { --acc: #b3452c; --acc-soft: #f7e9e4; }
+body.thunder { --acc: #4653b0; --acc-soft: #e9ebf7; }
+body.landing { --acc: #356b52; --acc-soft: #e9f2ec; }
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; color: var(--ink); background: var(--bg);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", sans-serif;
+}
+a { color: var(--acc); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre, kbd { font: 0.92em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+code { background: #f1f2f0; padding: .08em .35em; border-radius: 3px; }
+pre { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: .9em 1.1em; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+
+header.site { border-bottom: 1px solid var(--line); }
+header.site .in {
+  max-width: 52rem; margin: 0 auto; padding: .9rem 1.2rem;
+  display: flex; flex-wrap: wrap; gap: .4em 1.6rem; align-items: baseline;
+}
+.brand { font-weight: 700; font-size: 1.12rem; color: var(--ink); }
+.brand .id { color: var(--mut); font-weight: 400; font-size: .85rem; margin-left: .45em; }
+nav.cand { display: flex; flex-wrap: wrap; gap: .15em 1.1rem; font-size: .92rem; }
+nav.cand a { color: var(--mut); }
+nav.cand a:hover, nav.cand a[aria-current] { color: var(--acc); }
+
+main { max-width: 52rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
+h1 { font-size: 1.9rem; line-height: 1.25; margin: .4rem 0 .3rem; }
+h1 .sub, .sub { color: var(--mut); margin: 0 0 1.2rem; font-size: 1.02rem; font-weight: 400; }
+h2 { font-size: 1.28rem; margin: 2.1rem 0 .7rem; padding-bottom: .25rem; border-bottom: 2px solid var(--acc); display: inline-block; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
+
+table { border-collapse: collapse; width: 100%; margin: .8rem 0 1.2rem; font-size: .93rem; }
+th, td { border: 1px solid var(--line); padding: .4rem .6rem; text-align: left; vertical-align: top; }
+th { background: var(--soft); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.zh {
+  background: var(--soft); border-left: 4px solid var(--acc);
+  padding: .85rem 1.1rem; margin: 1.1rem 0 1.4rem; border-radius: 0 6px 6px 0;
+}
+.zh .tag { font-size: .78rem; letter-spacing: .12em; color: var(--acc); font-weight: 700; }
+
+.badges { display: flex; flex-wrap: wrap; gap: .45rem; margin: .8rem 0 1.2rem; }
+.badge { border: 1px solid var(--line); border-radius: 99px; padding: .12rem .7rem; font-size: .82rem; color: var(--mut); background: var(--soft); }
+.badge.ok { border-color: #9db8a0; color: #3c6b42; background: #eef5ef; }
+
+.note { background: var(--acc-soft); border-radius: 6px; padding: .8rem 1rem; margin: 1rem 0; }
+.news li { margin: .3rem 0; }
+ul.links { padding-left: 1.2rem; }
+ul.links li { margin: .35rem 0; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin: 1.2rem 0; }
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.2rem; }
+.card h3 { margin: 0 0 .3rem; }
+.card.dragon h3 a { color: #b3452c; }
+.card.thunder h3 a { color: #4653b0; }
+.card p { margin: .3rem 0 .6rem; color: var(--mut); font-size: .92rem; }
+
+footer.site { border-top: 1px solid var(--line); color: var(--mut); font-size: .85rem; }
+footer.site .in { max-width: 52rem; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.5rem; }
+  table { font-size: .85rem; }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Performance — Dragon (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.html">Home</a>
+<a href="specification.html">Specification</a>
+<a href="implementations.html">Implementations</a>
+<a href="performance.html" aria-current="page">Performance</a>
+<a href="analysis.html">Analysis</a>
+<a href="../thunder/index.html">Thunder ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Performance<span class="sub">independent cycle counts — reference implementation</span></h1>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+下表是 ngcc.dev 在 x86_1（i7-12700，单核定频 2.1 GHz，gcc 14.2 -O2，Debian 13）上对
+reference 实现的独立测量（先过 KAT 再计时）。Dragon-512 长消息约 17.8 cycles/byte（117 MB/s），
+比同场景的 Thunder-512（32.4 cycles/byte）快约 1.8 倍；完整表与 arm_1 数据见链接。</div>
+
+<h2>x86_1 environment</h2>
+<table>
+<tr><th>item</th><th>value</th></tr>
+<tr><td>processor</td><td>Intel Core i7-12700 (Alder Lake), one performance core, turbo off, fixed 2.10 GHz, SMT off</td></tr>
+<tr><td>OS / compiler</td><td>Debian GNU/Linux 13, gcc 14.2.0, cmake 3.31.6</td></tr>
+<tr><td>campaign</td><td>2026-09-25 → 2026-09-28 (UTC), KAT-checked before timing; n ≥ 2450 per data point</td></tr>
+</table>
+
+<h2>Cycles per byte (reference, x86_1)</h2>
+<table>
+<tr><th>instance</th><th class="num">32 B</th><th class="num">1 KiB</th><th class="num">16 KiB</th><th class="num">64 KiB</th><th class="num">MB/s @64 KiB</th></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">76.1</td><td class="num">19.9</td><td class="num">17.9</td><td class="num">17.8</td><td class="num">117.3</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">75.6</td><td class="num">24.8</td><td class="num">23.7</td><td class="num">24.0</td><td class="num">87.1</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">75.8</td><td class="num">38.7</td><td class="num">35.9</td><td class="num">36.2</td><td class="num">57.7</td></tr>
+<tr><td><code>Dragon-XOF-256</code></td><td class="num">308.1</td><td class="num">27.5</td><td class="num">18.1</td><td class="num">18.3</td><td class="num">114.4</td></tr>
+<tr><td><code>Dragon-XOF-384</code></td><td class="num">284.8</td><td class="num">31.4</td><td class="num">24.4</td><td class="num">24.0</td><td class="num">87.2</td></tr>
+<tr><td><code>Dragon-XOF-512</code></td><td class="num">261.5</td><td class="num">44.4</td><td class="num">36.7</td><td class="num">36.4</td><td class="num">57.5</td></tr>
+</table>
+<p class="sub">For comparison, on the same machine and campaign, Thunder-512 measures 32.4 cycles/byte at
+64 KiB (<a href="../thunder/performance.html">Thunder performance</a>). The large 32 B figures for the XOF
+instances reflect the one-squeeze fixed digest (160/144/128 bytes) counted over a tiny message.</p>
+
+<h2>Where the full data lives</h2>
+<ul class="links">
+<li>Full x86_1 table (all 8 message sizes, mean cycles, time, n) and resource proxies:
+<a href="../harness/hash-07/perf_x86_1.md"><code>perf_x86_1.md</code></a> —
+rendered copy: <a href="../ngcc-site/performance/x86_1/hash-07.html">mirrored ngcc.dev page</a>.</li>
+<li>arm_1 (Qualcomm Snapdragon X Elite X1E-78-100, one core pinned at 2.71 GHz):
+<a href="../ngcc-site/performance/arm_1/hash-07.html">mirrored page</a> ·
+<a href="https://ngcc.dev/performance/arm_1/hash-07.html">live</a></li>
+<li>Measurement method: <a href="../ngcc-site/performance/x86_1/method.html">method (x86_1)</a> ·
+<a href="../ngcc-site/performance/arm_1/method.html">method (arm_1)</a></li>
+<li>Raw evidence (per-point JSON with commands, environment, trials): <code>performance/data/x86_1/</code> in the
+<a href="https://github.com/ngcc-dev/ngcc-harness">ngcc-harness</a> repository.</li>
+</ul>
+<p class="sub">Independent measurement following the structure of the NICCS x86 self-assessment guide §3.5;
+not a submitter self-assessment. Measurements by ngcc.dev (M.-J. Saarinen).</p>
+</main>
+<footer class="site"><div class="in">
+<p>Measurements © ngcc.dev (CC-BY style, see source site); mirrored here with attribution for study purposes.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analysis — Dragon (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.html">Home</a>
+<a href="specification.html">Specification</a>
+<a href="implementations.html">Implementations</a>
+<a href="performance.html">Performance</a>
+<a href="analysis.html" aria-current="page">Analysis</a>
+<a href="../thunder/index.html">Thunder ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Analysis<span class="sub">third-party status, constant-time audit, review notes</span></h1>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+截至 ngcc.dev 2026-10-28 快照，Dragon <b>没有已公开的 vulnerability finding</b>（这不是安全性背书）。
+constant-time 源码级审查：XOF 的 <code>copy_bits_msb</code> 在 C 源里按输出 bit 分支，
+但 GCC -O2 会把它编译成 <code>cmovne</code>，未见数据相关的机器分支，未升级为问题。
+规范-实现核对未发现偏差。我们的分析结果将放在本页。</div>
+
+<h2>Security status</h2>
+<p><b>No vulnerability finding is currently published for this candidate</b>
+(<a href="https://ngcc.dev/reports/hash-07.html">ngcc.dev security report</a>, snapshot 2026-10-28).
+This records only the present state of the public finding inventory and is not a security endorsement;
+the candidate remains under review.</p>
+
+<h2>Constant-time audit (ngcc.dev)</h2>
+<p>Scope: archived reference implementation, fixed digest parameters and fixed message length; message
+contents and intermediate state treated as secret. Two source points examined:</p>
+<ul class="links">
+<li>Reference entry: <code>Dragon-ARM/…/Reference_Implementation/Dragon-1024/CryptHash_AlgorithmInstance.c:94</code>.</li>
+<li>The XOF helper <code>copy_bits_msb</code> branches in C on each squeezed output bit
+(<code>Dragon-x86/…/Dragon-XOF-256/CryptHash_AlgorithmInstance.c:101</code>), but GCC <code>-O2</code>
+compiles the branch to <code>cmovne</code> in the inspected x86 reference variant.</li>
+</ul>
+<p>Status: no issue promoted — no data-dependent machine branch or address was observed.
+Full text: <a href="../ngcc-site/constant-time/hash-07.html">mirrored audit page</a> ·
+<a href="https://ngcc.dev/constant-time/hash-07.html">live</a>.</p>
+
+<h2>Implementation-vs-specification review</h2>
+<p><b>No deviation from the specification was found.</b> Round constants, rotation offsets (1, 10, 24, 33, 49),
+lane mapping (<code>M_i → lane 25−n_r+i</code>), pd10* padding with the final-block constant C, the
+feed-forward <code>X ← P(X) ⊕ (0^r ‖ right_c(X))</code> and the digest order
+<code>D_{n_d−1} ‖ … ‖ D_0</code> all agree with the spec. Not re-verified by ngcc.dev: the full IV tables of
+four instances (two 9-lane tables were checked entry-by-entry) and the SM3-counter derivation of the IVs;
+the mode’s security proof (§4.1) and the permutation cryptanalysis (§4.2).
+Details: <a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a>.</p>
+
+<h2>Notes worth remembering</h2>
+<ul class="links">
+<li>XOF naming trap: the number in <code>Dragon-XOF-*</code> is a security level (log₂Q), not an output
+length; the fixed one-shot digest is one squeeze block (1280/1152/1024 bits) — see
+<a href="specification.html">Specification</a>.</li>
+<li><code>CryptHash()</code> (fixed instances) ignores <code>digest_len_bits</code>: smaller values overflow
+the output buffer, larger ones are silently truncated.</li>
+<li>Related: “Chinese NGCC Algorithms: The First Week of AI Cryptanalysis”,
+<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>.</li>
+</ul>
+
+<h2>Our results</h2>
+<p><em>Placeholder — cryptanalysis results of our group will be collected here
+(本组分析结果将放在这一节)。</em></p>
+</main>
+<footer class="site"><div class="in">
+<p>Third-party analysis © ngcc.dev (M.-J. Saarinen); “our results” section reserved for this study group.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
+</div></footer>
+</body>
+</html>

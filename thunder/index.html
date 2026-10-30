@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thunder Hash Family (hash-33)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="thunder">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Thunder<span class="id">NGCC Round-1 · hash-33</span></a>
+<nav class="cand">
+<a href="index.html" aria-current="page">Home</a>
+<a href="specification.html">Specification</a>
+<a href="implementations.html">Implementations</a>
+<a href="performance.html">Performance</a>
+<a href="analysis.html">Analysis</a>
+<a href="../dragon/index.html">Dragon ↗</a>
+</nav>
+</div></header>
+<main>
+<h1>Thunder Hash Family<span class="sub">NGCC Round-1 cryptographic hash candidate <code>hash-33</code> · symmetric (permutation-based)</span></h1>
+
+<div class="badges">
+<span class="badge">NGCC Round 1</span>
+<span class="badge">hash-33</span>
+<span class="badge ok">KAT 6/6 PASS</span>
+<span class="badge">no published finding*</span>
+</div>
+
+<div class="zh"><span class="tag">中文摘要</span><br>
+Thunder 是 NGCC Round 1 的 hash 候选（编号 <code>hash-33</code>）。与 Dragon 同用
+<em>sponge-forward</em> 模式（capacity 部分每次置换后前馈 XOR 回去，(second-)preimage 安全性
+≈ min{c, h}，digest 直接从 inner 部分读出），但置换不同：Thunder-p 是 Keccak-p 形状的 1600-bit
+(5×5×64) 置换，12 轮，非线性层 <code>ψ</code> 是 3 次的（Keccak 的 χ 是 2 次），θ 用双列校验。
+共六个实例：Thunder-512/768/1024 与 Thunder-XOF-256/384/512。
+本站汇总其规范、参考实现、KAT、性能与第三方分析，素材镜像自 ngcc.dev 与 NICCS（2026-10-30）。</div>
+
+<h2>News</h2>
+<ul class="news">
+<li>2026-10-30 — study pages created; all materials mirrored into this repository.</li>
+</ul>
+
+<h2>Quick facts</h2>
+<table>
+<tr><th>item</th><th>value</th></tr>
+<tr><td>mode</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code> (Guo et al., CRYPTO 2026, per the spec ref [GHJ+25]) — digest is squeezed <em>from the inner (capacity) part</em>; a final-block constant C prevents length extension</td></tr>
+<tr><td>permutation</td><td><b>Thunder-p</b>: 12-round, Keccak-p-shaped 1600-bit (5×5×64) permutation, round <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>, with degree-3 <code>ψ</code> and double-column-parity <code>θ</code></td></tr>
+<tr><td>instances</td><td>Thunder-512 / -768 / -1024 (fixed-output hash) and Thunder-XOF-256 / -384 / -512 (XOF)</td></tr>
+<tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF: min{level, ν/2} / min{level, ν}</td></tr>
+<tr><td>KAT</td><td>6/6 instances PASS (ngcc.dev harness, x86_1 campaign 2026-09-25 → 09-28)</td></tr>
+<tr><td>implementation review</td><td>no parameter or constant mismatch found; output-length domain separation verified via three independent mechanisms</td></tr>
+<tr><td>speed (reference, x86_1)</td><td>32.4 cycles/byte, 64.6 MB/s (Thunder-512, 64 KiB message)</td></tr>
+</table>
+
+<h2>Where to go</h2>
+<ul class="links">
+<li><a href="specification.html">Specification</a> — parameter table, mode and permutation summary, spec PDF.</li>
+<li><a href="implementations.html">Implementations</a> — package layout, build &amp; KAT instructions, review notes.</li>
+<li><a href="performance.html">Performance</a> — independent cycle counts on x86_1, links to arm_1.</li>
+<li><a href="analysis.html">Analysis</a> — security status, constant-time audit, review notes.</li>
+</ul>
+
+<ul class="links">
+<li>Specification PDF: <a href="../harness/hash-33/hash-33-spec.pdf"><code>hash-33-spec.pdf</code></a> (52 pages, English) ·
+full algorithm summary: <a href="../harness/hash-33/pseudocode.md"><code>pseudocode.md</code></a></li>
+<li>Official NICCS <a href="https://www.niccs.org.cn/niccs/Round1Submissions4/pc/content/content_2101533797931110400.html">submission page</a> ·
+submission archive <code>Thunder.zip</code> (see <a href="../official-archives/fetch-archives.sh">fetch-archives.sh</a>, 146,828,807 bytes)</li>
+<li>ngcc.dev: <a href="https://ngcc.dev/reports/hash-33.html">security report</a> ·
+<a href="https://ngcc.dev/constant-time/hash-33.html">constant-time audit</a> ·
+<a href="https://ngcc.dev/performance/x86_1/hash-33.html">x86_1</a> /
+<a href="https://ngcc.dev/performance/arm_1/hash-33.html">arm_1</a> performance
+(local copies under <code>../ngcc-site/</code>)</li>
+</ul>
+
+<p class="sub">* “No published finding” is the current state of the public finding inventory at
+<a href="https://ngcc.dev">ngcc.dev</a> (snapshot 2026-10-28). It is not a security endorsement.</p>
+</main>
+<footer class="site"><div class="in">
+<p>Specification and reference code © the Thunder submission team, distributed by NICCS.
+Independent analysis and measurements by <a href="https://ngcc.dev">ngcc.dev</a> (M.-J. Saarinen).
+This study mirror is maintained by Kai Hu (胡凯) for research collaboration.</p>
+<p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="../index.html">repo home</a></p>
+</div></footer>
+</body>
+</html>
