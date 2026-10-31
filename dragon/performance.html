@@ -22,18 +22,20 @@
 <h1>Performance<span class="sub">designer self-assessment from the submission package · independent reference check</span></h1>
 
 <div class="zh"><span class="tag">中文摘要</span><br>
-主数据取自<b>提交包内</b>的设计团队自评估（<i>Algorithm specifications.pdf</i> §5.1，即本仓库
-<code>hash-07-spec.pdf</code> 第 33–35 页）：performance-optimized 实现、官方 <code>ngcc_bench</code>
-S1–S8 消息长度（32 B–64 KiB）、单核，两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip
-RK3588）。长消息下 Dragon-512 在 x86-64 达 4.87 cycles/byte，低于同表 SHA3-512（12.46）与 SM3
-（8.45）。注意：自评估只覆盖三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现
-（未优化）的独立测量保留在本页下方作对照，两者不可直接比较。</div>
+主数据取自<b>提交包内</b>的设计团队自评估（spec §5.1，第 33–35 页，数字已对照 LaTeX 源逐格核验）：
+performance-optimized 实现、官方 <code>ngcc_bench</code> S1–S8 消息长度（32 B–64 KiB）、单核，
+两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588 @ 2.0 GHz）。长消息下
+Dragon-512 在 x86-64 达 4.87 cycles/byte（SHA3-512 为 12.46，约 2.6 倍加速），三个定长实例在全部
+测试长度上均快于 SHA3-512。硬件综合（Table 16）中三个实例的综合频率为 251–258 MHz
+（ARX 进位链限制，critical path 3.88–3.98 ns），当前吞吐低于 SHA3-512。注意：软件自评估只覆盖
+三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现（未优化）的独立测量保留在本页下方作对照。</div>
 
 <h2>Design-team self-assessment (submission package, spec §5.1)</h2>
 <p>Values are cycles per byte (cpb) measured with the official <code>ngcc_bench</code> in single-core
 mode over the self-assessment message sizes S1–S8 = 32, 128, 512, 1024, 4096, 8192, 16384, 65536 bytes.
-Source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec.pdf</code> §5.1, Tables 13–15 (pp. 33–35)</a>
-— this file is byte-identical to the official <i>Algorithm specifications.pdf</i> in <code>Dragon.zip</code> (MD5 checked).</p>
+Source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec.pdf</code> §5.1, Tables 13–15 (pp. 33–35)</a> —
+this file is byte-identical to the official <i>Algorithm specifications.pdf</i> in <code>Dragon.zip</code>
+(MD5 checked), and every value below was re-verified cell-by-cell against the LaTeX source (2026-10-31).</p>
 
 <table>
 <tr><th>item</th><th>x86-64 platform (Table 13)</th><th>ARM platform (Table 13)</th></tr>
@@ -46,33 +48,42 @@ Source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec
 <h3>x86-64 — Intel Xeon Platinum 8358 (spec Table 14)</h3>
 <table>
 <tr><th>instance</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
-<tr><td>SM3(256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.30</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
+<tr><td>SM3 (256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.59</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
 <tr><td>SHA3-512</td><td class="num">103.73</td><td class="num">34.97</td><td class="num">20.43</td><td class="num">13.46</td><td class="num">12.49</td><td class="num">12.48</td><td class="num">12.47</td><td class="num">12.46</td></tr>
 <tr><td><code>Dragon-512</code></td><td class="num">22.96</td><td class="num">11.00</td><td class="num">6.44</td><td class="num">5.65</td><td class="num">5.06</td><td class="num">4.96</td><td class="num">4.91</td><td class="num">4.87</td></tr>
 <tr><td><code>Dragon-768</code></td><td class="num">23.17</td><td class="num">10.92</td><td class="num">7.66</td><td class="num">6.91</td><td class="num">6.60</td><td class="num">6.57</td><td class="num">6.52</td><td class="num">6.49</td></tr>
-<tr><td><code>Dragon-1024</code></td><td class="num">25.00</td><td class="num">15.62</td><td class="num">11.18</td><td class="num">10.44</td><td class="num">9.88</td><td class="num">9.80</td><td class="num">9.73</td><td class="num">9.70</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">23.00</td><td class="num">15.62</td><td class="num">11.18</td><td class="num">10.44</td><td class="num">9.88</td><td class="num">9.80</td><td class="num">9.73</td><td class="num">9.70</td></tr>
 </table>
 
 <h3>ARM — Rockchip RK3588 (spec Table 15)</h3>
 <table>
 <tr><th>instance</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
-<tr><td>SM3(256)†</td><td class="num">91.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.32</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.55</td><td class="num">7.88</td></tr>
-<tr><td>SHA3-512†</td><td class="num">67.58</td><td class="num">29.30</td><td class="num">19.21</td><td class="num">17.32</td><td class="num">15.74</td><td class="num">15.60</td><td class="num">15.54</td><td class="num">15.49</td></tr>
-<tr><td><code>Dragon-512</code></td><td class="num">51.24</td><td class="num">17.27</td><td class="num">7.83</td><td class="num">6.04</td><td class="num">4.94</td><td class="num">4.64</td><td class="num">4.54</td><td class="num">4.47</td></tr>
-<tr><td><code>Dragon-768</code></td><td class="num">51.85</td><td class="num">17.71</td><td class="num">9.75</td><td class="num">7.18</td><td class="num">5.69</td><td class="num">5.42</td><td class="num">5.26</td><td class="num">5.17</td></tr>
-<tr><td><code>Dragon-1024</code></td><td class="num">51.85</td><td class="num">21.93</td><td class="num">12.19</td><td class="num">10.37</td><td class="num">9.45</td><td class="num">9.15</td><td class="num">9.05</td><td class="num">8.99</td></tr>
+<tr><td>SM3 (256)†</td><td class="num">94.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.42</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.95</td><td class="num">7.88</td></tr>
+<tr><td>SHA3-512†</td><td class="num">67.58</td><td class="num">25.59</td><td class="num">19.41</td><td class="num">17.32</td><td class="num">15.74</td><td class="num">15.60</td><td class="num">15.54</td><td class="num">15.49</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">51.24</td><td class="num">17.27</td><td class="num">7.63</td><td class="num">6.04</td><td class="num">4.84</td><td class="num">4.64</td><td class="num">4.54</td><td class="num">4.47</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">51.31</td><td class="num">17.41</td><td class="num">8.80</td><td class="num">7.18</td><td class="num">6.24</td><td class="num">6.11</td><td class="num">6.01</td><td class="num">5.96</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">51.85</td><td class="num">21.93</td><td class="num">12.19</td><td class="num">10.57</td><td class="num">9.35</td><td class="num">9.15</td><td class="num">9.05</td><td class="num">8.99</td></tr>
 </table>
 <p class="sub">† The SHA3-512 and SM3 baselines are portable software implementations that do not use the
-Armv8.2 SHA3 / SM3 instruction extensions (spec Table 15 footnotes). All three Dragon instances stay below
-both baselines at every tested length on both platforms. The spec also reports that the measured optimized
-x86 implementation costs ≈38.8 cycles per permutation round (design estimate ≈40, spec p. 33). The XOF
-instances are not covered by the software self-assessment.</p>
+Armv8.2 SHA-3 / SM3 instruction extensions (spec Table 15 footnotes). All three Dragon instances stay
+below both baselines at every tested length on both platforms (spec §5.1 Observations). The measured
+optimized x86 implementation costs ≈38.8 cycles per permutation round (design estimate ≈40, spec p. 33).
+The XOF instances are not covered by the software self-assessment.</p>
 
-<h3>Hardware (spec §5.2, Table 16)</h3>
-<p>The three fixed-output instances are also implemented in VHDL and synthesized for ASIC (UMC 55 nm,
-round-based architecture, one round per clock cycle); Table 16 reports area, delay, frequency, power, cycle
-count, throughput and throughput-to-area ratio for 32 B / 1 KiB / 64 KiB messages —
-<a href="../harness/hash-07/hash-07-spec.pdf#page=35">spec p. 35</a>.</p>
+<h2>Hardware (spec §5.2, Table 16 — ASIC, UMC 55 nm)</h2>
+<table class="table-wide">
+<tr><th rowspan="2">instance</th><th colspan="4">implementation</th><th colspan="3">32 B</th><th colspan="3">1 KiB</th><th colspan="3">64 KiB</th></tr>
+<tr><th class="num">Area (kGE)</th><th class="num">Delay (ns)</th><th class="num">Freq (MHz)</th><th class="num">Power (mW)</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th></tr>
+<tr><td>SHA3-512</td><td class="num">44.68</td><td class="num">0.84</td><td class="num">1190.48</td><td class="num">31.25</td><td class="num">38</td><td class="num">8020</td><td class="num">179.48</td><td class="num">512</td><td class="num">19048</td><td class="num">426.27</td><td class="num">30976</td><td class="num">20150</td><td class="num">450.93</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">122.28</td><td class="num">3.93</td><td class="num">254.45</td><td class="num">13.80</td><td class="num">30</td><td class="num">2171</td><td class="num">17.76</td><td class="num">297</td><td class="num">7018</td><td class="num">57.40</td><td class="num">17433</td><td class="num">7653</td><td class="num">62.58</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">132.41</td><td class="num">3.88</td><td class="num">257.73</td><td class="num">15.55</td><td class="num">34</td><td class="num">1941</td><td class="num">14.66</td><td class="num">338</td><td class="num">6247</td><td class="num">47.18</td><td class="num">20498</td><td class="num">6592</td><td class="num">49.79</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">131.24</td><td class="num">3.98</td><td class="num">251.26</td><td class="num">16.09</td><td class="num">38</td><td class="num">1693</td><td class="num">12.90</td><td class="num">449</td><td class="num">4584</td><td class="num">34.93</td><td class="num">26657</td><td class="num">4942</td><td class="num">37.65</td></tr>
+</table>
+<p class="sub">Round-based architecture (one round per clock cycle), VHDL + ModelSim, Synopsys Design
+Compiler. Values verified against the LaTeX source. At the submitted synthesis results the three Dragon
+instances close timing only at 251–258 MHz (critical path 3.88–3.98 ns, bounded by the ARX carry chains),
+so their throughput stays below the SHA3-512 baseline synthesized at 1190 MHz; cycle counts are lower
+at 1 KiB / 64 KiB (up to 1.8×) and power is roughly half (<a href="../harness/hash-07/hash-07-spec.pdf#page=35">spec p. 35</a>).</p>
 
 <h2>Independent reference-implementation check (ngcc.dev)</h2>
 <p>Separately from the submission package, ngcc.dev measured the <b>reference</b> implementation
