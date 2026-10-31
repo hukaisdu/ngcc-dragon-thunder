@@ -58,7 +58,7 @@ digest 恰为一个 squeeze block（1280/1152/1024 bit = 160/144/128 字节）�
 
 <h2>模式：sponge-with-feed-forward（spec §2.2，Fig. 2）</h2>
 <p>与 Dragon 相同的 <code>Sponge-F^{P,pd10*}</code> 构造（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang —
-<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）：
+<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，发表于 CRYPTO 2026）：
 inner（capacity）部分在每次置换调用间前馈，且 digest <b>从 inner 部分</b>挤出。
 正因为输出就是 inner 部分，final-block 常数 C = 0^{c−1}‖1 才是防长度扩展的关键。</p>
 <pre><code>Thunder-h(M):                             # h ∈ {512,768,1024}, c = h+64

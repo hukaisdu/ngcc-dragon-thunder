@@ -61,8 +61,7 @@ forward and XORed back into the inner part after every permutation call. This ra
 security to ≈ min{c, h} instead of the classical c/2, so a 1600-bit state suffices for a 1024-bit
 preimage target. Padding is <code>pd10*</code>; a domain constant C is XORed into the last block
 (the lowest bit of lane S[0,0]). The mode and its security analysis are due to Guo, Hu, Jiang, Fan, Fu,
-Preneel and Wang (<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, to appear at
-CRYPTO 2026).</p>
+Preneel and Wang (<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, published at CRYPTO 2026).</p>
 <pre><code>Sponge-F^{P,pd10*}(M, nu):
     (M[1..L]) &lt;- split_r( pd10*(M) )
     X &lt;- 0^r || IV

@@ -58,7 +58,7 @@ Dragon-512/768/1024（定长输出）与 Dragon-XOF-256/384/512（XOF）。本�
 <h2>速览</h2>
 <table>
 <tr><th>条目</th><th>内容</th></tr>
-<tr><td>模式 (mode)</td><td>sponge-forward <code>Sponge-F^{P,pd10*}</code>（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）— capacity 部分每次置换后前馈回加</td></tr>
+<tr><td>模式 (mode)</td><td>sponge-forward <code>Sponge-F^{P,pd10*}</code>（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，发表于 CRYPTO 2026）— capacity 部分每次置换后前馈回加</td></tr>
 <tr><td>置换</td><td><b>Dragon-p</b>：5×5×64 lane（1600-bit 状态）上的 16 轮 ARX；rotations (1, 10, 24, 33, 49)</td></tr>
 <tr><td>实例</td><td>Dragon-512 / -768 / -1024（定长 hash）与 Dragon-XOF-256 / -384 / -512（XOF）</td></tr>
 <tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF generic 等级 log₂Q = 256/384/512</td></tr>

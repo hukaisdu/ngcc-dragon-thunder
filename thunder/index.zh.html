@@ -59,7 +59,7 @@ Thunder-XOF-256/384/512。本站汇总其规范、参考实现、KAT、性能与
 <h2>速览</h2>
 <table>
 <tr><th>条目</th><th>内容</th></tr>
-<tr><td>模式 (mode)</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code>（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）— digest 从 inner（capacity）部分<em>直接读出</em>；final-block 常数 C 防长度扩展</td></tr>
+<tr><td>模式 (mode)</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code>（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，发表于 CRYPTO 2026）— digest 从 inner（capacity）部分<em>直接读出</em>；final-block 常数 C 防长度扩展</td></tr>
 <tr><td>置换</td><td><b>Thunder-p</b>：12 轮、Keccak-p 形状的 1600-bit（5×5×64）置换，轮函数 <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>，其中 <code>ψ</code> 为 3 次、<code>θ</code> 为双列校验</td></tr>
 <tr><td>实例</td><td>Thunder-512 / -768 / -1024（定长输出）与 Thunder-XOF-256 / -384 / -512（XOF）</td></tr>
 <tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF 为 min{等级, ν/2} / min{等级, ν}</td></tr>

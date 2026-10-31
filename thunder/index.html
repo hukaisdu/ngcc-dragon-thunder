@@ -52,7 +52,7 @@
 <h2>Quick facts</h2>
 <table>
 <tr><th>item</th><th>value</th></tr>
-<tr><td>mode</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code> (Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, to appear at CRYPTO 2026) — digest is squeezed <em>from the inner (capacity) part</em>; a final-block constant C prevents length extension</td></tr>
+<tr><td>mode</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code> (Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, published at CRYPTO 2026) — digest is squeezed <em>from the inner (capacity) part</em>; a final-block constant C prevents length extension</td></tr>
 <tr><td>permutation</td><td><b>Thunder-p</b>: 12-round, Keccak-p-shaped 1600-bit (5×5×64) permutation, round <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>, with degree-3 <code>ψ</code> and double-column-parity <code>θ</code></td></tr>
 <tr><td>instances</td><td>Thunder-512 / -768 / -1024 (fixed-output hash) and Thunder-XOF-256 / -384 / -512 (XOF)</td></tr>
 <tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF: min{level, ν/2} / min{level, ν}</td></tr>
