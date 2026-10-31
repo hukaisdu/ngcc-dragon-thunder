@@ -22,7 +22,7 @@ pre code { background: none; padding: 0; }
 
 header.site { border-bottom: 1px solid var(--line); }
 header.site .in {
-  max-width: 52rem; margin: 0 auto; padding: .9rem 1.2rem;
+  max-width: 64rem; margin: 0 auto; padding: .9rem 1.2rem;
   display: flex; flex-wrap: wrap; gap: .4em 1.6rem; align-items: baseline;
 }
 .brand { font-weight: 700; font-size: 1.12rem; color: var(--ink); }
@@ -32,7 +32,7 @@ nav.cand a { color: var(--mut); }
 nav.cand a:hover, nav.cand a[aria-current] { color: var(--acc); }
 nav.cand a.lang { margin-left: .4rem; padding-left: .9rem; border-left: 1px solid var(--line); font-weight: 600; }
 
-main { max-width: 52rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
+main { max-width: 64rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
 h1 { font-size: 1.9rem; line-height: 1.25; margin: .4rem 0 .3rem; }
 h1 .sub, .sub { color: var(--mut); margin: 0 0 1.2rem; font-size: 1.02rem; font-weight: 400; }
 h2 { font-size: 1.28rem; margin: 2.1rem 0 .7rem; padding-bottom: .25rem; border-bottom: 2px solid var(--acc); display: inline-block; }
@@ -74,7 +74,8 @@ ul.links li { margin: .35rem 0; }
 .card p { margin: .3rem 0 .6rem; color: var(--mut); font-size: .92rem; }
 
 footer.site { border-top: 1px solid var(--line); color: var(--mut); font-size: .85rem; }
-footer.site .in { max-width: 52rem; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+footer.site .in { max-width: 64rem; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+th.num, td.num { white-space: nowrap; }
 
 @media (max-width: 640px) {
   h1 { font-size: 1.5rem; }
