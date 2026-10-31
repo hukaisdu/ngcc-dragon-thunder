@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — Dragon &amp; Thunder</title>
+<meta name="description" content="Glossary for the Dragon and Thunder study site: sponge, capacity, rate, XOF, cpb, KAT, constant-time and other terms in plain English.">
+<meta property="og:title" content="Glossary — NGCC Dragon & Thunder">
+<meta property="og:description" content="Sponge, capacity, rate, XOF, cpb, KAT, constant-time and other terms in plain English.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='0.9em'%20font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="landing">
+<header class="site"><div class="in">
+<a class="brand" href="index.html">Dragon &amp; Thunder<span class="id">NGCC Round-1 hash candidates</span></a>
+<nav class="cand">
+<a href="dragon/index.html">Dragon ↗</a>
+<a href="thunder/index.html">Thunder ↗</a>
+<a class="lang" href="glossary.zh.html">中文</a>
+</nav>
+</div></header>
+<main>
+<h1>Glossary<span class="sub">plain-English notes for the terms used on this site</span></h1>
+
+<table>
+<tr><th style="width:11rem">term</th><th>meaning</th></tr>
+<tr><td>sponge</td><td>The hash construction mode: message blocks are absorbed into a state, output bits are squeezed out. SHA3 is a sponge.</td></tr>
+<tr><td>sponge-forward</td><td>The mode used by Dragon/Thunder: the capacity part is saved before each permutation call and XORed back afterwards. This lifts preimage security from c/2 to ≈ min{c, h}, so c = h + 64 suffices (a plain sponge needs c ≥ 2h). See <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>.</td></tr>
+<tr><td>permutation</td><td>An invertible transformation on a fixed-length bit string; here a multi-round map on the 1600-bit state (Dragon-p: 16 ARX rounds; Thunder-p: 12 Keccak-p-shaped rounds).</td></tr>
+<tr><td>capacity (c) / rate (r)</td><td>The two parts of the sponge state: r bits are absorbed/squeezed per block, c bits are the internal security margin, r + c = 1600. Larger c: more security, slower.</td></tr>
+<tr><td>absorb / squeeze</td><td>Absorbing: XOR a message block into the state and apply the permutation; squeezing: read output bits out. XOFs squeeze repeatedly.</td></tr>
+<tr><td>XOF</td><td>Extendable-output function: the caller chooses the output length ν (unlike a fixed-length hash digest).</td></tr>
+<tr><td>digest</td><td>The hash output; Thunder-512 outputs 512 bits.</td></tr>
+<tr><td>collision / (second-)preimage</td><td>The two classic attack goals: find two messages with the same digest / find a message mapping to a given digest. Design targets: collision ≈ h/2 bits, preimage ≈ h bits.</td></tr>
+<tr><td>log₂Q</td><td>The generic security level of an XOF instance: the bound on the adversary's advantage after Q permutation queries. The 256 in XOF-256 is this level, not an output length.</td></tr>
+<tr><td>cpb (cycles/byte)</td><td>CPU cycles per byte of input — <b>lower is faster</b>. S1–S8 are the self-assessment message lengths 32 B → 64 KiB.</td></tr>
+<tr><td>KAT</td><td>Known-Answer Test: the submission provides “input → expected output” pairs; an implementation passes if it reproduces every answer, showing it matches the specification.</td></tr>
+<tr><td>reference / optimized implementation</td><td>Submissions ship several tiers: reference is a readable transcription of the spec (slow), optimized targets speed. The two performance tables on this site come from these different tiers (and machines) and are not directly comparable.</td></tr>
+<tr><td>constant-time</td><td>Execution time and memory addresses do not depend on secret data — a necessary condition against timing side channels.</td></tr>
+<tr><td>domain separation</td><td>Making internal states for different uses/lengths unconfusable (e.g. Thunder: distinct IVs; Dragon: distinct IVs plus the final-block constant C).</td></tr>
+<tr><td>lane</td><td>The 1600-bit state is a 5×5 array of 64-bit words; each word is a lane.</td></tr>
+<tr><td>ARX</td><td>Modular Addition, Rotation, XOR — the three instruction types that make up Dragon-p.</td></tr>
+<tr><td>pd10* padding</td><td>The padding rule: append a single 1 bit, then zeros up to the block boundary (extra all-zero block case: see the specification page).</td></tr>
+<tr><td>kGE / TP/Area</td><td>Hardware metrics: area in thousand gate equivalents; throughput divided by area (higher = more area-efficient).</td></tr>
+</table>
+</main>
+<footer class="site"><div class="in">
+<p>This table is a reading aid; definitions follow the two specifications and the ngcc.dev notes.</p>
+<p><a href="index.html">Site home</a> · 2026-10-31</p>
+</div></footer>
+</body>
+</html>

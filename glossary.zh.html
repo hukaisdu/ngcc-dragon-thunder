@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>术语表 — Dragon &amp; Thunder</title>
+<meta name="description" content="Dragon 与 Thunder 研究站的术语表：sponge、capacity、rate、XOF、cpb、KAT、constant-time 等术语的简明中文解释。">
+<meta property="og:title" content="术语表 — NGCC Dragon & Thunder">
+<meta property="og:description" content="sponge、capacity、rate、XOF、cpb、KAT、constant-time 等术语的简明中文解释。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='0.9em'%20font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="landing">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Dragon &amp; Thunder<span class="id">NGCC Round-1 杂凑候选</span></a>
+<nav class="cand">
+<a href="dragon/index.zh.html">Dragon ↗</a>
+<a href="thunder/index.zh.html">Thunder ↗</a>
+<a class="lang" href="glossary.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>术语表<span class="sub">本站出现的术语，简明中文解释（术语保留英文）</span></h1>
+
+<table>
+<tr><th style="width:11rem">术语</th><th>解释</th></tr>
+<tr><td>sponge（海绵结构）</td><td>一种构造 hash 的模式：消息按块写入状态（absorb），再从状态读出输出（squeeze）。SHA3 就是 sponge。</td></tr>
+<tr><td>sponge-forward（前馈 sponge）</td><td>Dragon/Thunder 用的模式：每次置换<em>前</em>保存 capacity 部分、置换<em>后</em> XOR 回去。把 preimage 安全性从 c/2 提升到约 min{c, h}，因此 c = h + 64 就够（经典 sponge 要 c ≥ 2h）。见 <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>。</td></tr>
+<tr><td>permutation（置换）</td><td>对固定长度比特串的可逆变换，这里是 1600-bit 状态上的多轮变换（Dragon-p 16 轮 ARX；Thunder-p 12 轮 Keccak-p 形状）。</td></tr>
+<tr><td>capacity（c）/ rate（r）</td><td>sponge 状态的两部分：r 是每块吸收/挤出的比特数，c 是内部“安全余量”，r + c = 1600。c 越大越安全、越慢。</td></tr>
+<tr><td>absorb / squeeze</td><td>吸收：消息块 XOR 进状态再过置换；挤出：从状态读出输出比特。XOF 的多次挤出即“要多少给多少”。</td></tr>
+<tr><td>XOF</td><td>extendable-output function，可变长输出函数：输出长度 ν 由调用者指定（对照定长 digest 的 hash）。</td></tr>
+<tr><td>digest</td><td>杂凑值（输出）。Thunder-512 即输出 512 bit。</td></tr>
+<tr><td>collision / (second-)preimage</td><td>两类攻击目标：找碰撞（两消息同 digest）/ 找原像（给定 digest 找消息）。设计目标：collision ≈ h/2 bit、preimage ≈ h bit。</td></tr>
+<tr><td>log₂Q</td><td>XOF 实例的 generic 安全等级：攻击者做 Q 次置换询问时的优势界。XOF-256 的 256 是这个等级，不是输出长度。</td></tr>
+<tr><td>cpb（cycles/byte）</td><td>每字节数据耗费的 CPU 周期数，<b>越低越快</b>。S1–S8 指自评估规定的消息长度 32 B → 64 KiB。</td></tr>
+<tr><td>KAT</td><td>Known-Answer Test，已知答案测试：提交包给出一组“输入 → 期望输出”向量，实现对答案，全对说明实现与规范一致。</td></tr>
+<tr><td>reference / optimized 实现</td><td>提交包含多档实现：reference 是可读的规范直译（慢），optimized 面向性能。性能页的两套数字分别来自这两档（及不同机器），不可直接比较。</td></tr>
+<tr><td>constant-time（常数时间）</td><td>代码执行时间/访存地址不依赖秘密数据，是抵抗时序侧信道的必要条件。</td></tr>
+<tr><td>domain separation（域分离）</td><td>让不同用途/长度的输入产生不可混淆的内部状态（如 Thunder 用不同 IV、Dragon 用不同 IV + 最后块常数 C）。</td></tr>
+<tr><td>lane</td><td>1600-bit 状态 = 5×5 个 64-bit 字，每个字叫一条 lane。</td></tr>
+<tr><td>ARX</td><td>模加（Addition）、循环移位（Rotation）、异或（XOR）三类指令构成的变换——Dragon-p 的全部运算。</td></tr>
+<tr><td>pd10* padding</td><td>填充规则：消息后补一个 1 再补 0 到块边界（多零块情形见规范页）。</td></tr>
+<tr><td>kGE / TP/Area</td><td>硬件指标：千门等效面积（kGE）；吞吐除以面积（TP/Area），越高越省面积。</td></tr>
+</table>
+</main>
+<footer class="site"><div class="in">
+<p>本表为阅读辅助，定义以两份 spec 与 ngcc.dev 的笔记为准。</p>
+<p><a href="index.zh.html">站点首页</a> · 2026-10-31</p>
+</div></footer>
+</body>
+</html>

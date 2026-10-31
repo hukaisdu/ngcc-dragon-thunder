@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Implementations — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Package layout, build & KAT instructions, implementation-vs-spec review notes.">
+<meta property="og:title" content="Implementations — Dragon (hash-07)">
+<meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Package layout, build & KAT instructions, implementation-vs-spec review notes.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+
 </head>
 <body class="dragon">
 <header class="site"><div class="in">
@@ -16,6 +23,7 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a href="../glossary.html">Glossary</a>
 <a class="lang" href="implementations.zh.html">中文</a>
 </nav>
 </div></header>
@@ -38,12 +46,12 @@
 All instance parameters live in the header.</p>
 
 <h2>Build and KAT</h2>
-<p>From the <code>harness/</code> directory of this repository (the uniform NGCC build):</p>
+<p>Prerequisites: GCC (≥ 9) and CMake. From the <code>harness/</code> directory of this repository:</p>
 <pre><code>cd harness
 make -C hash-07          # build the six instance libraries (reference)
 make -C hash-07 test     # run the KAT harness; summary in results/
 </code></pre>
-<p>All six instances KAT-PASS against the submitted test vectors
+<p><b>Expected output</b>: all six instances KAT-PASS against the submitted test vectors
 (manifest <a href="../harness/hash-07/kat.sha256"><code>kat.sha256</code></a>, 24 files),
 checked before every timing campaign (x86_1, 2026-09-25 → 09-28).</p>
 

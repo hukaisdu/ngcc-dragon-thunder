@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Specification — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Parameters, sponge-forward mode and the permutation, with round constants.">
+<meta property="og:title" content="Specification — Dragon (hash-07)">
+<meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Parameters, sponge-forward mode and the permutation, with round constants.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+
 </head>
 <body class="dragon">
 <header class="site"><div class="in">
@@ -16,6 +23,7 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a href="../glossary.html">Glossary</a>
 <a class="lang" href="specification.zh.html">中文</a>
 </nav>
 </div></header>
@@ -77,6 +85,18 @@ CRYPTO 2026).</p>
     e += c ;  b = (b &lt;&lt;&lt; 10) ^ e
     d += b ;  a = (a &lt;&lt;&lt; 1)  ^ d
     c += a ;  e = (e &lt;&lt;&lt; 49) ^ c</code></pre>
+
+<h3>Round constants RC<sub>i</sub>（spec Table 3）</h3>
+<table style="max-width:34rem"><tr><th class="num">i</th><th class="num">RC<sub>i</sub></th><th class="num">i</th><th class="num">RC<sub>i</sub></th></tr>
+<tr><td class="num">0</td><td class="num"><code>0x000000000000000F</code></td><td class="num">8</td><td class="num"><code>0x0000000000000087</code></td></tr>
+<tr><td class="num">1</td><td class="num"><code>0x000000000000001E</code></td><td class="num">9</td><td class="num"><code>0x0000000000000096</code></td></tr>
+<tr><td class="num">2</td><td class="num"><code>0x000000000000002D</code></td><td class="num">10</td><td class="num"><code>0x00000000000000A5</code></td></tr>
+<tr><td class="num">3</td><td class="num"><code>0x000000000000003C</code></td><td class="num">11</td><td class="num"><code>0x00000000000000B4</code></td></tr>
+<tr><td class="num">4</td><td class="num"><code>0x000000000000004B</code></td><td class="num">12</td><td class="num"><code>0x00000000000000C3</code></td></tr>
+<tr><td class="num">5</td><td class="num"><code>0x000000000000005A</code></td><td class="num">13</td><td class="num"><code>0x00000000000000D2</code></td></tr>
+<tr><td class="num">6</td><td class="num"><code>0x0000000000000069</code></td><td class="num">14</td><td class="num"><code>0x00000000000000E1</code></td></tr>
+<tr><td class="num">7</td><td class="num"><code>0x0000000000000078</code></td><td class="num">15</td><td class="num"><code>0x00000000000000F0</code></td></tr>
+</table>
 
 <h2>Files</h2>
 <ul class="links">

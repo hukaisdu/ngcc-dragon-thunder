@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>实现 — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 提交包结构、构建与 KAT 步骤、实现与规范核对注记。">
+<meta property="og:title" content="实现 — Dragon (hash-07)">
+<meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 提交包结构、构建与 KAT 步骤、实现与规范核对注记。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+
 </head>
 <body class="dragon">
 <header class="site"><div class="in">
@@ -16,6 +23,7 @@
 <a href="performance.zh.html">性能</a>
 <a href="analysis.zh.html">分析</a>
 <a href="../thunder/index.zh.html">Thunder ↗</a>
+<a href="../glossary.zh.html">术语</a>
 <a class="lang" href="implementations.html">EN</a>
 </nav>
 </div></header>
@@ -43,12 +51,12 @@ ngcc.dev 的源码核对结论：<b>未发现与规范的偏差</b>；两条使�
 全部实例参数都放在头文件里。</p>
 
 <h2>构建与 KAT</h2>
-<p>在本仓库的 <code>harness/</code> 目录下（NGCC 统一构建）：</p>
+<p>前置需求：GCC（≥9）与 CMake。在本仓库的 <code>harness/</code> 目录下：</p>
 <pre><code>cd harness
 make -C hash-07          # 构建六个实例库（reference）
 make -C hash-07 test     # 跑 KAT harness; 汇总在 results/
 </code></pre>
-<p>六个实例对提交的 test vector 全部 KAT-PASS（清单
+<p><b>预期输出</b>：六个实例对提交的 test vector（KAT = Known-Answer Test，已知答案测试）全部 KAT-PASS（清单
 <a href="../harness/hash-07/kat.sha256"><code>kat.sha256</code></a>，24 个文件），
 每次计时前先做 KAT 检查（x86_1，2026-09-25 → 09-28）。</p>
 

@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>性能 — Thunder (hash-33)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 设计团队自评估（S1–S8，x86-64 与 ARM）、ngcc.dev 独立对照与 ASIC 硬件表。">
+<meta property="og:title" content="性能 — Thunder (hash-33)">
+<meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 设计团队自评估（S1–S8，x86-64 与 ARM）、ngcc.dev 独立对照与 ASIC 硬件表。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/thunder/hero.png">
+
 </head>
 <body class="thunder">
 <header class="site"><div class="in">
@@ -16,6 +23,7 @@
 <a href="performance.zh.html" aria-current="page">性能</a>
 <a href="analysis.zh.html">分析</a>
 <a href="../dragon/index.zh.html">Dragon ↗</a>
+<a href="../glossary.zh.html">术语</a>
 <a class="lang" href="performance.html">EN</a>
 </nav>
 </div></header>
@@ -30,6 +38,8 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 硬件综合（Table 20）三个实例吞吐全部高于 SHA3-512（64 KiB：+82% / +51% / +33%）。
 注意：软件自评估只覆盖三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现（未优化）的
 独立测量保留在本页下方作对照，两者不可直接比较。</p>
+
+<div class="note"><b>一句话结论</b>：软件——Thunder-512/768 在全部测试长度快于 SHA3-512（512 长消息 6.95 vs 12.46 cpb，约 <b>1.8×</b>；ARM 7.62 vs 15.49，约 <b>2.0×</b>）；x86-64 上 Thunder-512 全程快于 SM3（6.95 vs 8.45）。硬件——三个实例吞吐全面高于 SHA3-512（64 KiB：+82% / +51% / +33%）。<br>读表提示：cpb = cycles/byte，<b>越低越快</b>；S1–S8 = 消息长度 32 B → 64 KiB。</div>
 
 <h2>设计团队自评估（提交包，spec §5.1）</h2>
 <p>数值为 cycles/byte（cpb），官方 <code>ngcc_bench</code> 单核模式，消息长度 S1–S8 =
@@ -47,6 +57,7 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 </table>
 
 <h3>x86-64 — Intel Xeon Platinum 8358（spec Table 18）</h3>
+<div class="table-wrap">
 <table>
 <tr><th>实例</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
 <tr><td>SM3(256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.59</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
@@ -55,8 +66,10 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <tr><td><code>Thunder-768</code></td><td class="num">34.91</td><td class="num">18.03</td><td class="num">12.04</td><td class="num">10.44</td><td class="num">9.60</td><td class="num">9.47</td><td class="num">9.36</td><td class="num">9.28</td></tr>
 <tr><td><code>Thunder-1024</code></td><td class="num">36.04</td><td class="num">25.73</td><td class="num">17.13</td><td class="num">15.49</td><td class="num">14.22</td><td class="num">14.00</td><td class="num">13.90</td><td class="num">13.81</td></tr>
 </table>
+</div>
 
 <h3>ARM — Rockchip RK3588（spec Table 19）</h3>
+<div class="table-wrap">
 <table>
 <tr><th>实例</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
 <tr><td>SM3(256)†</td><td class="num">94.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.42</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.95</td><td class="num">7.88</td></tr>
@@ -65,6 +78,7 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <tr><td><code>Thunder-768</code></td><td class="num">63.58</td><td class="num">23.45</td><td class="num">13.44</td><td class="num">11.44</td><td class="num">10.42</td><td class="num">10.28</td><td class="num">10.17</td><td class="num">10.14</td></tr>
 <tr><td><code>Thunder-1024</code></td><td class="num">63.82</td><td class="num">31.17</td><td class="num">19.17</td><td class="num">17.18</td><td class="num">15.68</td><td class="num">15.42</td><td class="num">15.30</td><td class="num">15.27</td></tr>
 </table>
+</div>
 <p class="sub">† SHA3-512 与 SM3 基线为可移植软件实现，未使用 Armv8.2 的 SHA-3 / SM3 指令扩展
 （spec Table 19 脚注）。依据 spec：Thunder-512 与 Thunder-768 在两个平台的全部测试长度上均低于
 SHA3-512；Thunder-1024 在 x86-64 上 S3 之前快于 SHA3-512、S4 起变慢，ARM 上除 S2 外全部长度更快
@@ -72,6 +86,7 @@ SHA3-512；Thunder-1024 在 x86-64 上 S3 之前快于 SHA3-512、S4 起变慢�
 ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例不在软件自评估范围内。</p>
 
 <h2>硬件（spec §5.2，Table 20 — ASIC，UMC 55 nm）</h2>
+<div class="table-wrap">
 <table class="table-wide">
 <tr><th rowspan="2">实例</th><th colspan="4">实现</th><th colspan="3">32 B</th><th colspan="3">1 KiB</th><th colspan="3">64 KiB</th></tr>
 <tr><th class="num">面积 (kGE)</th><th class="num">延时 (ns)</th><th class="num">频率 (MHz)</th><th class="num">功耗 (mW)</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th></tr>
@@ -80,6 +95,7 @@ ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例
 <tr><td><code>Thunder-768</code></td><td class="num">72.76</td><td class="num">0.97</td><td class="num">1030.93</td><td class="num">50.68</td><td class="num">30</td><td class="num">8797</td><td class="num">120.91</td><td class="num">294</td><td class="num">28726</td><td class="num">394.82</td><td class="num">17766</td><td class="num">30423</td><td class="num">418.15</td></tr>
 <tr><td><code>Thunder-1024</code></td><td class="num">84.01</td><td class="num">0.87</td><td class="num">1149.43</td><td class="num">64.02</td><td class="num">34</td><td class="num">8654</td><td class="num">103.02</td><td class="num">381</td><td class="num">24714</td><td class="num">294.19</td><td class="num">22557</td><td class="num">26716</td><td class="num">318.02</td></tr>
 </table>
+</div>
 <p class="sub">Round-based 架构（每周期一轮），VHDL + ModelSim 验证，Synopsys Design Compiler 综合。
 数值已对照 LaTeX 源核验。依据 spec：Thunder-512 把 SHA3-512 的周期数削减 32% / 49% / 50%
 （32 B / 1 KiB / 64 KiB），尽管 critical path 略长（0.93 vs 0.84 ns），吞吐仍提升 32% / 77% / 82%；
@@ -96,7 +112,7 @@ ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例
 <tr><th>条目</th><th>数值</th></tr>
 <tr><td>处理器</td><td>Intel Core i7-12700（Alder Lake），单性能核，关闭 turbo，固定 2.10 GHz，SMT 关闭</td></tr>
 <tr><td>系统 / 编译器</td><td>Debian GNU/Linux 13，gcc 14.2.0，cmake 3.31.6</td></tr>
-<tr><td>测量期</td><td>2026-09-25 → 2026-09-28（UTC），计时前先过 KAT；非提交方自评估</td></tr>
+<tr><td>测量期</td><td>2026-09-25 → 2026-09-28（UTC），计时前先通过自测向量（KAT）；非提交方自评估</td></tr>
 </table>
 
 <table>

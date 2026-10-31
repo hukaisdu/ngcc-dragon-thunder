@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thunder 杂凑家族 (hash-33)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。">
+<meta property="og:title" content="Thunder 杂凑家族 (hash-33)">
+<meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/thunder/hero.png">
+
 </head>
 <body class="thunder">
 <header class="site"><div class="in">
@@ -16,22 +23,25 @@
 <a href="performance.zh.html">性能</a>
 <a href="analysis.zh.html">分析</a>
 <a href="../dragon/index.zh.html">Dragon ↗</a>
+<a href="../glossary.zh.html">术语</a>
 <a class="lang" href="index.html">EN</a>
 </nav>
 </div></header>
 <main>
-<h1>Thunder 杂凑家族<span class="sub">NGCC Round-1 hash 候选 <code>hash-33</code> · symmetric（permutation-based）</span></h1>
+<h1>Thunder 杂凑家族<span class="sub">NGCC Round-1 杂凑候选 <code>hash-33</code> · symmetric（permutation-based）</span></h1>
 
 <div class="badges">
 <span class="badge">NGCC Round 1</span>
 <span class="badge">hash-33</span>
-<span class="badge ok">KAT 6/6 PASS</span>
+<span class="badge ok">自测向量 6/6 通过</span>
 <span class="badge">暂无公开漏洞发现*</span>
 </div>
 
 <figure class="hero">
 <img src="hero.png?v=3" alt="靛蓝与墨灰的北欧雷神举锤引雷，下方是 5×5 lane 状态格" width="1536" height="1024">
 </figure>
+
+<div class="note"><b>太长不看</b>：Thunder = Keccak-p 骨架的 12 轮置换 Thunder-p（三次非线性层 ψ、双列校验 θ）+ sponge-forward 前馈模式，六个实例。软件上 Thunder-512/768 全长度快于 SHA3-512（512 长消息约 1.8×，ARM 约 2.0×）；硬件吞吐全面高于 SHA3-512（64 KiB 最高 +82%）。安全目标最高 512-bit collision / 1024-bit preimage。</div>
 
 <p>Thunder 与 Dragon 同用 <em>sponge-forward</em> 模式（capacity 部分每次置换后前馈回加，
 (second-)preimage 安全性 ≈ min{c, h}，digest 直接从 inner 部分读出），但置换不同：
@@ -42,6 +52,7 @@ Thunder-XOF-256/384/512。本站汇总其规范、参考实现、KAT、性能与
 
 <h2>动态</h2>
 <ul class="news">
+<li>2026-10-31 — 全部性能数字对照提交 spec 的 LaTeX 源逐格核验；站点改为双语双页并新增<a href="../glossary.zh.html">术语表</a>。</li>
 <li>2026-10-30 — 研究页面创建；全部材料镜像入仓库。</li>
 </ul>
 
@@ -50,20 +61,21 @@ Thunder-XOF-256/384/512。本站汇总其规范、参考实现、KAT、性能与
 <tr><th>条目</th><th>内容</th></tr>
 <tr><td>模式 (mode)</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code>（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）— digest 从 inner（capacity）部分<em>直接读出</em>；final-block 常数 C 防长度扩展</td></tr>
 <tr><td>置换</td><td><b>Thunder-p</b>：12 轮、Keccak-p 形状的 1600-bit（5×5×64）置换，轮函数 <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>，其中 <code>ψ</code> 为 3 次、<code>θ</code> 为双列校验</td></tr>
-<tr><td>实例</td><td>Thunder-512 / -768 / -1024（定长 hash）与 Thunder-XOF-256 / -384 / -512（XOF）</td></tr>
+<tr><td>实例</td><td>Thunder-512 / -768 / -1024（定长输出）与 Thunder-XOF-256 / -384 / -512（XOF）</td></tr>
 <tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF 为 min{等级, ν/2} / min{等级, ν}</td></tr>
-<tr><td>KAT</td><td>6/6 实例 PASS（ngcc.dev harness，x86_1 测量期 2026-09-25 → 09-28）</td></tr>
+<tr><td>自测向量（KAT）</td><td>6/6 实例通过（KAT = Known-Answer Test，已知答案测试——对提交的“输入 → 期望输出”向量对答案；ngcc.dev harness，测量期 2026-09-25 → 09-28）</td></tr>
 <tr><td>实现核对</td><td>未发现参数或常数不吻合；输出长度间的 domain separation 经三条独立机制确认</td></tr>
-<tr><td>速度（设计团队自评估）</td><td>x86-64（Intel Xeon Platinum 8358）64 KiB 下 6.95 cycles/byte，RK3588 上 7.62——每个测试长度上均低于 SHA3-512，且在 x86-64 上全程快于 SM3（spec §5.1，Tables 18–19）</td></tr>
-<tr><td>速度（独立对照）</td><td>reference 实现（未优化）：64 KiB 下 32.4 cycles/byte（ngcc.dev x86_1）——见<a href="performance.zh.html">性能</a>页</td></tr>
+<tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>1.8×</b>（x86-64：6.95 vs 12.46 cpb）、约 <b>2.0×</b>（ARM：7.62 vs 15.49）；x86-64 上 Thunder-512 全程快于 SM3（6.95 vs 8.45）（spec §5.1，Tables 18–19）</td></tr>
+<tr><td>速度（独立对照）</td><td>ngcc.dev 在另一台机器（i7-12700）上测得 reference 实现 32.4 cpb @64 KiB——机器与实现均不同，仅供交叉核对（<a href="performance.zh.html">性能</a>页）</td></tr>
 </table>
 
 <h2>页面导航</h2>
 <ul class="links">
-<li><a href="specification.zh.html">规范</a> — 参数表、模式与置换、spec PDF。</li>
-<li><a href="implementations.zh.html">实现</a> — 提交包结构、构建与 KAT、核对注记。</li>
-<li><a href="performance.zh.html">性能</a> — 设计团队自评估与 ngcc.dev 独立对照。</li>
-<li><a href="analysis.zh.html">分析</a> — 安全状态、constant-time 审查、核对注记。</li>
+<li>想快速了解算法 → <a href="specification.zh.html">规范</a>（参数表、模式与置换、轮常数）</li>
+<li>想自己跑代码 → <a href="implementations.zh.html">实现</a>（依赖 + 两条命令，几分钟跑通 KAT）</li>
+<li>想看性能数字 → <a href="performance.zh.html">性能</a>（设计团队自评估 + 独立对照 + 硬件表）</li>
+<li>想跟进安全性 → <a href="analysis.zh.html">分析</a>（第三方状态、constant-time、本组结果）</li>
+<li>术语不熟 → <a href="../glossary.zh.html">术语表</a></li>
 </ul>
 
 <ul class="links">

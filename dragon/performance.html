@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Performance — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Designer self-assessment (S1–S8, x86-64 and ARM) and the independent ngcc.dev reference check, plus ASIC tables.">
+<meta property="og:title" content="Performance — Dragon (hash-07)">
+<meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Designer self-assessment (S1–S8, x86-64 and ARM) and the independent ngcc.dev reference check, plus ASIC tables.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+
 </head>
 <body class="dragon">
 <header class="site"><div class="in">
@@ -16,11 +23,14 @@
 <a href="performance.html" aria-current="page">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a href="../glossary.html">Glossary</a>
 <a class="lang" href="performance.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Performance<span class="sub">designer self-assessment from the submission package · independent reference check</span></h1>
+
+<div class="note"><b>One-line takeaways</b> — Software: all three fixed-output instances beat SHA3-512 at every tested length on both platforms (Dragon-512 long messages 4.87 vs 12.46 cpb, ≈ <b>2.6×</b>; ARM 4.47 vs 15.49, ≈ <b>3.5×</b>); Dragon-512/768 also stay below SM3 throughout. Hardware: the first synthesis (251–258 MHz) trails SHA3-512 in throughput, though cycle counts are up to 1.8× lower and power roughly halves.<br>How to read: cpb = cycles per byte, <b>lower is faster</b>; S1–S8 = message lengths 32 B → 64 KiB.</div>
 
 <h2>Design-team self-assessment (submission package, spec §5.1)</h2>
 <p>Values are cycles per byte (cpb) measured with the official <code>ngcc_bench</code> in single-core
@@ -38,6 +48,7 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 </table>
 
 <h3>x86-64 — Intel Xeon Platinum 8358 (spec Table 14)</h3>
+<div class="table-wrap">
 <table>
 <tr><th>instance</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
 <tr><td>SM3 (256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.59</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
@@ -46,8 +57,10 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 <tr><td><code>Dragon-768</code></td><td class="num">23.17</td><td class="num">10.92</td><td class="num">7.66</td><td class="num">6.91</td><td class="num">6.60</td><td class="num">6.57</td><td class="num">6.52</td><td class="num">6.49</td></tr>
 <tr><td><code>Dragon-1024</code></td><td class="num">23.00</td><td class="num">15.62</td><td class="num">11.18</td><td class="num">10.44</td><td class="num">9.88</td><td class="num">9.80</td><td class="num">9.73</td><td class="num">9.70</td></tr>
 </table>
+</div>
 
 <h3>ARM — Rockchip RK3588 (spec Table 15)</h3>
+<div class="table-wrap">
 <table>
 <tr><th>instance</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
 <tr><td>SM3 (256)†</td><td class="num">94.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.42</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.95</td><td class="num">7.88</td></tr>
@@ -56,6 +69,7 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 <tr><td><code>Dragon-768</code></td><td class="num">51.31</td><td class="num">17.41</td><td class="num">8.80</td><td class="num">7.18</td><td class="num">6.24</td><td class="num">6.11</td><td class="num">6.01</td><td class="num">5.96</td></tr>
 <tr><td><code>Dragon-1024</code></td><td class="num">51.85</td><td class="num">21.93</td><td class="num">12.19</td><td class="num">10.57</td><td class="num">9.35</td><td class="num">9.15</td><td class="num">9.05</td><td class="num">8.99</td></tr>
 </table>
+</div>
 <p class="sub">† The SHA3-512 and SM3 baselines are portable software implementations that do not use the
 Armv8.2 SHA-3 / SM3 instruction extensions (spec Table 15 footnotes). All three Dragon instances stay
 below the SHA3-512 baseline at every tested length on both platforms, and Dragon-512 / Dragon-768 also
@@ -65,6 +79,7 @@ implementation costs ≈38.8 cycles per permutation round (design estimate ≈40
 instances are not covered by the software self-assessment.</p>
 
 <h2>Hardware (spec §5.2, Table 16 — ASIC, UMC 55 nm)</h2>
+<div class="table-wrap">
 <table class="table-wide">
 <tr><th rowspan="2">instance</th><th colspan="4">implementation</th><th colspan="3">32 B</th><th colspan="3">1 KiB</th><th colspan="3">64 KiB</th></tr>
 <tr><th class="num">Area (kGE)</th><th class="num">Delay (ns)</th><th class="num">Freq (MHz)</th><th class="num">Power (mW)</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th></tr>
@@ -73,6 +88,7 @@ instances are not covered by the software self-assessment.</p>
 <tr><td><code>Dragon-768</code></td><td class="num">132.41</td><td class="num">3.88</td><td class="num">257.73</td><td class="num">15.55</td><td class="num">34</td><td class="num">1941</td><td class="num">14.66</td><td class="num">338</td><td class="num">6247</td><td class="num">47.18</td><td class="num">20498</td><td class="num">6592</td><td class="num">49.79</td></tr>
 <tr><td><code>Dragon-1024</code></td><td class="num">131.24</td><td class="num">3.98</td><td class="num">251.26</td><td class="num">16.09</td><td class="num">38</td><td class="num">1693</td><td class="num">12.90</td><td class="num">449</td><td class="num">4584</td><td class="num">34.93</td><td class="num">26657</td><td class="num">4942</td><td class="num">37.65</td></tr>
 </table>
+</div>
 <p class="sub">Round-based architecture (one round per clock cycle), VHDL + ModelSim, Synopsys Design
 Compiler. Values verified against the LaTeX source. At the submitted synthesis results the three Dragon
 instances close timing only at 251–258 MHz (critical path 3.88–3.98 ns, bounded by the ARX carry chains),

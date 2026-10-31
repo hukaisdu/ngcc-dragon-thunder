@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thunder Hash Family (hash-33)</title>
 <link rel="stylesheet" href="../site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round Keccak-p-shaped permutation Thunder-p with a degree-3 layer in the sponge-forward mode.">
+<meta property="og:title" content="Thunder Hash Family (hash-33)">
+<meta property="og:description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round Keccak-p-shaped permutation Thunder-p with a degree-3 layer in the sponge-forward mode.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/thunder/hero.png">
+
 </head>
 <body class="thunder">
 <header class="site"><div class="in">
@@ -16,6 +23,7 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../dragon/index.html">Dragon ↗</a>
+<a href="../glossary.html">Glossary</a>
 <a class="lang" href="index.zh.html">中文</a>
 </nav>
 </div></header>
@@ -33,8 +41,11 @@
 <img src="hero.png?v=3" alt="A Norse thunder god in indigo and ink gray raising his hammer toward a lightning bolt, above a 5×5 grid of lanes" width="1536" height="1024">
 </figure>
 
+<div class="note"><b>TL;DR</b> — Thunder = the 12-round Keccak-p-shaped permutation Thunder-p (degree-3 layer ψ, double-parity θ) in the sponge-forward mode; six instances. In software Thunder-512/768 beat SHA3-512 at every tested length (512 ≈ 1.8×, ARM ≈ 2.0× at long messages); in hardware all three instances out-throughput SHA3-512 (up to +82% at 64 KiB). Security targets up to 512-bit collision / 1024-bit preimage.</div>
+
 <h2>News</h2>
 <ul class="news">
+<li>2026-10-31 — every performance number re-verified cell-by-cell against the LaTeX source of the submitted specification; site reorganized into dual-language pages with a <a href="../glossary.html">glossary</a>.</li>
 <li>2026-10-30 — study pages created; all materials mirrored into this repository.</li>
 </ul>
 
@@ -45,18 +56,19 @@
 <tr><td>permutation</td><td><b>Thunder-p</b>: 12-round, Keccak-p-shaped 1600-bit (5×5×64) permutation, round <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>, with degree-3 <code>ψ</code> and double-column-parity <code>θ</code></td></tr>
 <tr><td>instances</td><td>Thunder-512 / -768 / -1024 (fixed-output hash) and Thunder-XOF-256 / -384 / -512 (XOF)</td></tr>
 <tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF: min{level, ν/2} / min{level, ν}</td></tr>
-<tr><td>KAT</td><td>6/6 instances PASS (ngcc.dev harness, x86_1 campaign 2026-09-25 → 09-28)</td></tr>
+<tr><td>KAT</td><td>6/6 instances pass their Known-Answer Test (KAT) vectors — the submitted input→answer pairs (ngcc.dev harness, 2026-09-25 → 09-28)</td></tr>
 <tr><td>implementation review</td><td>no parameter or constant mismatch found; output-length domain separation verified via three independent mechanisms</td></tr>
-<tr><td>speed (designer self-assessment)</td><td>6.95 cycles/byte @ 64 KiB on x86-64 (Intel Xeon Platinum 8358), 7.62 on RK3588 — below SHA3-512 at every tested length, faster than SM3 on x86-64 (spec §5.1, Tables 18–19)</td></tr>
-<tr><td>speed (independent check)</td><td>reference implementation (unoptimized): 32.4 cycles/byte @ 64 KiB (ngcc.dev x86_1) — see <a href="performance.html">Performance</a></td></tr>
+<tr><td>speed (designer self-assessment)</td><td>≈ <b>1.8×</b> faster than SHA3-512 at long messages on x86-64 (6.95 vs 12.46 cpb), ≈ <b>2.0×</b> on ARM (7.62 vs 15.49); Thunder-512 also beats SM3 throughout on x86-64 (6.95 vs 8.45) (spec §5.1, Tables 18–19)</td></tr>
+<tr><td>speed (independent check)</td><td>reference implementation measured by ngcc.dev on a different machine (i7-12700): 32.4 cpb @ 64 KiB — different machine and code tier, cross-check only (<a href="performance.html">Performance</a>)</td></tr>
 </table>
 
 <h2>Where to go</h2>
 <ul class="links">
-<li><a href="specification.html">Specification</a> — parameter table, mode and permutation summary, spec PDF.</li>
-<li><a href="implementations.html">Implementations</a> — package layout, build &amp; KAT instructions, review notes.</li>
-<li><a href="performance.html">Performance</a> — independent cycle counts on x86_1, links to arm_1.</li>
-<li><a href="analysis.html">Analysis</a> — security status, constant-time audit, review notes.</li>
+<li>Quick tour of the algorithm → <a href="specification.html">Specification</a> (parameters, mode, permutation, round constants)</li>
+<li>Run the code yourself → <a href="implementations.html">Implementations</a> (prerequisites + two commands to pass the KATs)</li>
+<li>Numbers → <a href="performance.html">Performance</a> (designer self-assessment + independent check + ASIC tables)</li>
+<li>Security → <a href="analysis.html">Analysis</a> (third-party status, constant-time, our results)</li>
+<li>New to the terms → <a href="../glossary.html">Glossary</a></li>
 </ul>
 
 <ul class="links">
