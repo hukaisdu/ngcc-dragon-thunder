@@ -42,6 +42,11 @@ table { border-collapse: collapse; width: 100%; margin: .8rem 0 1.2rem; font-siz
 th, td { border: 1px solid var(--line); padding: .4rem .6rem; text-align: left; vertical-align: top; }
 th { background: var(--soft); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+figure.fig { margin: 1.2rem auto; text-align: center; }
+figure.fig img { display: block; margin: 0 auto; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
+figure.fig figcaption { font-size: .8rem; color: var(--mut); margin-top: .4rem; }
+.fig-grid { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.1rem 0; }
+.fig-grid figure.fig { flex: 1 1 18rem; margin: 0; }
 .chart-flex { margin: .6rem 0 1.2rem; }
 .chart-flex svg, main > svg { display: block; width: 100%; height: auto; }
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }

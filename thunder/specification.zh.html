@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>规范 — Thunder (hash-33)</title>
-<link rel="stylesheet" href="../site.css?v=2">
+<link rel="stylesheet" href="../site.css?v=3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 参数表、sponge-forward 模式与置换（含轮常数表）。">
 <meta property="og:title" content="规范 — Thunder (hash-33)">
@@ -61,6 +61,8 @@ digest 恰为一个 squeeze block（1280/1152/1024 bit = 160/144/128 字节）�
 <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，发表于 CRYPTO 2026）：
 inner（capacity）部分在每次置换调用间前馈，且 digest <b>从 inner 部分</b>挤出。
 正因为输出就是 inner 部分，final-block 常数 C = 0^{c−1}‖1 才是防长度扩展的关键。</p>
+
+<figure class="fig"><img src="figs/mode.png" alt="sponge-forward 构造的算法图" style="max-width:44rem"><figcaption>spec Fig. 2</figcaption></figure>
 <pre><code>Thunder-h(M):                             # h ∈ {512,768,1024}, c = h+64
     X &lt;- 0^r || IV                        # IV_j -&gt; lane j
     Mpad &lt;- M || 1 || 0^{r-((|M|+1) mod r)}   # pd10*
@@ -70,15 +72,23 @@ inner（capacity）部分在每次置换调用间前馈，且 digest <b>从 inne
         X &lt;- P(X) XOR (0^r || S)           # 前馈
     return right_h(X)                      # h &lt; c: 单次读取, 无额外置换</code></pre>
 
+<figure class="fig"><img src="figs/msgload.png" alt="Thunder-512 的状态初始化与消息字装载" style="max-width:26rem"><figcaption>spec Fig. 5</figcaption></figure>
+
 <h2>置换 Thunder-p（spec §2.3，Tables 2–4）</h2>
 <p>在 1600-bit 的 5×5×64 状态上做 12 轮 <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>——与 Keccak-p 相同的步骤顺序，
 但有两处替换：</p>
+<figure class="fig"><img src="figs/state.png" alt="Thunder-p 的状态组织" style="max-width:30rem"><figcaption>spec Fig. 3</figcaption></figure>
+
 <ul class="links">
 <li><code>ψ</code>（替代 Keccak 的 χ）是 <em>3 次</em>的：
 <code>D'[x][y] = D[x][y+3] ⊕ ( ¬D[x][y+1] · D[x][y+2] · ¬D[x][y+4] )</code>，下标在 Z₅ 中。</li>
 <li><code>θ</code> 混合<em>两个</em>列校验平面 P 与 Q（偏移 t = (41, 50, 6, 10, 27)、u = 26、r = 1、
 s = 36），而 Keccak 只有一个校验平面。</li>
 </ul>
+<div class="fig-grid">
+<figure class="fig"><img src="figs/rho.png" alt="ρ 操作示意" style="max-width:44rem"><figcaption>spec Fig. 6 · ρ</figcaption></figure><figure class="fig"><img src="figs/theta.png" alt="θ 操作示意" style="max-width:44rem"><figcaption>spec Fig. 7 · θ</figcaption></figure><figure class="fig"><img src="figs/pi.png" alt="π 操作示意" style="max-width:44rem"><figcaption>spec Fig. 8 · π</figcaption></figure><figure class="fig"><img src="figs/psi.png" alt="ψ 操作示意" style="max-width:44rem"><figcaption>spec Fig. 9 · ψ</figcaption></figure>
+</div>
+
 <p>lane 布局与串行化遵循 spec：消息字按大端装入最高编号的 rate lane（<code>M_{n_r−1}</code> 进 lane 24），
 digest 为 <code>D_{n_d−1} ‖ … ‖ D_0</code>，每个 lane 按最高位在前串行化。</p>
 

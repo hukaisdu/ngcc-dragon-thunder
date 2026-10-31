@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Specification — Thunder (hash-33)</title>
-<link rel="stylesheet" href="../site.css?v=2">
+<link rel="stylesheet" href="../site.css?v=3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round Keccak-p-shaped permutation Thunder-p with a degree-3 layer in the sponge-forward mode. Parameters, sponge-forward mode and the permutation, with round constants.">
 <meta property="og:title" content="Specification — Thunder (hash-33)">
@@ -63,6 +63,8 @@ Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, publi
 the inner (capacity) part is fed forward across every permutation call, and the digest is squeezed
 <b>from the inner part</b>. Because the output is the inner part, the final-block constant
 C = 0^{c−1}‖1 is what prevents length extension.</p>
+
+<figure class="fig"><img src="figs/mode.png" alt="algorithmic diagram of the sponge-forward construction" style="max-width:44rem"><figcaption>spec Fig. 2</figcaption></figure>
 <pre><code>Thunder-h(M):                             # h in {512,768,1024}, c = h+64
     X &lt;- 0^r || IV                        # IV_j -&gt; lane j
     Mpad &lt;- M || 1 || 0^{r-((|M|+1) mod r)}   # pd10*
@@ -72,15 +74,23 @@ C = 0^{c−1}‖1 is what prevents length extension.</p>
         X &lt;- P(X) XOR (0^r || S)           # feed-forward
     return right_h(X)                      # h &lt; c: one read, no extra permutation</code></pre>
 
+<figure class="fig"><img src="figs/msgload.png" alt="state initialization and message-word placement for Thunder-512" style="max-width:26rem"><figcaption>spec Fig. 5</figcaption></figure>
+
 <h2>Permutation Thunder-p (spec §2.3, Tables 2–4)</h2>
 <p>12 rounds of <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code> on the 1600-bit 5×5×64 state — the Keccak-p step order,
 with two substitutions:</p>
+<figure class="fig"><img src="figs/state.png" alt="the state organization of Thunder-p" style="max-width:30rem"><figcaption>spec Fig. 3</figcaption></figure>
+
 <ul class="links">
 <li><code>ψ</code> (for Keccak’s χ) is <em>degree 3</em>:
 <code>D'[x][y] = D[x][y+3] ⊕ ( ¬D[x][y+1] · D[x][y+2] · ¬D[x][y+4] )</code>, indices in Z₅.</li>
 <li><code>θ</code> mixes <em>two</em> column parities P and Q (offsets t = (41, 50, 6, 10, 27),
 u = 26, r = 1, s = 36) instead of Keccak’s single parity.</li>
 </ul>
+<div class="fig-grid">
+<figure class="fig"><img src="figs/rho.png" alt="the rho operation" style="max-width:44rem"><figcaption>spec Fig. 6 · ρ</figcaption></figure><figure class="fig"><img src="figs/theta.png" alt="the theta operation" style="max-width:44rem"><figcaption>spec Fig. 7 · θ</figcaption></figure><figure class="fig"><img src="figs/pi.png" alt="the pi operation" style="max-width:44rem"><figcaption>spec Fig. 8 · π</figcaption></figure><figure class="fig"><img src="figs/psi.png" alt="the psi operation" style="max-width:44rem"><figcaption>spec Fig. 9 · ψ</figcaption></figure>
+</div>
+
 <p>Lane layout and serialization follow the spec: message words big-endian into the highest-indexed rate
 lanes (<code>M_{n_r−1}</code> into lane 24), digest <code>D_{n_d−1} ‖ … ‖ D_0</code>, MSB-first per lane.</p>
 

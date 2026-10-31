@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Specification — Dragon (hash-07)</title>
-<link rel="stylesheet" href="../site.css?v=2">
+<link rel="stylesheet" href="../site.css?v=3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Parameters, sponge-forward mode and the permutation, with round constants.">
 <meta property="og:title" content="Specification — Dragon (hash-07)">
@@ -62,6 +62,8 @@ security to ≈ min{c, h} instead of the classical c/2, so a 1600-bit state suff
 preimage target. Padding is <code>pd10*</code>; a domain constant C is XORed into the last block
 (the lowest bit of lane S[0,0]). The mode and its security analysis are due to Guo, Hu, Jiang, Fan, Fu,
 Preneel and Wang (<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, published at CRYPTO 2026).</p>
+
+<figure class="fig"><img src="figs/mode.png" alt="algorithmic diagram of the sponge-forward construction" style="max-width:44rem"><figcaption>spec Fig. 1</figcaption></figure>
 <pre><code>Sponge-F^{P,pd10*}(M, nu):
     (M[1..L]) &lt;- split_r( pd10*(M) )
     X &lt;- 0^r || IV
@@ -78,12 +80,18 @@ Preneel and Wang (<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</
 (RC_i follows the pattern i·15+15); <code>φ = Col ∘ Diag</code> applies the ARX map
 <code>Update</code> to five diagonals then five columns of the 5×5 lane array.
 <code>Update</code> mixes additions mod 2⁶⁴ and rotations by (1, 10, 24, 33, 49) bits.</p>
+<figure class="fig"><img src="figs/state.png" alt="the 5x5 lane state of Dragon-p" style="max-width:30rem"><figcaption>spec Fig. 3</figcaption></figure>
+
 <pre><code>Update(a,b,c,d,e):                 # + mod 2^64, &lt;&lt;&lt; rotl
     b += e ;  d = (d &lt;&lt;&lt; 33) ^ b
     a += d ;  c = (c &lt;&lt;&lt; 24) ^ a
     e += c ;  b = (b &lt;&lt;&lt; 10) ^ e
     d += b ;  a = (a &lt;&lt;&lt; 1)  ^ d
     c += a ;  e = (e &lt;&lt;&lt; 49) ^ c</code></pre>
+
+<figure class="fig"><img src="figs/update.png" alt="dataflow of the Update transformation" style="max-width:24rem"><figcaption>spec Fig. 4</figcaption></figure>
+
+<figure class="fig"><img src="figs/msgload.png" alt="state initialization and message-word placement for Dragon-512" style="max-width:26rem"><figcaption>spec Fig. 5</figcaption></figure>
 
 <h3>Round constants RC<sub>i</sub>（spec Table 3）</h3>
 <table style="max-width:34rem"><tr><th class="num">i</th><th class="num">RC<sub>i</sub></th><th class="num">i</th><th class="num">RC<sub>i</sub></th></tr>

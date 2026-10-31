@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>规范 — Dragon (hash-07)</title>
-<link rel="stylesheet" href="../site.css?v=2">
+<link rel="stylesheet" href="../site.css?v=3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 参数表、sponge-forward 模式与置换（含轮常数表）。">
 <meta property="og:title" content="规范 — Dragon (hash-07)">
@@ -61,6 +61,8 @@
 1024-bit preimage 目标。padding 为 <code>pd10*</code>；domain constant C 被 XOR 进最后一个块
 （lane S[0,0] 的最低位）。模式及其安全分析来自 Guo, Hu, Jiang, Fan, Fu, Preneel, Wang
 （<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，发表于 CRYPTO 2026）。</p>
+
+<figure class="fig"><img src="figs/mode.png" alt="sponge-forward 构造的算法图" style="max-width:44rem"><figcaption>spec Fig. 1</figcaption></figure>
 <pre><code>Sponge-F^{P,pd10*}(M, nu):
     (M[1..L]) &lt;- split_r( pd10*(M) )
     X &lt;- 0^r || IV
@@ -77,12 +79,18 @@
 （RC_i 按 i·15+15 规律：0x0F, 0x1E, …, 0xF0）；<code>φ = Col ∘ Diag</code> 先对 5×5 lane 阵列的
 五条对角线、再对五条列各做一次 ARX 映射 <code>Update</code>。<code>Update</code> 由 mod 2⁶⁴ 模加与
 (1, 10, 24, 33, 49) bit 的 rotations 组成。</p>
+<figure class="fig"><img src="figs/state.png" alt="Dragon-p 的 5×5 lane 状态表示" style="max-width:30rem"><figcaption>spec Fig. 3</figcaption></figure>
+
 <pre><code>Update(a,b,c,d,e):                 # + 为 mod 2^64, &lt;&lt;&lt; 为 rotl
     b += e ;  d = (d &lt;&lt;&lt; 33) ^ b
     a += d ;  c = (c &lt;&lt;&lt; 24) ^ a
     e += c ;  b = (b &lt;&lt;&lt; 10) ^ e
     d += b ;  a = (a &lt;&lt;&lt; 1)  ^ d
     c += a ;  e = (e &lt;&lt;&lt; 49) ^ c</code></pre>
+
+<figure class="fig"><img src="figs/update.png" alt="Update 变换的数据流图" style="max-width:24rem"><figcaption>spec Fig. 4</figcaption></figure>
+
+<figure class="fig"><img src="figs/msgload.png" alt="Dragon-512 的状态初始化与消息字装载" style="max-width:26rem"><figcaption>spec Fig. 5</figcaption></figure>
 
 <h3>轮常数 RC<sub>i</sub>（spec Table 3）</h3>
 <table style="max-width:34rem"><tr><th class="num">i</th><th class="num">RC<sub>i</sub></th><th class="num">i</th><th class="num">RC<sub>i</sub></th></tr>
