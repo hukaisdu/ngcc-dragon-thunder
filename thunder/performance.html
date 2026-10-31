@@ -79,16 +79,38 @@ analysis; the ARM implementation is slightly slower due to register pressure and
 (spec p. 41). The XOF instances are not covered by the software self-assessment.</p>
 
 <h2>Hardware (spec §5.2, Table 20 — ASIC, UMC 55 nm)</h2>
-<div class="table-wrap">
-<table class="table-wide">
-<tr><th rowspan="2">instance</th><th colspan="4">implementation</th><th colspan="3">32 B</th><th colspan="3">1 KiB</th><th colspan="3">64 KiB</th></tr>
-<tr><th class="num">Area (kGE)</th><th class="num">Delay (ns)</th><th class="num">Freq (MHz)</th><th class="num">Power (mW)</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th></tr>
-<tr><td>SHA3-512</td><td class="num">44.68</td><td class="num">0.84</td><td class="num">1190.48</td><td class="num">31.25</td><td class="num">38</td><td class="num">8020</td><td class="num">179.48</td><td class="num">512</td><td class="num">19048</td><td class="num">426.27</td><td class="num">30976</td><td class="num">20150</td><td class="num">450.93</td></tr>
-<tr><td><code>Thunder-512</code></td><td class="num">70.10</td><td class="num">0.93</td><td class="num">1075.27</td><td class="num">47.76</td><td class="num">26</td><td class="num">10587</td><td class="num">151.02</td><td class="num">261</td><td class="num">33749</td><td class="num">481.42</td><td class="num">15381</td><td class="num">36652</td><td class="num">522.83</td></tr>
-<tr><td><code>Thunder-768</code></td><td class="num">72.76</td><td class="num">0.97</td><td class="num">1030.93</td><td class="num">50.68</td><td class="num">30</td><td class="num">8797</td><td class="num">120.91</td><td class="num">294</td><td class="num">28726</td><td class="num">394.82</td><td class="num">17766</td><td class="num">30423</td><td class="num">418.15</td></tr>
-<tr><td><code>Thunder-1024</code></td><td class="num">84.01</td><td class="num">0.87</td><td class="num">1149.43</td><td class="num">64.02</td><td class="num">34</td><td class="num">8654</td><td class="num">103.02</td><td class="num">381</td><td class="num">24714</td><td class="num">294.19</td><td class="num">22557</td><td class="num">26716</td><td class="num">318.02</td></tr>
+<h3>Implementation</h3>
+<table>
+<tr><th>instance</th><th class="num">Area (kGE)</th><th class="num">Delay (ns)</th><th class="num">Freq (MHz)</th><th class="num">Power (mW)</th></tr>
+<tr><td>SHA3-512</td><td class="num">44.68</td><td class="num">0.84</td><td class="num">1190.48</td><td class="num">31.25</td></tr>
+<tr><td><code>Thunder-512</code></td><td class="num">70.10</td><td class="num">0.93</td><td class="num">1075.27</td><td class="num">47.76</td></tr>
+<tr><td><code>Thunder-768</code></td><td class="num">72.76</td><td class="num">0.97</td><td class="num">1030.93</td><td class="num">50.68</td></tr>
+<tr><td><code>Thunder-1024</code></td><td class="num">84.01</td><td class="num">0.87</td><td class="num">1149.43</td><td class="num">64.02</td></tr>
 </table>
-</div>
+<h3>32 B messages</h3>
+<table>
+<tr><th>instance</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
+<tr><td>SHA3-512</td><td class="num">38</td><td class="num">8020</td><td class="num">179.48</td></tr>
+<tr><td><code>Thunder-512</code></td><td class="num">26</td><td class="num">10587</td><td class="num">151.02</td></tr>
+<tr><td><code>Thunder-768</code></td><td class="num">30</td><td class="num">8797</td><td class="num">120.91</td></tr>
+<tr><td><code>Thunder-1024</code></td><td class="num">34</td><td class="num">8654</td><td class="num">103.02</td></tr>
+</table>
+<h3>1 KiB messages</h3>
+<table>
+<tr><th>instance</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
+<tr><td>SHA3-512</td><td class="num">512</td><td class="num">19048</td><td class="num">426.27</td></tr>
+<tr><td><code>Thunder-512</code></td><td class="num">261</td><td class="num">33749</td><td class="num">481.42</td></tr>
+<tr><td><code>Thunder-768</code></td><td class="num">294</td><td class="num">28726</td><td class="num">394.82</td></tr>
+<tr><td><code>Thunder-1024</code></td><td class="num">381</td><td class="num">24714</td><td class="num">294.19</td></tr>
+</table>
+<h3>64 KiB messages</h3>
+<table>
+<tr><th>instance</th><th class="num">Cycles</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
+<tr><td>SHA3-512</td><td class="num">30976</td><td class="num">20150</td><td class="num">450.93</td></tr>
+<tr><td><code>Thunder-512</code></td><td class="num">15381</td><td class="num">36652</td><td class="num">522.83</td></tr>
+<tr><td><code>Thunder-768</code></td><td class="num">17766</td><td class="num">30423</td><td class="num">418.15</td></tr>
+<tr><td><code>Thunder-1024</code></td><td class="num">22557</td><td class="num">26716</td><td class="num">318.02</td></tr>
+</table>
 <p class="sub">Round-based architecture (one round per clock cycle), VHDL + ModelSim, Synopsys Design
 Compiler. Values verified against the LaTeX source. Per the spec: Thunder-512 cuts the SHA3-512 cycle
 count by 32% / 49% / 50% (32 B / 1 KiB / 64 KiB), giving throughput gains of 32% / 77% / 82% despite a
