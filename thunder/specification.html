@@ -55,7 +55,8 @@ outer part, which the feed-forward mode permits (spec §2.5). These three fixed 
 separate hash functions — shorter outputs are prefixes of longer ones.</div>
 
 <h2>Mode: sponge-with-feed-forward (spec §2.2, Fig. 2)</h2>
-<p>The same <code>Sponge-F^{P,pd10*}</code> construction as Dragon (spec ref [GHJ+25]):
+<p>The same <code>Sponge-F^{P,pd10*}</code> construction as Dragon (Guo, Hu, Jiang, Fan, Fu, Preneel,
+Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, to appear at CRYPTO 2026):
 the inner (capacity) part is fed forward across every permutation call, and the digest is squeezed
 <b>from the inner part</b>. Because the output is the inner part, the final-block constant
 C = 0^{c−1}‖1 is what prevents length extension.</p>

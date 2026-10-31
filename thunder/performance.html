@@ -68,9 +68,10 @@ and every value below was re-verified cell-by-cell against the LaTeX source (202
 <p class="sub">† The SHA3-512 and SM3 baselines are portable software implementations that do not use the
 Armv8.2 SHA-3 / SM3 instruction extensions (spec Table 19 footnotes). Per the spec: Thunder-512 and
 Thunder-768 stay below SHA3-512 at every tested length on both platforms; Thunder-1024 is faster than
-SHA3-512 up to S3 on x86-64 and at all ARM lengths except S2 (spec §5.1). The measured ARM implementation
-costs ≈74 cycles per round against a ≈75 design-level estimate (spec p. 41). The XOF instances are not
-covered by the software self-assessment.</p>
+SHA3-512 up to S3 on x86-64 and at all ARM lengths except S2 (spec §5.1). The design-level estimate is
+≈75 cycles per round and the measured x86 implementation costs ≈74, consistent with the port-throughput
+analysis; the ARM implementation is slightly slower due to register pressure and stack spilling
+(spec p. 41). The XOF instances are not covered by the software self-assessment.</p>
 
 <h2>Hardware (spec §5.2, Table 20 — ASIC, UMC 55 nm)</h2>
 <table class="table-wide">

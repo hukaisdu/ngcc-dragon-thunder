@@ -66,9 +66,11 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 </table>
 <p class="sub">† The SHA3-512 and SM3 baselines are portable software implementations that do not use the
 Armv8.2 SHA-3 / SM3 instruction extensions (spec Table 15 footnotes). All three Dragon instances stay
-below both baselines at every tested length on both platforms (spec §5.1 Observations). The measured
-optimized x86 implementation costs ≈38.8 cycles per permutation round (design estimate ≈40, spec p. 33).
-The XOF instances are not covered by the software self-assessment.</p>
+below the SHA3-512 baseline at every tested length on both platforms, and Dragon-512 / Dragon-768 also
+stay below SM3 everywhere; Dragon-1024 crosses above SM3 from S4 on (x86-64 10.44 vs 9.28 cpb), with a
+long-message cost close to SM3 (spec §5.1 Observations and §6). The measured optimized x86
+implementation costs ≈38.8 cycles per permutation round (design estimate ≈40, spec p. 33). The XOF
+instances are not covered by the software self-assessment.</p>
 
 <h2>Hardware (spec §5.2, Table 16 — ASIC, UMC 55 nm)</h2>
 <table class="table-wide">
