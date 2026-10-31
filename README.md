@@ -18,7 +18,7 @@ hash 候选 **Dragon Hash Family** 与 **Thunder Hash Family** 的公开材料�
 - `site.css` — 共用样式
 - `dragon/`、`thunder/` — 每个候选五页（× 两种语言）：
   `index`（概览+新闻+快速事实）、`specification`（参数表+模式+置换）、
-  `implementations`（包结构+构建/KAT+核对注记）、`performance`（设计团队自评估表 S1–S8 主表 + ngcc.dev reference 对照 + 硬件表）、
+  `implementations`（包结构+构建/KAT+核对注记）、`performance`（设计团队自评估表 S1–S8 主表 + ASIC 硬件表）、
   `analysis`（安全状态+constant-time+规范核对+本组结果占位）
 - 中文版正文完整翻译，密码学术语（differential、capacity、rate、XOF、cycles/byte、KAT、constant-time 等）保留英文。
 - `glossary.html` / `glossary.zh.html` — 术语表（sponge/capacity/rate/XOF/cpb/KAT 等，中英双语）。

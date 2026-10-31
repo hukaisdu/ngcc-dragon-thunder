@@ -6,9 +6,9 @@
 <title>Performance — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Designer self-assessment (S1–S8, x86-64 and ARM) and the independent ngcc.dev reference check, plus ASIC tables.">
+<meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Designer self-assessment (S1–S8, x86-64 and ARM) and the ASIC hardware tables.">
 <meta property="og:title" content="Performance — Dragon (hash-07)">
-<meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Designer self-assessment (S1–S8, x86-64 and ARM) and the independent ngcc.dev reference check, plus ASIC tables.">
+<meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Designer self-assessment (S1–S8, x86-64 and ARM) and the ASIC hardware tables.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
 
@@ -28,7 +28,7 @@
 </nav>
 </div></header>
 <main>
-<h1>Performance<span class="sub">designer self-assessment from the submission package · independent reference check</span></h1>
+<h1>Performance<span class="sub">designer self-assessment from the submission package</span></h1>
 
 <div class="note"><b>One-line takeaways</b> — Software: all three fixed-output instances beat SHA3-512 at every tested length on both platforms (Dragon-512 long messages 4.87 vs 12.46 cpb, ≈ <b>2.6×</b>; ARM 4.47 vs 15.49, ≈ <b>3.5×</b>); Dragon-512/768 also stay below SM3 throughout. Hardware: the first synthesis (251–258 MHz) trails SHA3-512 in throughput, though cycle counts are up to 1.8× lower and power roughly halves.<br>How to read: cpb = cycles per byte, <b>lower is faster</b>; S1–S8 = message lengths 32 B → 64 KiB.</div>
 
@@ -95,52 +95,12 @@ instances close timing only at 251–258 MHz (critical path 3.88–3.98 ns, boun
 so their throughput stays below the SHA3-512 baseline synthesized at 1190 MHz; cycle counts are lower
 at 1 KiB / 64 KiB (up to 1.8×) and power is roughly half (<a href="../harness/hash-07/hash-07-spec.pdf#page=35">spec p. 35</a>).</p>
 
-<h2>Independent reference-implementation check (ngcc.dev)</h2>
-<p>Separately from the submission package, ngcc.dev measured the <b>reference</b> implementation
-(unoptimized placeholder-quality code) on its own x86_1 system. These numbers characterize the reference
-code, not the design’s optimized speed, and are not comparable with the self-assessment tables above;
-they are kept here as an independent correctness-and-timing cross-check.</p>
-
-<table>
-<tr><th>item</th><th>value</th></tr>
-<tr><td>processor</td><td>Intel Core i7-12700 (Alder Lake), one performance core, turbo off, fixed 2.10 GHz, SMT off</td></tr>
-<tr><td>OS / compiler</td><td>Debian GNU/Linux 13, gcc 14.2.0, cmake 3.31.6</td></tr>
-<tr><td>campaign</td><td>2026-09-25 → 2026-09-28 (UTC), KAT-checked before timing; not a submitter self-assessment</td></tr>
-</table>
-
-<table>
-<tr><th>instance</th><th class="num">32 B</th><th class="num">1 KiB</th><th class="num">16 KiB</th><th class="num">64 KiB</th><th class="num">MB/s @64 KiB</th></tr>
-<tr><td><code>Dragon-512</code></td><td class="num">76.1</td><td class="num">19.9</td><td class="num">17.9</td><td class="num">17.8</td><td class="num">117.3</td></tr>
-<tr><td><code>Dragon-768</code></td><td class="num">75.6</td><td class="num">24.8</td><td class="num">23.7</td><td class="num">24.0</td><td class="num">87.1</td></tr>
-<tr><td><code>Dragon-1024</code></td><td class="num">75.8</td><td class="num">38.7</td><td class="num">35.9</td><td class="num">36.2</td><td class="num">57.7</td></tr>
-<tr><td><code>Dragon-XOF-256</code></td><td class="num">308.1</td><td class="num">27.5</td><td class="num">18.1</td><td class="num">18.3</td><td class="num">114.4</td></tr>
-<tr><td><code>Dragon-XOF-384</code></td><td class="num">284.8</td><td class="num">31.4</td><td class="num">24.4</td><td class="num">24.0</td><td class="num">87.2</td></tr>
-<tr><td><code>Dragon-XOF-512</code></td><td class="num">261.5</td><td class="num">44.4</td><td class="num">36.7</td><td class="num">36.4</td><td class="num">57.5</td></tr>
-</table>
-<p class="sub">At 64 KiB on the same machine and campaign, the Thunder-512 <em>reference</em> implementation
-measures 32.4 cycles/byte (<a href="../thunder/performance.html">Thunder performance</a>). The large 32 B
-figures for the XOF instances reflect the one-squeeze fixed digest (160/144/128 bytes) counted over a tiny
-message.</p>
-
 <h2>Where the full data lives</h2>
 <ul class="links">
-<li>Self-assessment source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33">spec §5.1 (pp. 33–35)</a>;
-self-assessment code (Reference / Resource- / Performance-Optimized versions for x86 and ARM, plus the
-official <code>ngcc_bench</code>) ships inside <code>Dragon.zip</code> under <code>Dragon/Others/</code>
-(mirrored at <code>harness/hash-07/Dragon/Others/</code>).</li>
-<li>ngcc.dev full x86_1 table (all 8 message sizes, mean cycles, time, n) and resource proxies:
-<a href="../harness/hash-07/perf_x86_1.md"><code>perf_x86_1.md</code></a> —
-rendered copy: <a href="../ngcc-site/performance/x86_1/hash-07.html">mirrored ngcc.dev page</a>.</li>
-<li>ngcc.dev arm_1 (Qualcomm Snapdragon X Elite X1E-78-100, one core pinned at 2.71 GHz):
-<a href="../ngcc-site/performance/arm_1/hash-07.html">mirrored page</a> ·
-<a href="https://ngcc.dev/performance/arm_1/hash-07.html">live</a></li>
-<li>Measurement method: <a href="../ngcc-site/performance/x86_1/method.html">method (x86_1)</a> ·
-<a href="../ngcc-site/performance/arm_1/method.html">method (arm_1)</a></li>
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>Self-assessment data © the Dragon submission team (NICCS Round-1 submission package); independent
-reference-code measurements © ngcc.dev (M.-J. Saarinen).</p>
+<p>Self-assessment data © the Dragon submission team (NICCS Round-1 submission package).</p>
 <p>Mirrored 2026-10-30 · updated 2026-10-31 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
 </div></footer>
 </body>

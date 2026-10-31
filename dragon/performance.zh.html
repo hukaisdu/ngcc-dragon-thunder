@@ -6,9 +6,9 @@
 <title>性能 — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 设计团队自评估（S1–S8，x86-64 与 ARM）、ngcc.dev 独立对照与 ASIC 硬件表。">
+<meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:title" content="性能 — Dragon (hash-07)">
-<meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 设计团队自评估（S1–S8，x86-64 与 ARM）、ngcc.dev 独立对照与 ASIC 硬件表。">
+<meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
 
@@ -28,15 +28,14 @@
 </nav>
 </div></header>
 <main>
-<h1>性能<span class="sub">提交包内的设计团队自评估 · ngcc.dev 独立对照</span></h1>
+<h1>性能<span class="sub">提交包内的设计团队自评估</span></h1>
 
 <p>主数据取自<b>提交包内</b>的设计团队自评估（spec §5.1，第 33–35 页，数字已对照 LaTeX 源逐格核验）：
 performance-optimized 实现、官方 <code>ngcc_bench</code>、S1–S8 消息长度（32 B–64 KiB）、单核，
 两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588 @ 2.0 GHz）。长消息下
 Dragon-512 在 x86-64 达 4.87 cycles/byte（SHA3-512 为 12.46，约 2.6 倍加速）。硬件综合（Table 16）中
 三个实例的综合频率为 251–258 MHz（ARX 进位链限制，critical path 3.88–3.98 ns），当前吞吐低于
-SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现
-（未优化）的独立测量保留在本页下方作对照，两者不可直接比较。</p>
+SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其中。</p>
 
 <div class="note"><b>一句话结论</b>：软件——三个定长实例在两个平台的全部测试长度上均快于 SHA3-512（Dragon-512 长消息 4.87 vs 12.46 cpb，约 <b>2.6×</b>；ARM 4.47 vs 15.49，约 <b>3.5×</b>）；Dragon-512/768 还全长度快于 SM3。硬件——第一版综合（251–258 MHz）吞吐低于 SHA3-512，但周期数最多少 1.8×、功耗约为一半。<br>读表提示：cpb = cycles/byte，<b>越低越快</b>；S1–S8 = 消息长度 32 B → 64 KiB。</div>
 
@@ -102,49 +101,12 @@ XOF 实例不在软件自评估范围内。</p>
 1 KiB / 64 KiB 的周期数更少（最多 1.8 倍），功耗约为其一半
 （<a href="../harness/hash-07/hash-07-spec.pdf#page=35">spec 第 35 页</a>）。</p>
 
-<h2>ngcc.dev 独立对照（reference 实现）</h2>
-<p>独立于提交包，ngcc.dev 在自己的 x86_1 系统上测量了 <b>reference</b> 实现（未优化的占位级代码）。
-这些数字反映的是 reference 代码而非设计的优化速度，与上面的自评估表不可直接比较；
-保留在此作为正确性与计时的独立交叉核对。</p>
-
-<table>
-<tr><th>条目</th><th>数值</th></tr>
-<tr><td>处理器</td><td>Intel Core i7-12700（Alder Lake），单性能核，关闭 turbo，固定 2.10 GHz，SMT 关闭</td></tr>
-<tr><td>系统 / 编译器</td><td>Debian GNU/Linux 13，gcc 14.2.0，cmake 3.31.6</td></tr>
-<tr><td>测量期</td><td>2026-09-25 → 2026-09-28（UTC），计时前先通过自测向量（KAT）；非提交方自评估</td></tr>
-</table>
-
-<table>
-<tr><th>实例</th><th class="num">32 B</th><th class="num">1 KiB</th><th class="num">16 KiB</th><th class="num">64 KiB</th><th class="num">MB/s @64 KiB</th></tr>
-<tr><td><code>Dragon-512</code></td><td class="num">76.1</td><td class="num">19.9</td><td class="num">17.9</td><td class="num">17.8</td><td class="num">117.3</td></tr>
-<tr><td><code>Dragon-768</code></td><td class="num">75.6</td><td class="num">24.8</td><td class="num">23.7</td><td class="num">24.0</td><td class="num">87.1</td></tr>
-<tr><td><code>Dragon-1024</code></td><td class="num">75.8</td><td class="num">38.7</td><td class="num">35.9</td><td class="num">36.2</td><td class="num">57.7</td></tr>
-<tr><td><code>Dragon-XOF-256</code></td><td class="num">308.1</td><td class="num">27.5</td><td class="num">18.1</td><td class="num">18.3</td><td class="num">114.4</td></tr>
-<tr><td><code>Dragon-XOF-384</code></td><td class="num">284.8</td><td class="num">31.4</td><td class="num">24.4</td><td class="num">24.0</td><td class="num">87.2</td></tr>
-<tr><td><code>Dragon-XOF-512</code></td><td class="num">261.5</td><td class="num">44.4</td><td class="num">36.7</td><td class="num">36.4</td><td class="num">57.5</td></tr>
-</table>
-<p class="sub">同一台机器、同一测量期下，Thunder-512 的 <em>reference</em> 实现为 32.4 cycles/byte
-（<a href="../thunder/performance.zh.html">Thunder 性能</a>）。XOF 实例 32 B 的数值偏大，
-是因为按一次性固定 digest（160/144/128 字节）除以极短消息所致。</p>
-
 <h2>完整数据位置</h2>
 <ul class="links">
-<li>自评估来源：<a href="../harness/hash-07/hash-07-spec.pdf#page=33">spec §5.1（第 33–35 页）</a>；
-自评估代码（x86 与 ARM 的 Reference / Resource 优化 / Performance 优化三档 + 官方
-<code>ngcc_bench</code>）在 <code>Dragon.zip</code> 的 <code>Dragon/Others/</code>
-（镜像于 <code>harness/hash-07/Dragon/Others/</code>）。</li>
-<li>ngcc.dev 完整 x86_1 表（8 个消息长度、平均 cycles、时间、n）与资源占用：
-<a href="../harness/hash-07/perf_x86_1.md"><code>perf_x86_1.md</code></a> —
-渲染版：<a href="../ngcc-site/performance/x86_1/hash-07.html">镜像页</a>。</li>
-<li>ngcc.dev arm_1（Qualcomm Snapdragon X Elite X1E-78-100，单核锁定 2.71 GHz）：
-<a href="../ngcc-site/performance/arm_1/hash-07.html">镜像页</a> ·
-<a href="https://ngcc.dev/performance/arm_1/hash-07.html">线上</a></li>
-<li>测量方法：<a href="../ngcc-site/performance/x86_1/method.html">method（x86_1）</a> ·
-<a href="../ngcc-site/performance/arm_1/method.html">method（arm_1）</a></li>
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>自评估数据 © Dragon 提交团队（NICCS Round-1 提交包）；reference 实现独立测量 © ngcc.dev（M.-J. Saarinen）。</p>
+<p>自评估数据 © Dragon 提交团队（NICCS Round-1 提交包）。</p>
 <p>镜像于 2026-10-30 · 更新于 2026-10-31 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Dragon 首页</a></p>
 </div></footer>
 </body>

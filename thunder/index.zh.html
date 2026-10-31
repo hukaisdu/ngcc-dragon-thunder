@@ -66,14 +66,13 @@ Thunder-XOF-256/384/512。本站汇总其规范、参考实现、KAT、性能与
 <tr><td>自测向量（KAT）</td><td>6/6 实例通过（KAT = Known-Answer Test，已知答案测试——对提交的“输入 → 期望输出”向量对答案；ngcc.dev harness，测量期 2026-09-25 → 09-28）</td></tr>
 <tr><td>实现核对</td><td>未发现参数或常数不吻合；输出长度间的 domain separation 经三条独立机制确认</td></tr>
 <tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>1.8×</b>（x86-64：6.95 vs 12.46 cpb）、约 <b>2.0×</b>（ARM：7.62 vs 15.49）；x86-64 上 Thunder-512 全程快于 SM3（6.95 vs 8.45）（spec §5.1，Tables 18–19）</td></tr>
-<tr><td>速度（独立对照）</td><td>ngcc.dev 在另一台机器（i7-12700）上测得 reference 实现 32.4 cpb @64 KiB——机器与实现均不同，仅供交叉核对（<a href="performance.zh.html">性能</a>页）</td></tr>
 </table>
 
 <h2>页面导航</h2>
 <ul class="links">
 <li>想快速了解算法 → <a href="specification.zh.html">规范</a>（参数表、模式与置换、轮常数）</li>
 <li>想自己跑代码 → <a href="implementations.zh.html">实现</a>（依赖 + 两条命令，几分钟跑通 KAT）</li>
-<li>想看性能数字 → <a href="performance.zh.html">性能</a>（设计团队自评估 + 独立对照 + 硬件表）</li>
+<li>想看性能数字 → <a href="performance.zh.html">性能</a>（设计团队自评估 + 硬件表）</li>
 <li>想跟进安全性 → <a href="analysis.zh.html">分析</a>（第三方状态、constant-time、本组结果）</li>
 <li>术语不熟 → <a href="../glossary.zh.html">术语表</a></li>
 </ul>
