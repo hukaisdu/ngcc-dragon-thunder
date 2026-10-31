@@ -16,20 +16,11 @@
 <a href="performance.html" aria-current="page">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../dragon/index.html">Dragon ↗</a>
+<a class="lang" href="performance.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Performance<span class="sub">designer self-assessment from the submission package · independent reference check</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-主数据取自<b>提交包内</b>的设计团队自评估（spec §5.1，第 40–43 页，数字已对照 LaTeX 源逐格核验）：
-performance-optimized 实现、官方 <code>ngcc_bench</code> S1–S8 消息长度（32 B–64 KiB）、单核，
-两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588）。长消息下 Thunder-512 在
-x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM 上 7.62（SHA3 为 15.49，约
-2.0 倍），Thunder-512/768 在全部测试长度上均快于 SHA3-512；x86-64 上 Thunder-512 全程快于
-SM3(256)。硬件综合（Table 20）三个实例吞吐全部高于 SHA3-512（64 KiB：+82% / +51% / +33%）。
-注意：软件自评估只覆盖三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现（未优化）
-的独立测量保留在本页下方作对照。</div>
 
 <h2>Design-team self-assessment (submission package, spec §5.1)</h2>
 <p>Values are cycles per byte (cpb) measured with the official <code>ngcc_bench</code> in single-core

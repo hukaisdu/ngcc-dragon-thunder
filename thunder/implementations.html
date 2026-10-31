@@ -16,16 +16,11 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../dragon/index.html">Dragon ↗</a>
+<a class="lang" href="implementations.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Implementations<span class="sub">package layout, build &amp; KAT, review notes</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-提交包内含 X86 与 ARM 两套树，各分 Reference / Additional / Optimized 三种实现；
-ngcc.dev 构建与计时用 <code>Thunder-X86</code> 的 Reference（XOF 以定长 1280/1152/1024 bit 构建）。
-<code>make -C hash-33 test</code> 复现 KAT（6/6 PASS）。源码注释为 GB 编码中文。
-ngcc.dev 的核对结论：<b>未发现参数或常数不吻合</b>；各输出长度之间的 domain separation 经三条独立机制确认。</div>
 
 <h2>Package layout (official Thunder.zip, extracted under <code>harness/hash-33/Thunder/</code>)</h2>
 <pre><code>Thunder/Implementations and Test_vector/

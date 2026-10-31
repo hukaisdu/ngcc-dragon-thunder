@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>性能 — Dragon (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.zh.html">首页</a>
+<a href="specification.zh.html">规范</a>
+<a href="implementations.zh.html">实现</a>
+<a href="performance.zh.html" aria-current="page">性能</a>
+<a href="analysis.zh.html">分析</a>
+<a href="../thunder/index.zh.html">Thunder ↗</a>
+<a class="lang" href="performance.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>性能<span class="sub">提交包内的设计团队自评估 · ngcc.dev 独立对照</span></h1>
+
+<p>主数据取自<b>提交包内</b>的设计团队自评估（spec §5.1，第 33–35 页，数字已对照 LaTeX 源逐格核验）：
+performance-optimized 实现、官方 <code>ngcc_bench</code>、S1–S8 消息长度（32 B–64 KiB）、单核，
+两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588 @ 2.0 GHz）。长消息下
+Dragon-512 在 x86-64 达 4.87 cycles/byte（SHA3-512 为 12.46，约 2.6 倍加速）。硬件综合（Table 16）中
+三个实例的综合频率为 251–258 MHz（ARX 进位链限制，critical path 3.88–3.98 ns），当前吞吐低于
+SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其中。ngcc.dev 对 <em>reference</em> 实现
+（未优化）的独立测量保留在本页下方作对照，两者不可直接比较。</p>
+
+<h2>设计团队自评估（提交包，spec §5.1）</h2>
+<p>数值为 cycles/byte（cpb），官方 <code>ngcc_bench</code> 单核模式，消息长度 S1–S8 =
+32, 128, 512, 1024, 4096, 8192, 16384, 65536 字节。
+来源：<a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec.pdf</code> §5.1，Tables 13–15（第 33–35 页）</a>
+——该文件与 <code>Dragon.zip</code> 中官方 <i>Algorithm specifications.pdf</i> 逐字节一致（MD5 已核对），
+本页每个数值均于 2026-10-31 对照 LaTeX 源逐格复核。</p>
+
+<table>
+<tr><th>条目</th><th>x86-64 平台（Table 13）</th><th>ARM 平台（Table 13）</th></tr>
+<tr><td>处理器</td><td>Intel Xeon(R) Platinum 8358 CPU @ 2.60 GHz</td><td>Rockchip RK3588 @ 2.0 GHz</td></tr>
+<tr><td>操作系统</td><td>Ubuntu 22.04 LTS（内核 6.8.0）</td><td>Ubuntu 22.04（内核 5.10.160）</td></tr>
+<tr><td>编译器 / 构建</td><td>GCC 11.4 / CMake 3.22.1</td><td>GCC 9.4 / CMake 3.16.3</td></tr>
+<tr><td>测量模式</td><td>单核</td><td>单核</td></tr>
+</table>
+
+<h3>x86-64 — Intel Xeon Platinum 8358（spec Table 14）</h3>
+<table>
+<tr><th>实例</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
+<tr><td>SM3 (256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.59</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
+<tr><td>SHA3-512</td><td class="num">103.73</td><td class="num">34.97</td><td class="num">20.43</td><td class="num">13.46</td><td class="num">12.49</td><td class="num">12.48</td><td class="num">12.47</td><td class="num">12.46</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">22.96</td><td class="num">11.00</td><td class="num">6.44</td><td class="num">5.65</td><td class="num">5.06</td><td class="num">4.96</td><td class="num">4.91</td><td class="num">4.87</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">23.17</td><td class="num">10.92</td><td class="num">7.66</td><td class="num">6.91</td><td class="num">6.60</td><td class="num">6.57</td><td class="num">6.52</td><td class="num">6.49</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">23.00</td><td class="num">15.62</td><td class="num">11.18</td><td class="num">10.44</td><td class="num">9.88</td><td class="num">9.80</td><td class="num">9.73</td><td class="num">9.70</td></tr>
+</table>
+
+<h3>ARM — Rockchip RK3588（spec Table 15）</h3>
+<table>
+<tr><th>实例</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
+<tr><td>SM3 (256)†</td><td class="num">94.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.42</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.95</td><td class="num">7.88</td></tr>
+<tr><td>SHA3-512†</td><td class="num">67.58</td><td class="num">25.59</td><td class="num">19.41</td><td class="num">17.32</td><td class="num">15.74</td><td class="num">15.60</td><td class="num">15.54</td><td class="num">15.49</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">51.24</td><td class="num">17.27</td><td class="num">7.63</td><td class="num">6.04</td><td class="num">4.84</td><td class="num">4.64</td><td class="num">4.54</td><td class="num">4.47</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">51.31</td><td class="num">17.41</td><td class="num">8.80</td><td class="num">7.18</td><td class="num">6.24</td><td class="num">6.11</td><td class="num">6.01</td><td class="num">5.96</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">51.85</td><td class="num">21.93</td><td class="num">12.19</td><td class="num">10.57</td><td class="num">9.35</td><td class="num">9.15</td><td class="num">9.05</td><td class="num">8.99</td></tr>
+</table>
+<p class="sub">† SHA3-512 与 SM3 基线为可移植软件实现，未使用 Armv8.2 的 SHA-3 / SM3 指令扩展
+（spec Table 15 脚注）。三个 Dragon 实例在两个平台的全部测试长度上均低于 SHA3-512 基线；
+Dragon-512 / Dragon-768 还在全部长度上低于 SM3；Dragon-1024 从 S4 起高于 SM3
+（x86-64 上 10.44 vs 9.28 cpb），长消息代价接近 SM3（spec §5.1 Observations 与 §6）。
+实测的 optimized x86 实现每轮置换约 38.8 cycles（设计估算 ≈40，spec 第 33 页）。
+XOF 实例不在软件自评估范围内。</p>
+
+<h2>硬件（spec §5.2，Table 16 — ASIC，UMC 55 nm）</h2>
+<table class="table-wide">
+<tr><th rowspan="2">实例</th><th colspan="4">实现</th><th colspan="3">32 B</th><th colspan="3">1 KiB</th><th colspan="3">64 KiB</th></tr>
+<tr><th class="num">面积 (kGE)</th><th class="num">延时 (ns)</th><th class="num">频率 (MHz)</th><th class="num">功耗 (mW)</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area</th></tr>
+<tr><td>SHA3-512</td><td class="num">44.68</td><td class="num">0.84</td><td class="num">1190.48</td><td class="num">31.25</td><td class="num">38</td><td class="num">8020</td><td class="num">179.48</td><td class="num">512</td><td class="num">19048</td><td class="num">426.27</td><td class="num">30976</td><td class="num">20150</td><td class="num">450.93</td></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">122.28</td><td class="num">3.93</td><td class="num">254.45</td><td class="num">13.80</td><td class="num">30</td><td class="num">2171</td><td class="num">17.76</td><td class="num">297</td><td class="num">7018</td><td class="num">57.40</td><td class="num">17433</td><td class="num">7653</td><td class="num">62.58</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">132.41</td><td class="num">3.88</td><td class="num">257.73</td><td class="num">15.55</td><td class="num">34</td><td class="num">1941</td><td class="num">14.66</td><td class="num">338</td><td class="num">6247</td><td class="num">47.18</td><td class="num">20498</td><td class="num">6592</td><td class="num">49.79</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">131.24</td><td class="num">3.98</td><td class="num">251.26</td><td class="num">16.09</td><td class="num">38</td><td class="num">1693</td><td class="num">12.90</td><td class="num">449</td><td class="num">4584</td><td class="num">34.93</td><td class="num">26657</td><td class="num">4942</td><td class="num">37.65</td></tr>
+</table>
+<p class="sub">Round-based 架构（每周期一轮），VHDL + ModelSim 验证，Synopsys Design Compiler 综合。
+数值已对照 LaTeX 源核验。本次提交版本的综合结果中，三个 Dragon 实例只能在 251–258 MHz 收敛
+（critical path 3.88–3.98 ns，受 ARX 进位链限制），因此吞吐低于 1190 MHz 综合的 SHA3-512 基线；
+1 KiB / 64 KiB 的周期数更少（最多 1.8 倍），功耗约为其一半
+（<a href="../harness/hash-07/hash-07-spec.pdf#page=35">spec 第 35 页</a>）。</p>
+
+<h2>ngcc.dev 独立对照（reference 实现）</h2>
+<p>独立于提交包，ngcc.dev 在自己的 x86_1 系统上测量了 <b>reference</b> 实现（未优化的占位级代码）。
+这些数字反映的是 reference 代码而非设计的优化速度，与上面的自评估表不可直接比较；
+保留在此作为正确性与计时的独立交叉核对。</p>
+
+<table>
+<tr><th>条目</th><th>数值</th></tr>
+<tr><td>处理器</td><td>Intel Core i7-12700（Alder Lake），单性能核，关闭 turbo，固定 2.10 GHz，SMT 关闭</td></tr>
+<tr><td>系统 / 编译器</td><td>Debian GNU/Linux 13，gcc 14.2.0，cmake 3.31.6</td></tr>
+<tr><td>测量期</td><td>2026-09-25 → 2026-09-28（UTC），计时前先过 KAT；非提交方自评估</td></tr>
+</table>
+
+<table>
+<tr><th>实例</th><th class="num">32 B</th><th class="num">1 KiB</th><th class="num">16 KiB</th><th class="num">64 KiB</th><th class="num">MB/s @64 KiB</th></tr>
+<tr><td><code>Dragon-512</code></td><td class="num">76.1</td><td class="num">19.9</td><td class="num">17.9</td><td class="num">17.8</td><td class="num">117.3</td></tr>
+<tr><td><code>Dragon-768</code></td><td class="num">75.6</td><td class="num">24.8</td><td class="num">23.7</td><td class="num">24.0</td><td class="num">87.1</td></tr>
+<tr><td><code>Dragon-1024</code></td><td class="num">75.8</td><td class="num">38.7</td><td class="num">35.9</td><td class="num">36.2</td><td class="num">57.7</td></tr>
+<tr><td><code>Dragon-XOF-256</code></td><td class="num">308.1</td><td class="num">27.5</td><td class="num">18.1</td><td class="num">18.3</td><td class="num">114.4</td></tr>
+<tr><td><code>Dragon-XOF-384</code></td><td class="num">284.8</td><td class="num">31.4</td><td class="num">24.4</td><td class="num">24.0</td><td class="num">87.2</td></tr>
+<tr><td><code>Dragon-XOF-512</code></td><td class="num">261.5</td><td class="num">44.4</td><td class="num">36.7</td><td class="num">36.4</td><td class="num">57.5</td></tr>
+</table>
+<p class="sub">同一台机器、同一测量期下，Thunder-512 的 <em>reference</em> 实现为 32.4 cycles/byte
+（<a href="../thunder/performance.zh.html">Thunder 性能</a>）。XOF 实例 32 B 的数值偏大，
+是因为按一次性固定 digest（160/144/128 字节）除以极短消息所致。</p>
+
+<h2>完整数据位置</h2>
+<ul class="links">
+<li>自评估来源：<a href="../harness/hash-07/hash-07-spec.pdf#page=33">spec §5.1（第 33–35 页）</a>；
+自评估代码（x86 与 ARM 的 Reference / Resource 优化 / Performance 优化三档 + 官方
+<code>ngcc_bench</code>）在 <code>Dragon.zip</code> 的 <code>Dragon/Others/</code>
+（镜像于 <code>harness/hash-07/Dragon/Others/</code>）。</li>
+<li>ngcc.dev 完整 x86_1 表（8 个消息长度、平均 cycles、时间、n）与资源占用：
+<a href="../harness/hash-07/perf_x86_1.md"><code>perf_x86_1.md</code></a> —
+渲染版：<a href="../ngcc-site/performance/x86_1/hash-07.html">镜像页</a>。</li>
+<li>ngcc.dev arm_1（Qualcomm Snapdragon X Elite X1E-78-100，单核锁定 2.71 GHz）：
+<a href="../ngcc-site/performance/arm_1/hash-07.html">镜像页</a> ·
+<a href="https://ngcc.dev/performance/arm_1/hash-07.html">线上</a></li>
+<li>测量方法：<a href="../ngcc-site/performance/x86_1/method.html">method（x86_1）</a> ·
+<a href="../ngcc-site/performance/arm_1/method.html">method（arm_1）</a></li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>自评估数据 © Dragon 提交团队（NICCS Round-1 提交包）；reference 实现独立测量 © ngcc.dev（M.-J. Saarinen）。</p>
+<p>镜像于 2026-10-30 · 更新于 2026-10-31 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Dragon 首页</a></p>
+</div></footer>
+</body>
+</html>

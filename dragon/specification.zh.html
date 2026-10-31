@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>规范 — Dragon (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.zh.html">首页</a>
+<a href="specification.zh.html" aria-current="page">规范</a>
+<a href="implementations.zh.html">实现</a>
+<a href="performance.zh.html">性能</a>
+<a href="analysis.zh.html">分析</a>
+<a href="../thunder/index.zh.html">Thunder ↗</a>
+<a class="lang" href="specification.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>规范<span class="sub">Dragon 哈希族 — 参数、模式、置换</span></h1>
+
+<p>权威来源：<a href="../harness/hash-07/hash-07-spec.pdf"><code>hash-07-spec.pdf</code></a>
+（42 页，英文；§2.4 置换、§2.5 hash 实例化、§2.6 XOF、§2.7 安全声明）。ngcc.dev 整理的逐行算法笔记
+（含完整 pseudocode）保存在 <a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a>。
+本页数字均对照 spec 的 LaTeX 源（2026-10-31）核验。</p>
+
+<h2>参数（spec Tables 4 与 6）</h2>
+<table>
+<tr><th>参数</th><th class="num">Dragon-512</th><th class="num">Dragon-768</th><th class="num">Dragon-1024</th><th class="num">XOF-256</th><th class="num">XOF-384</th><th class="num">XOF-512</th></tr>
+<tr><td>状态宽度 b</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td></tr>
+<tr><td>capacity c</td><td class="num">576</td><td class="num">832</td><td class="num">1088</td><td class="num">576</td><td class="num">832</td><td class="num">1088</td></tr>
+<tr><td>absorb rate r</td><td class="num">1024</td><td class="num">768</td><td class="num">512</td><td class="num">1024</td><td class="num">768</td><td class="num">512</td></tr>
+<tr><td>squeeze rate r′</td><td class="num">—（直读 h）</td><td class="num">—</td><td class="num">—</td><td class="num">1280</td><td class="num">1152</td><td class="num">1024</td></tr>
+<tr><td>轮数</td><td class="num">16</td><td class="num">16</td><td class="num">16</td><td class="num">16</td><td class="num">16</td><td class="num">16</td></tr>
+<tr><td>digest（spec）</td><td class="num">512</td><td class="num">768</td><td class="num">1024</td><td class="num">ν（任意）</td><td class="num">ν（任意）</td><td class="num">ν（任意）</td></tr>
+<tr><td>collision 目标</td><td class="num">256</td><td class="num">384</td><td class="num">512</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>preimage 目标</td><td class="num">512</td><td class="num">768</td><td class="num">1024</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td>generic log₂Q 目标</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">256</td><td class="num">384</td><td class="num">512</td></tr>
+</table>
+<p class="sub">均以 bit 计。消息长度上限 2⁶⁴ bit（§2.7）。</p>
+
+<div class="note"><b>XOF 命名陷阱。</b> <code>Dragon-XOF-256/384/512</code> 中的数字是<em>安全等级</em>
+（log₂Q，spec Table 6），不是输出长度。一次性 API 报告的是一个 squeeze block——
+1280 / 1152 / 1024 bit（160 / 144 / 128 字节）——所以 <code>XOF-256</code> 的固定 digest 反而比
+<code>XOF-512</code> <em>更长</em>。实现本身支持任意 ν。</div>
+
+<h2>模式：sponge-forward（spec Fig. 1）</h2>
+<p>在普通 sponge 上，把置换<em>前</em>状态的 inner（capacity）部分保存，置换后 XOR 回 inner 部分。
+这一前馈把 (second-)preimage 安全性从经典的 c/2 提升到 ≈ min{c, h}，因此 1600-bit 状态足以支撑
+1024-bit preimage 目标。padding 为 <code>pd10*</code>；domain constant C 被 XOR 进最后一个块
+（lane S[0,0] 的最低位）。模式及其安全分析来自 Guo, Hu, Jiang, Fan, Fu, Preneel, Wang
+（<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）。</p>
+<pre><code>Sponge-F^{P,pd10*}(M, nu):
+    (M[1..L]) &lt;- split_r( pd10*(M) )
+    X &lt;- 0^r || IV
+    for i = 1..L:                     # absorb
+        X &lt;- X XOR (M[i] || (i==L ? C : 0))
+        X &lt;- P(X) XOR (0^r || right_c(X))   # 前馈
+    for i = 1..ceil(nu/r'):           # squeeze
+        Z[i] &lt;- right_{r'}(X)
+        if i &lt; last: X &lt;- P(X) XOR (0^r || right_c(X))
+    return left_nu(Z[1] || ... )</code></pre>
+
+<h2>置换 Dragon-p（spec §2.4）</h2>
+<p>16 轮，<code>R_i = φ ∘ ι_i</code>：<code>ι</code> 向 S[0,0] XOR 一个轮常数
+（RC_i 按 i·15+15 规律：0x0F, 0x1E, …, 0xF0）；<code>φ = Col ∘ Diag</code> 先对 5×5 lane 阵列的
+五条对角线、再对五条列各做一次 ARX 映射 <code>Update</code>。<code>Update</code> 由 mod 2⁶⁴ 模加与
+(1, 10, 24, 33, 49) bit 的 rotations 组成。</p>
+<pre><code>Update(a,b,c,d,e):                 # + 为 mod 2^64, &lt;&lt;&lt; 为 rotl
+    b += e ;  d = (d &lt;&lt;&lt; 33) ^ b
+    a += d ;  c = (c &lt;&lt;&lt; 24) ^ a
+    e += c ;  b = (b &lt;&lt;&lt; 10) ^ e
+    d += b ;  a = (a &lt;&lt;&lt; 1)  ^ d
+    c += a ;  e = (e &lt;&lt;&lt; 49) ^ c</code></pre>
+
+<h2>文件</h2>
+<ul class="links">
+<li>规范：<a href="../harness/hash-07/hash-07-spec.pdf"><code>hash-07-spec.pdf</code></a></li>
+<li>算法笔记 + 完整 pseudocode + 实现核对：
+<a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a></li>
+<li>官方提交包 <code>Dragon.zip</code> — <a href="../official-archives/fetch-archives.sh">下载与校验</a>
+（SHA-256 <code>08875981…b26c</code>，见 <a href="../official-archives/SHA256SUMS.txt">SHA256SUMS.txt</a>）</li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>规范 © Dragon 提交团队，由 NICCS 发布。本页摘要文字依据 spec 与 ngcc.dev 算法笔记整理。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Dragon 首页</a></p>
+</div></footer>
+</body>
+</html>

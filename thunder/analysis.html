@@ -16,17 +16,11 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html" aria-current="page">Analysis</a>
 <a href="../dragon/index.html">Dragon ↗</a>
+<a class="lang" href="analysis.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Analysis<span class="sub">third-party status, constant-time audit, review notes</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-截至 ngcc.dev 2026-10-28 快照，Thunder <b>没有已公开的 vulnerability finding</b>（这不是安全性背书）。
-constant-time 审查：XOF 输出位拷贝的 <code>if (src_bit)</code> 在 C 源里有分支，但 GCC -O2 编成
-<code>cmovne</code> 且地址固定，未升级为问题（其他编译器/目标仍需检查）。
-规范-实现核对无误；domain separation 三机制确认。IV 常数（Table 6）规范未给出导出规则——
-是一个透明度缺口，不是 break。我们的分析结果将放在本页。</div>
 
 <h2>Security status</h2>
 <p><b>No vulnerability finding is currently published for this candidate</b>

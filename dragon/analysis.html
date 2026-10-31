@@ -16,16 +16,11 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html" aria-current="page">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a class="lang" href="analysis.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Analysis<span class="sub">third-party status, constant-time audit, review notes</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-截至 ngcc.dev 2026-10-28 快照，Dragon <b>没有已公开的 vulnerability finding</b>（这不是安全性背书）。
-constant-time 源码级审查：XOF 的 <code>copy_bits_msb</code> 在 C 源里按输出 bit 分支，
-但 GCC -O2 会把它编译成 <code>cmovne</code>，未见数据相关的机器分支，未升级为问题。
-规范-实现核对未发现偏差。我们的分析结果将放在本页。</div>
 
 <h2>Security status</h2>
 <p><b>No vulnerability finding is currently published for this candidate</b>

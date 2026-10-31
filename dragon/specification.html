@@ -16,15 +16,11 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a class="lang" href="specification.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Specification<span class="sub">Dragon Hash Family — parameters, mode, permutation</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-六个实例共享 1600-bit 状态与同一个 16 轮置换 Dragon-p，差别只在 capacity c、rate r、IV 与输出规则。
-注意一个命名陷阱：Dragon-XOF-256/384/512 中的数字是安全等级（log₂Q），不是输出长度；
-ICCS 一次性 API 观察到的 digest 长度是一个 squeeze block（1280/1152/1024 bit）。</div>
 
 <p>Authoritative source: <a href="../harness/hash-07/hash-07-spec.pdf"><code>hash-07-spec.pdf</code></a>
 (42 pages, English; §2.4 permutation, §2.5 hash instantiation, §2.6 XOF, §2.7 claims).

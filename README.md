@@ -11,14 +11,16 @@ hash 候选 **Dragon Hash Family** 与 **Thunder Hash Family** 的公开材料�
 
 ## 网页 (study pages)
 
-仓库根目录是一个可直接浏览的静态站（GitHub Pages 可直接托管）：
+仓库根目录是一个可直接浏览的静态站（GitHub Pages 可直接托管），**每个页面均有英文版与中文版**
+（`foo.html` 为英文、`foo.zh.html` 为中文，页头 EN/中文 一键切换）：
 
-- `index.html` — 双候选 landing 页
+- `index.html` / `index.zh.html` — 双候选 landing 页
 - `site.css` — 共用样式
-- `dragon/`、`thunder/` — 每个候选五页：
+- `dragon/`、`thunder/` — 每个候选五页（× 两种语言）：
   `index`（概览+新闻+快速事实）、`specification`（参数表+模式+置换）、
-  `implementations`（包结构+构建/KAT+核对注记）、`performance`（设计团队自评估表 S1–S8 主表 + ngcc.dev reference 对照 + arm_1 链接）、
+  `implementations`（包结构+构建/KAT+核对注记）、`performance`（设计团队自评估表 S1–S8 主表 + ngcc.dev reference 对照 + 硬件表）、
   `analysis`（安全状态+constant-time+规范核对+本组结果占位）
+- 中文版正文完整翻译，密码学术语（differential、capacity、rate、XOF、cycles/byte、KAT、constant-time 等）保留英文。
 - `dragon/hero.png`、`thunder/hero.png` — 首页插画（中国龙 / 雷神，AI 生成，
   gpt-image via Codex，2026-10-30，配色与站点一致，无版权第三方元素）
 

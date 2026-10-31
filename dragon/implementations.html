@@ -16,16 +16,11 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a class="lang" href="implementations.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Implementations<span class="sub">package layout, build &amp; KAT, review notes</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-提交包内含 x86 与 ARM 两套树，各分 Reference / Additional / Optimized 三种实现；
-ngcc.dev 构建与计时用的是 <code>Dragon-x86</code> 的 Reference（XOF 以定长 1280/1152/1024 bit 构建）。
-在 harness 根目录 <code>make -C hash-07 test</code> 可复现 KAT（6/6 PASS）。
-ngcc.dev 的源码核对结论：<b>未发现与规范的偏差</b>；两条小的使用注意事项见下文。</div>
 
 <h2>Package layout (official Dragon.zip, extracted under <code>harness/hash-07/Dragon/</code>)</h2>
 <pre><code>Dragon/Implementations and Test_vector/

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分析 — Thunder (hash-33)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="thunder">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Thunder<span class="id">NGCC Round-1 · hash-33</span></a>
+<nav class="cand">
+<a href="index.zh.html">首页</a>
+<a href="specification.zh.html">规范</a>
+<a href="implementations.zh.html">实现</a>
+<a href="performance.zh.html">性能</a>
+<a href="analysis.zh.html" aria-current="page">分析</a>
+<a href="../dragon/index.zh.html">Dragon ↗</a>
+<a class="lang" href="analysis.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>分析<span class="sub">第三方状态、constant-time 审查、核对注记</span></h1>
+
+<p>截至 ngcc.dev 2026-10-28 快照，Thunder <b>没有已公开的 vulnerability finding</b>
+（<a href="https://ngcc.dev/reports/hash-33.html">ngcc.dev security 报告</a>）。这只是公开 finding
+清单的当前状态，不是安全性背书；该候选仍在评审中。</p>
+
+<h2>Constant-time 审查（ngcc.dev）</h2>
+<p>范围：归档的 reference 实现、固定 digest 参数与固定消息长度；消息内容与中间状态视为秘密。
+审查了两个源码点：</p>
+<ul class="links">
+<li>Reference 入口：<code>Thunder-ARM/…/Reference_Implementation/Thunder-1024/CryptHash_AlgorithmInstance.c:175</code>。</li>
+<li>XOF 输出位拷贝中的 <code>if (src_bit)</code>
+（<code>Thunder-X86/…/Thunder-XOF-256/CryptHash_AlgorithmInstance.c:187</code>）。GCC <code>-O2</code>
+将其编译为地址固定的 <code>cmovne</code>，因此在受检构建中不构成机器分支——其他编译器与目标平台仍需检查。</li>
+</ul>
+<p>结论：受检 GCC 构建未升级为问题。全文：
+<a href="../ngcc-site/constant-time/hash-33.html">镜像审查页</a> ·
+<a href="https://ngcc.dev/constant-time/hash-33.html">线上</a>。</p>
+
+<h2>实现与规范核对</h2>
+<p><b>未发现参数或常数不吻合。</b>整个置换逐项核对（非抽样）；capacity、rate、IV 放置
+（数组逆序 + 加载补偿）、前馈、消息布局、padding 与 final-block 常数均与 spec 一致。</p>
+
+<h2>输出长度 domain separation —— 已验证（ngcc.dev）</h2>
+<ul class="links">
+<li>每个实例<b>使用不同的 IV</b>（spec IV 表）——六个实例（包括共享 capacity 的两对：
+512/XOF-256、768/XOF-384、1024/XOF-512）加载的 IV lane 集合完全不同。</li>
+<li>三个安全等级的 <b>rate/capacity 划分不同</b>（576/832/1088），消息分块方式因此不同。</li>
+<li><b>final-block 常数</b> C = 0^{c−1}‖1——同时是防长度扩展的关键，因为 digest 直接从 inner 部分读出。</li>
+</ul>
+<p>XOF 固有的注意点：同一 XOF 实例内，不同长度的输出互为前缀；harness 暴露的三个固定长度
+（1280/1152/1024 bit）不是三个独立的 hash 函数。</p>
+
+<h2>值得记住的几点</h2>
+<ul class="links">
+<li>IV 常数（spec 的 IV 表）<b>没有给出导出规则</b>——已在生效 LaTeX 源中全文确认；这是一个值得注意的
+透明度缺口，不是 break。对比：Dragon 的 IV 有明文的 SM3 counter-mode 导出程序。</li>
+<li>ψ 的代数次数为 3（Keccak 的 χ 为 2），θ 使用双列校验——做 trail / differential 搜索时相关。</li>
+<li>相关文献：“Chinese NGCC Algorithms: The First Week of AI Cryptanalysis”，
+<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>。</li>
+</ul>
+
+<h2>本组结果</h2>
+<p><em>占位——我们组的 cryptanalysis 结果将收集在此。</em></p>
+</main>
+<footer class="site"><div class="in">
+<p>第三方分析 © ngcc.dev（M.-J. Saarinen）；“本组结果”一节保留给本研究组。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Thunder 首页</a></p>
+</div></footer>
+</body>
+</html>

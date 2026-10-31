@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实现 — Thunder (hash-33)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="thunder">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Thunder<span class="id">NGCC Round-1 · hash-33</span></a>
+<nav class="cand">
+<a href="index.zh.html">首页</a>
+<a href="specification.zh.html">规范</a>
+<a href="implementations.zh.html" aria-current="page">实现</a>
+<a href="performance.zh.html">性能</a>
+<a href="analysis.zh.html">分析</a>
+<a href="../dragon/index.zh.html">Dragon ↗</a>
+<a class="lang" href="implementations.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>实现<span class="sub">提交包结构、构建与 KAT、核对注记</span></h1>
+
+<p>提交包内有 X86 与 ARM 两套树，各分 Reference / Additional / Optimized 三种实现；
+ngcc.dev 构建与计时用 <code>Thunder-X86</code> 的 Reference（XOF 以定长 1280/1152/1024 bit 构建）。
+<code>make -C hash-33 test</code> 复现 KAT（6/6 PASS）。源码注释为 GB 编码中文。
+ngcc.dev 的核对结论：<b>未发现参数或常数不吻合</b>；各输出长度之间的 domain separation
+经三条独立机制确认。</p>
+
+<h2>提交包结构（官方 Thunder.zip，解包于 <code>harness/hash-33/Thunder/</code>）</h2>
+<pre><code>Thunder/Implementations and Test_vector/
+├── Thunder-X86/Implementations/       # &lt;- ngcc.dev 构建并计时（"X86" 为大写）
+│   ├── Reference_Implementation/      # 六个实例: Thunder-512/768/1024, Thunder-XOF-256/384/512
+│   ├── Additional_Implementation/{Thunder-512, Thunder-768, Thunder-1024}
+│   └── Optimized_Implementation/{Thunder-512, Thunder-768, Thunder-1024}
+└── Thunder-ARM/Implementations/       # 与 Thunder-X86 同构</code></pre>
+<p class="sub">每个实例目录含 <code>CryptHash_AlgorithmInstance.{c,h}</code> 与 KAT 驱动。
+定长三实例共用一份逐字节相同的 <code>.c</code>；XOF 三实例共用另一份，只多了多块 squeeze 循环。
+源码注释为 GB 编码的中文。</p>
+
+<h2>构建与 KAT</h2>
+<p>在本仓库的 <code>harness/</code> 目录下：</p>
+<pre><code>cd harness
+make -C hash-33          # 构建六个实例库（reference）
+make -C hash-33 test     # 跑 KAT harness; 汇总在 results/
+</code></pre>
+<p>六个实例对提交的 test vector 全部 KAT-PASS（清单
+<a href="../harness/hash-33/kat.sha256"><code>kat.sha256</code></a>，24 个文件），
+每次计时前先做 KAT 检查（x86_1，2026-09-25 → 09-28）。</p>
+
+<h2>核对注记（ngcc.dev 源码审查）</h2>
+<p><b>未发现 spec 与实现之间任何参数或常数不吻合。</b>整个置换都被核对过（不是抽样）：
+<code>RC[12]</code>、25 个 lane rotation τ(x,y)、θ 的偏移（t = 41/50/6/10/27、u = 26、r = 1、s = 36）、
+π 的 lane 置换、3 次的 ψ、轮序 ι → ρ → θ → π → ψ、六个实例的 capacity/rate、IV 加载
+（数组逆序存放、加载补偿，lane j 收到 spec 的 <code>IV_j</code>——六个实例全部核对）、前馈、消息布局、
+padding 与 final-block 常数。细节见
+<a href="../harness/hash-33/pseudocode.md"><code>pseudocode.md</code></a>。</p>
+<ul class="links">
+<li>外观小问题：头文件注释 “<code>IV[0]</code> is the least significant lane” 是错的——数组按 spec
+指标降序存放；但最终放置正确。</li>
+<li>XOF 实例没有指定的 digest 长度；NGCC wrapper 将 <code>DIGEST_BIT_LENGTH</code> 固定为一个
+squeeze block（1280/1152/1024 bit），因此元数据报告 160/144/128 字节。</li>
+</ul>
+
+<h2>文件</h2>
+<ul class="links">
+<li>reference 源码树：本仓库 <code>harness/hash-33/Thunder/</code>。</li>
+<li>官方提交包 <code>Thunder.zip</code>（146,828,807 字节）：
+<a href="../official-archives/fetch-archives.sh">fetch-archives.sh</a> ·
+SHA-256 <code>db6970d54250084ea73cc1a47bd56c868e5e478cdfa3746ff7b69d30c690b0c8</code></li>
+<li>NICCS <a href="https://www.niccs.org.cn/niccs/Round1Submissions4/pc/content/content_2101533797931110400.html">提交页</a> ·
+<a href="https://list.niccs.org.cn/archives/list/crypthashforum@list.niccs.org.cn/thread/NFFBYY3BQVNNKGZDA6SFJJZHCP6UIZ6Y/">论坛帖</a></li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>参考实现 © Thunder 提交团队，由 NICCS 发布。构建/KAT 说明依据 ngcc-harness。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Thunder 首页</a></p>
+</div></footer>
+</body>
+</html>

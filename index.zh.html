@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NGCC Round-1 哈希候选 — Dragon 与 Thunder</title>
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="landing">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Dragon &amp; Thunder<span class="id">NGCC Round-1 哈希候选</span></a>
+<nav class="cand">
+<a href="dragon/index.html">Dragon ↗</a>
+<a href="thunder/index.html">Thunder ↗</a>
+<a class="lang" href="index.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>Dragon 与 Thunder<span class="sub">NGCC Round-1 哈希候选算法 — 研究资料站</span></h1>
+
+<p>Dragon（候选编号 <code>hash-07</code>）与 Thunder（<code>hash-33</code>）是中国 Next Generation
+Commercial Cryptographic (NGCC) algorithms program Round 1 的两个 hash 候选。本站是研究用资料镜像与导读：
+每个候选一套页面（规范 / 实现 / 性能 / 分析），素材取自 ngcc.dev 的独立分析与 NICCS 官方提交包，
+镜像日期 2026-10-30，全部数字已对照提交 spec 的 LaTeX 源逐格核验。</p>
+
+<div class="cards">
+<div class="card dragon">
+<h3><a href="dragon/index.zh.html">Dragon 哈希族</a></h3>
+<p><code>hash-07</code> · permutation-based（ARX）</p>
+<p>1600-bit 状态，16 轮 Dragon-p，sponge-forward 模式。六个实例：Dragon-512/768/1024 与
+Dragon-XOF-256/384/512。x86-64 长消息 4.87 cycles/byte（设计团队自评估，spec Table 14）。</p>
+</div>
+<div class="card thunder">
+<h3><a href="thunder/index.zh.html">Thunder 哈希族</a></h3>
+<p><code>hash-33</code> · permutation-based</p>
+<p>1600-bit 状态，12 轮 Thunder-p（三次非线性层 ψ），sponge-forward 模式。六个实例：Thunder-512/768/1024 与
+Thunder-XOF-256/384/512。x86-64 长消息 6.95 cycles/byte（设计团队自评估，spec Table 18）。</p>
+</div>
+</div>
+
+<h2>仓库内容</h2>
+<ul class="links">
+<li><code>dragon/</code>、<code>thunder/</code> — 本站页面（每页均有英文版与中文版，页头可切换）。</li>
+<li><code>harness/</code> — <a href="https://github.com/ngcc-dev/ngcc-harness">ngcc-harness</a> 仓库在
+<code>dc66c6cb</code> 的快照：spec PDF、算法笔记、constant-time 审查、KAT 清单，以及两个候选提交包的完整解包代码
+（<code>hash-07/</code>、<code>hash-33/</code>）与顶层构建文件。</li>
+<li><code>ngcc-site/</code> — ngcc.dev 上与两候选相关页面的离线副本（security 报告、constant-time 审查、
+x86_1 / arm_1 性能明细与测量方法）。</li>
+<li><code>official-archives/</code> — NICCS 官方 Round-1 提交包原档（各约 140&nbsp;MB，超过 GitHub 单文件
+100&nbsp;MB 限制，由 <code>fetch-archives.sh</code> 下载并用 <code>SHA256SUMS.txt</code> 校验）。</li>
+</ul>
+
+<h2>来源与致谢</h2>
+<ul class="links">
+<li>规范、参考实现与 test vector：Dragon、Thunder 提交团队，由 <a href="https://www.niccs.org.cn/en/">NICCS</a>
+发布（官方 Round-1
+<a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Dragon.zip">Dragon</a> /
+<a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Thunder.zip">Thunder</a> 原档）。</li>
+<li>独立安全审查、constant-time 审查与性能测量：<a href="https://ngcc.dev">ngcc.dev</a>
+（Markku-Juhani Saarinen），站点更新 2026-10-28；另见
+<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>。</li>
+<li>本镜像与研究页面由 Kai Hu（胡凯）维护，仅供研究协作使用。</li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>材料版权归 NICCS 与各提交团队 · 分析与测量来自 ngcc.dev · 本页面仅为研究协作目的维护。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="README.md">仓库 README</a></p>
+</div></footer>
+</body>
+</html>

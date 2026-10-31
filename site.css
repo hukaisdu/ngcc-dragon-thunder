@@ -30,6 +30,7 @@ header.site .in {
 nav.cand { display: flex; flex-wrap: wrap; gap: .15em 1.1rem; font-size: .92rem; }
 nav.cand a { color: var(--mut); }
 nav.cand a:hover, nav.cand a[aria-current] { color: var(--acc); }
+nav.cand a.lang { margin-left: .4rem; padding-left: .9rem; border-left: 1px solid var(--line); font-weight: 600; }
 
 main { max-width: 52rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
 h1 { font-size: 1.9rem; line-height: 1.25; margin: .4rem 0 .3rem; }

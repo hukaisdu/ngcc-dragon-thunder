@@ -16,6 +16,7 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../thunder/index.html">Thunder ↗</a>
+<a class="lang" href="index.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
@@ -32,14 +33,6 @@
 <img src="hero.png" alt="A Chinese serpentine dragon in terracotta red and ink gray, weaving through a 5×5 grid of lanes with trailing dot streams" width="1536" height="1024">
 <figcaption>Dragon — 中国龙：龙身穿过 Dragon-p 的 5×5 lane 状态（illustration generated for this page, 2026-10-30）</figcaption>
 </figure>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-Dragon 是 NGCC Round 1 的 hash 候选（编号 <code>hash-07</code>）。核心是
-<em>sponge-forward</em> 模式：sponge 的 capacity（inner）部分在每次置换前被保存、置换后 XOR 回去，
-把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c, h}，因此 1600-bit 状态即可支撑 1024-bit
-preimage 目标。置换 Dragon-p 是 5×5×64 lane 上的 16 轮 ARX。共六个实例：
-Dragon-512/768/1024（定长 hash）与 Dragon-XOF-256/384/512（XOF）。
-本站汇总其规范、参考实现、KAT、性能与第三方分析，素材镜像自 ngcc.dev 与 NICCS（2026-10-30）。</div>
 
 <h2>News</h2>
 <ul class="news">

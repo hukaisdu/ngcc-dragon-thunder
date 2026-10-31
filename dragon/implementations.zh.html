@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实现 — Dragon (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.zh.html">首页</a>
+<a href="specification.zh.html">规范</a>
+<a href="implementations.zh.html" aria-current="page">实现</a>
+<a href="performance.zh.html">性能</a>
+<a href="analysis.zh.html">分析</a>
+<a href="../thunder/index.zh.html">Thunder ↗</a>
+<a class="lang" href="implementations.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>实现<span class="sub">提交包结构、构建与 KAT、核对注记</span></h1>
+
+<p>提交包内有 x86 与 ARM 两套树，各分 Reference / Additional / Optimized 三种实现；
+ngcc.dev 构建与计时用的是 <code>Dragon-x86</code> 的 Reference（XOF 以定长 1280/1152/1024 bit 构建）。
+在 harness 根目录执行 <code>make -C hash-07 test</code> 可复现 KAT（6/6 PASS）。
+ngcc.dev 的源码核对结论：<b>未发现与规范的偏差</b>；两条使用注意事项见下文。</p>
+
+<h2>提交包结构（官方 Dragon.zip，解包于 <code>harness/hash-07/Dragon/</code>）</h2>
+<pre><code>Dragon/Implementations and Test_vector/
+├── Dragon-x86/Implementations/
+│   ├── Reference_Implementation/      # &lt;- ngcc.dev 构建并计时
+│   │   ├── Dragon-512/  Dragon-768/  Dragon-1024/
+│   │   └── Dragon-XOF-256/  Dragon-XOF-384/  Dragon-XOF-512/
+│   ├── Additional_Implementation/{Dragon-512, Dragon-768, Dragon-1024}
+│   └── Optimized_Implementation/{Dragon-512, Dragon-768, Dragon-1024}
+├── Dragon-ARM/Implementations/        # 与 Dragon-x86 同构
+└── (Test_Vector/ 与 Others/ 自评估树, 见提交包)</code></pre>
+<p class="sub">每个实例目录含 <code>CryptHash_AlgorithmInstance.{c,h}</code>、KAT 驱动
+（<code>KAT_CryptHash.c</code>）与 ICCS 辅助（<code>drng.c/h</code>）。定长实例共用一份 191 行的
+<code>.c</code>；三个 XOF 共用另一份 245 行的变体（带真正的多块 squeeze 循环）。
+全部实例参数都放在头文件里。</p>
+
+<h2>构建与 KAT</h2>
+<p>在本仓库的 <code>harness/</code> 目录下（NGCC 统一构建）：</p>
+<pre><code>cd harness
+make -C hash-07          # 构建六个实例库（reference）
+make -C hash-07 test     # 跑 KAT harness; 汇总在 results/
+</code></pre>
+<p>六个实例对提交的 test vector 全部 KAT-PASS（清单
+<a href="../harness/hash-07/kat.sha256"><code>kat.sha256</code></a>，24 个文件），
+每次计时前先做 KAT 检查（x86_1，2026-09-25 → 09-28）。</p>
+
+<h2>核对注记（ngcc.dev 源码审查）</h2>
+<p><b>未发现 hash-07 与规范之间的偏差。</b>参数常数、轮常数、rotation offsets、lane 映射、padding、
+domain separation 规则、前馈与 digest 顺序全部一致（细节见
+<a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a> 的 "Implementation vs specification"）。</p>
+<ul class="links">
+<li>定长实例的 <code>CryptHash()</code> 完全忽略 <code>digest_len_bits</code>：总是写入
+<code>DIGEST_LANE_NUM</code> 个 lane 并返回 0。传入更小的值会缓冲区溢出；更大的值会被静默截断。</li>
+<li><code>ROTL64(x, 0)</code> 按标准是未定义行为，但没有任何 rotation 常数为 0，因此不可达。</li>
+<li>IV 在头文件中按 spec 逆序存放；加载代码做了补偿，每个 lane 收到的都是 spec 的 <code>IV_j</code>
+（两张 9-lane 表逐项核对过；spec 的 SM3 counter 导出程序未被重新计算）。</li>
+<li>部分字节输入处理正确（padding 前先屏蔽超出 <code>msg_len_bits</code> 的位）。</li>
+</ul>
+
+<h2>文件</h2>
+<ul class="links">
+<li>reference 源码树：本仓库 <code>harness/hash-07/Dragon/</code>。</li>
+<li>官方提交包 <code>Dragon.zip</code>（148,150,104 字节）：
+<a href="../official-archives/fetch-archives.sh">fetch-archives.sh</a> ·
+SHA-256 <code>088759817e3193e0ca02c3a3669fd05ac70e833b0447f336666268b61846b26c</code></li>
+<li>NICCS <a href="https://www.niccs.org.cn/niccs/Round1Submissions4/pc/content/content_2101539781751689216.html">提交页</a> ·
+<a href="https://list.niccs.org.cn/archives/list/crypthashforum@list.niccs.org.cn/thread/GRAHTRUNRC25N7P5QVCBH7CZG47REYZS/">论坛帖</a></li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>参考实现 © Dragon 提交团队，由 NICCS 发布。构建/KAT 说明依据 ngcc-harness。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Dragon 首页</a></p>
+</div></footer>
+</body>
+</html>

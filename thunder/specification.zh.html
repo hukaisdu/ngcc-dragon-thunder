@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>规范 — Thunder (hash-33)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="thunder">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Thunder<span class="id">NGCC Round-1 · hash-33</span></a>
+<nav class="cand">
+<a href="index.zh.html">首页</a>
+<a href="specification.zh.html" aria-current="page">规范</a>
+<a href="implementations.zh.html">实现</a>
+<a href="performance.zh.html">性能</a>
+<a href="analysis.zh.html">分析</a>
+<a href="../dragon/index.zh.html">Dragon ↗</a>
+<a class="lang" href="specification.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>规范<span class="sub">Thunder 哈希族 — 参数、模式、置换</span></h1>
+
+<p>权威来源：<a href="../harness/hash-33/hash-33-spec.pdf"><code>hash-33-spec.pdf</code></a>
+（52 页，英文；§2.2 模式、§2.3 Thunder-p、§2.4 hash、§2.5 XOF、§2.6 安全声明）。
+ngcc.dev 整理的逐行算法笔记保存在 <a href="../harness/hash-33/pseudocode.md"><code>pseudocode.md</code></a>。
+本页数字均对照 spec 的 LaTeX 源（2026-10-31）核验。</p>
+
+<h2>参数（spec Tables 1、5、7）</h2>
+<table>
+<tr><th>参数</th><th class="num">Thunder-512</th><th class="num">Thunder-768</th><th class="num">Thunder-1024</th><th class="num">XOF-256</th><th class="num">XOF-384</th><th class="num">XOF-512</th></tr>
+<tr><td>状态宽度 b</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td><td class="num">1600</td></tr>
+<tr><td>capacity c</td><td class="num">576</td><td class="num">832</td><td class="num">1088</td><td class="num">576</td><td class="num">832</td><td class="num">1088</td></tr>
+<tr><td>absorb rate r</td><td class="num">1024</td><td class="num">768</td><td class="num">512</td><td class="num">1024</td><td class="num">768</td><td class="num">512</td></tr>
+<tr><td>squeeze rate r′</td><td class="num">h = 512</td><td class="num">768</td><td class="num">1024</td><td class="num">1280</td><td class="num">1152</td><td class="num">1024</td></tr>
+<tr><td>轮数</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="num">12</td><td class="num">12</td></tr>
+<tr><td>digest（spec）</td><td class="num">512</td><td class="num">768</td><td class="num">1024</td><td class="num">ν（任意）</td><td class="num">ν（任意）</td><td class="num">ν（任意）</td></tr>
+<tr><td>collision 目标</td><td class="num">256</td><td class="num">384</td><td class="num">512</td><td class="num">min{256, ν/2}</td><td class="num">min{384, ν/2}</td><td class="num">min{512, ν/2}</td></tr>
+<tr><td>preimage 目标</td><td class="num">512</td><td class="num">768</td><td class="num">1024</td><td class="num">min{256, ν}</td><td class="num">min{384, ν}</td><td class="num">min{512, ν}</td></tr>
+</table>
+<p class="sub">均以 bit 计。消息长度上限 2⁶⁴ bit。定长实例取 c = h + 64——正是前馈模式允许这样紧凑的
+capacity（经典 sponge 要求 c ≥ 2h）。</p>
+
+<div class="note"><b>XOF 命名陷阱。</b> 与 Dragon 相同，<code>Thunder-XOF-256/384/512</code> 中的数字是
+<em>安全等级</em>而非输出长度。harness 通过固定长度的 <code>CryptHash</code> API 暴露 XOF，
+digest 恰为一个 squeeze block（1280/1152/1024 bit = 160/144/128 字节）。
+注意 XOF 的 r′ &gt; c（如 1280 &gt; 576）：一个 squeeze block 覆盖整个 inner 部分加部分 outer 部分，
+这是前馈模式允许的（spec §2.5）。这三个固定长度<em>不是</em>三个独立的 hash 函数——短输出是长输出的前缀。</div>
+
+<h2>模式：sponge-with-feed-forward（spec §2.2，Fig. 2）</h2>
+<p>与 Dragon 相同的 <code>Sponge-F^{P,pd10*}</code> 构造（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang —
+<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）：
+inner（capacity）部分在每次置换调用间前馈，且 digest <b>从 inner 部分</b>挤出。
+正因为输出就是 inner 部分，final-block 常数 C = 0^{c−1}‖1 才是防长度扩展的关键。</p>
+<pre><code>Thunder-h(M):                             # h ∈ {512,768,1024}, c = h+64
+    X &lt;- 0^r || IV                        # IV_j -&gt; lane j
+    Mpad &lt;- M || 1 || 0^{r-((|M|+1) mod r)}   # pd10*
+    for i = 1..l:                          # absorb
+        X &lt;- X XOR (M[i] || (i==l ? C : 0))
+        S &lt;- right_c(X)                    # XOR 之后的 inner 部分
+        X &lt;- P(X) XOR (0^r || S)           # 前馈
+    return right_h(X)                      # h &lt; c: 单次读取, 无额外置换</code></pre>
+
+<h2>置换 Thunder-p（spec §2.3，Tables 2–4）</h2>
+<p>在 1600-bit 的 5×5×64 状态上做 12 轮 <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>——与 Keccak-p 相同的步骤顺序，
+但有两处替换：</p>
+<ul class="links">
+<li><code>ψ</code>（替代 Keccak 的 χ）是 <em>3 次</em>的：
+<code>D'[x][y] = D[x][y+3] ⊕ ( ¬D[x][y+1] · D[x][y+2] · ¬D[x][y+4] )</code>，下标在 Z₅ 中。</li>
+<li><code>θ</code> 混合<em>两个</em>列校验平面 P 与 Q（偏移 t = (41, 50, 6, 10, 27)、u = 26、r = 1、
+s = 36），而 Keccak 只有一个校验平面。</li>
+</ul>
+<p>lane 布局与串行化遵循 spec：消息字按大端装入最高编号的 rate lane（<code>M_{n_r−1}</code> 进 lane 24），
+digest 为 <code>D_{n_d−1} ‖ … ‖ D_0</code>，每个 lane 按最高位在前串行化。</p>
+
+<h2>文件</h2>
+<ul class="links">
+<li>规范：<a href="../harness/hash-33/hash-33-spec.pdf"><code>hash-33-spec.pdf</code></a></li>
+<li>算法笔记 + 完整 pseudocode + 实现核对：
+<a href="../harness/hash-33/pseudocode.md"><code>pseudocode.md</code></a></li>
+<li>官方提交包 <code>Thunder.zip</code> — <a href="../official-archives/fetch-archives.sh">下载与校验</a>
+（SHA-256 <code>db6970d5…b0c8</code>，见 <a href="../official-archives/SHA256SUMS.txt">SHA256SUMS.txt</a>）</li>
+</ul>
+</main>
+<footer class="site"><div class="in">
+<p>规范 © Thunder 提交团队，由 NICCS 发布。本页摘要文字依据 spec 与 ngcc.dev 算法笔记整理。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Thunder 首页</a></p>
+</div></footer>
+</body>
+</html>

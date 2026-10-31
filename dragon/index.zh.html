@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dragon 哈希族 (hash-07)</title>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body class="dragon">
+<header class="site"><div class="in">
+<a class="brand" href="index.zh.html">Dragon<span class="id">NGCC Round-1 · hash-07</span></a>
+<nav class="cand">
+<a href="index.zh.html" aria-current="page">首页</a>
+<a href="specification.zh.html">规范</a>
+<a href="implementations.zh.html">实现</a>
+<a href="performance.zh.html">性能</a>
+<a href="analysis.zh.html">分析</a>
+<a href="../thunder/index.zh.html">Thunder ↗</a>
+<a class="lang" href="index.html">EN</a>
+</nav>
+</div></header>
+<main>
+<h1>Dragon 哈希族<span class="sub">NGCC Round-1 hash 候选 <code>hash-07</code> · symmetric（permutation-based）</span></h1>
+
+<div class="badges">
+<span class="badge">NGCC Round 1</span>
+<span class="badge">hash-07</span>
+<span class="badge ok">KAT 6/6 PASS</span>
+<span class="badge">暂无公开漏洞发现*</span>
+</div>
+
+<figure class="hero">
+<img src="hero.png" alt="赭红与墨灰的中国龙穿行于 5×5 lane 状态格之间，身后拖着点流" width="1536" height="1024">
+<figcaption>Dragon — 中国龙：龙身穿过 Dragon-p 的 5×5 lane 状态（本页配图，AI 生成于 2026-10-30）</figcaption>
+</figure>
+
+<p>Dragon 的核心是 <em>sponge-forward</em> 模式：sponge 的 capacity（inner）部分在每次置换前被保存、置换后
+XOR 回去，把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c, h}，因此 1600-bit 状态即可支撑
+1024-bit preimage 目标。置换 <b>Dragon-p</b> 是 5×5×64 lane 上的 16 轮 ARX。全族共六个实例：
+Dragon-512/768/1024（定长 hash）与 Dragon-XOF-256/384/512（XOF）。本站汇总其规范、参考实现、KAT、
+性能与第三方分析；素材镜像自 ngcc.dev 与 NICCS（2026-10-30），数字已对照 spec LaTeX 源核验。</p>
+
+<h2>动态</h2>
+<ul class="news">
+<li>2026-10-30 — 研究页面创建；全部材料镜像入仓库。</li>
+</ul>
+
+<h2>速览</h2>
+<table>
+<tr><th>条目</th><th>内容</th></tr>
+<tr><td>模式 (mode)</td><td>sponge-forward <code>Sponge-F^{P,pd10*}</code>（Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>，将发表于 CRYPTO 2026）— capacity 部分每次置换后前馈回加</td></tr>
+<tr><td>置换</td><td><b>Dragon-p</b>：5×5×64 lane（1600-bit 状态）上的 16 轮 ARX；rotations (1, 10, 24, 33, 49)</td></tr>
+<tr><td>实例</td><td>Dragon-512 / -768 / -1024（定长 hash）与 Dragon-XOF-256 / -384 / -512（XOF）</td></tr>
+<tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF generic 等级 log₂Q = 256/384/512</td></tr>
+<tr><td>KAT</td><td>6/6 实例 PASS（ngcc.dev harness，x86_1 测量期 2026-09-25 → 09-28）</td></tr>
+<tr><td>实现核对</td><td>未发现与规范的偏差（ngcc.dev 源码审查）</td></tr>
+<tr><td>速度（设计团队自评估）</td><td>x86-64（Intel Xeon Platinum 8358）64 KiB 下 4.87 cycles/byte，RK3588 上 4.47——在每个测试长度上均低于 SHA3-512 与 SM3 两个基线（spec §5.1，Tables 14–15）</td></tr>
+<tr><td>速度（独立对照）</td><td>reference 实现（未优化）：64 KiB 下 17.8 cycles/byte（ngcc.dev x86_1）——见<a href="performance.zh.html">性能</a>页</td></tr>
+</table>
+
+<h2>页面导航</h2>
+<ul class="links">
+<li><a href="specification.zh.html">规范</a> — 参数表、模式与置换、spec PDF。</li>
+<li><a href="implementations.zh.html">实现</a> — 提交包结构、构建与 KAT、核对注记。</li>
+<li><a href="performance.zh.html">性能</a> — 设计团队自评估与 ngcc.dev 独立对照。</li>
+<li><a href="analysis.zh.html">分析</a> — 安全状态、constant-time 审查、规范核对。</li>
+</ul>
+
+<ul class="links">
+<li>规范 PDF：<a href="../harness/hash-07/hash-07-spec.pdf"><code>hash-07-spec.pdf</code></a>（42 页，英文）·
+完整算法笔记：<a href="../harness/hash-07/pseudocode.md"><code>pseudocode.md</code></a></li>
+<li>NICCS 官方<a href="https://www.niccs.org.cn/niccs/Round1Submissions4/pc/content/content_2101539781751689216.html">提交页</a> ·
+提交包 <code>Dragon.zip</code>（见 <a href="../official-archives/fetch-archives.sh">fetch-archives.sh</a>，148,150,104 字节）</li>
+<li>ngcc.dev：<a href="https://ngcc.dev/reports/hash-07.html">security 报告</a> ·
+<a href="https://ngcc.dev/constant-time/hash-07.html">constant-time 审查</a> ·
+<a href="https://ngcc.dev/performance/x86_1/hash-07.html">x86_1</a> /
+<a href="https://ngcc.dev/performance/arm_1/hash-07.html">arm_1</a> 性能
+（本地副本在 <code>../ngcc-site/</code>）</li>
+</ul>
+
+<p class="sub">* “暂无公开漏洞发现”是 ngcc.dev 公开 finding 清单的当前状态（2026-10-28 快照），
+不构成安全性背书；该候选仍在评审中。</p>
+</main>
+<footer class="site"><div class="in">
+<p>规范与参考实现 © Dragon 提交团队，由 NICCS 发布。独立分析与测量来自
+<a href="https://ngcc.dev">ngcc.dev</a>（M.-J. Saarinen）。本研究镜像由 Kai Hu（胡凯）维护，仅供研究协作。</p>
+<p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="../index.zh.html">站点首页</a></p>
+</div></footer>
+</body>
+</html>

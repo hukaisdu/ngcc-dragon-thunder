@@ -16,16 +16,11 @@
 <a href="performance.html">Performance</a>
 <a href="analysis.html">Analysis</a>
 <a href="../dragon/index.html">Dragon ↗</a>
+<a class="lang" href="specification.zh.html">中文</a>
 </nav>
 </div></header>
 <main>
 <h1>Specification<span class="sub">Thunder Hash Family — parameters, mode, permutation</span></h1>
-
-<div class="zh"><span class="tag">中文摘要</span><br>
-六个实例共享 1600-bit 状态与同一个 12 轮置换 Thunder-p，参数网格与 Dragon 完全相同
-（c = 576/832/1088，r = 1024/768/512）。定长实例 c = h + 64；XOF 的数字同样是安全等级而非输出长度，
-一次性 API 观察到的是一个 squeeze block（1280/1152/1024 bit）。与 Dragon 的差别在置换：
-Thunder-p 的 <code>ψ</code> 是 3 次、<code>θ</code> 是双列校验。</div>
 
 <p>Authoritative source: <a href="../harness/hash-33/hash-33-spec.pdf"><code>hash-33-spec.pdf</code></a>
 (52 pages, English; §2.2 mode, §2.3 Thunder-p, §2.4 hash, §2.5 XOF, §2.6 claims).
