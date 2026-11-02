@@ -47,7 +47,7 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 <tr><td>benchmark mode</td><td>single core</td><td>single core</td></tr>
 </table>
 
-<h3>Speedup comparison (higher is faster; dashed line = baseline)</h3>
+<h3>Speedup comparison (higher is faster; dashed = baseline; 2-decimal labels near 1×)</h3>
 <div class="fig-grid">
 <svg viewBox="0 0 470 350" role="img" aria-label="vs SHA3-512 · x86-64" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
 <rect width="470" height="350" fill="#ffffff"/>
@@ -313,13 +313,13 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 <rect x="114.0" y="167.3" width="12" height="138.7" fill="#7d2f1e"/>
 <text x="120.0" y="164.8" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#7d2f1e">1.2</text>
 <rect x="128.0" y="195.9" width="12" height="110.1" fill="#d98c76"/>
-<text x="134.0" y="193.4" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.9</text>
+<text x="134.0" y="193.4" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.93</text>
 <rect x="152.0" y="135.6" width="12" height="170.4" fill="#b3452c"/>
 <text x="158.0" y="133.1" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#b3452c">1.4</text>
 <rect x="166.0" y="158.3" width="12" height="147.7" fill="#7d2f1e"/>
 <text x="172.0" y="155.8" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#7d2f1e">1.2</text>
 <rect x="180.0" y="199.4" width="12" height="106.6" fill="#d98c76"/>
-<text x="186.0" y="196.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.9</text>
+<text x="186.0" y="196.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.90</text>
 <rect x="204.0" y="121.7" width="12" height="184.3" fill="#b3452c"/>
 <text x="210.0" y="119.2" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#b3452c">1.6</text>
 <rect x="218.0" y="151.0" width="12" height="155.0" fill="#7d2f1e"/>
@@ -386,8 +386,7 @@ this file is byte-identical to the official <i>Algorithm specifications.pdf</i> 
 <p class="sub">† The SHA3-512 and SM3 baselines are portable software implementations that do not use the
 Armv8.2 SHA-3 / SM3 instruction extensions (spec Table 15 footnotes). All three Dragon instances stay
 below the SHA3-512 baseline at every tested length on both platforms, and Dragon-512 / Dragon-768 also
-stay below SM3 everywhere; Dragon-1024 crosses above SM3 from S4 on (x86-64 10.44 vs 9.28 cpb), with a
-long-message cost close to SM3 (spec §5.1 Observations and §6). The measured optimized x86
+stay below SM3 everywhere; on x86-64 Dragon-1024 crosses above SM3 from S4 (10.44 vs 9.28 cpb), and on ARM from S2 (21.93 vs 20.44) (spec §5.1 Observations and §6). The measured optimized x86
 implementation costs ≈38.8 cycles per permutation round (design estimate ≈40, spec p. 33). The XOF
 instances are not covered by the software self-assessment.</p>
 

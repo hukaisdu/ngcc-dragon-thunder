@@ -51,13 +51,12 @@
 <p><b>未发现参数或常数不吻合。</b>整个置换逐项核对（非抽样）；capacity、rate、IV 放置
 （数组逆序 + 加载补偿）、前馈、消息布局、padding 与 final-block 常数均与 spec 一致。</p>
 
-<h2>输出长度 domain separation —— 已验证（ngcc.dev）</h2>
-<ul class="links">
-<li>每个实例<b>使用不同的 IV</b>（spec IV 表）——六个实例（包括共享 capacity 的两对：
-512/XOF-256、768/XOF-384、1024/XOF-512）加载的 IV lane 集合完全不同。</li>
-<li>三个安全等级的 <b>rate/capacity 划分不同</b>（576/832/1088），消息分块方式因此不同。</li>
-<li><b>final-block 常数</b> C = 0^{c−1}‖1——同时是防长度扩展的关键，因为 digest 直接从 inner 部分读出。</li>
-</ul>
+<h2>输出长度 domain separation</h2>
+<p>共享 capacity 的实例对（如 Thunder-512 / Thunder-XOF-256，均为 c = 576）之间，
+<b>仅靠不同的 IV</b>（spec IV 表）实现分离——六个实例加载的 IV lane 集合完全不同（ngcc.dev 已验证）。
+rate/capacity 划分（576/832/1088）区分安全等级但区分不了这些配对。
+final-block 常数 C = 0^{c−1}‖1 在六个实例中<em>完全相同</em>；它分离的是末块与非末块
+（防长度扩展），对实例间分离没有贡献。</p>
 <p>XOF 固有的注意点：同一 XOF 实例内，不同长度的输出互为前缀；harness 暴露的三个固定长度
 （1280/1152/1024 bit）不是三个独立的 hash 函数。</p>
 

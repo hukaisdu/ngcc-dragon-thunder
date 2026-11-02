@@ -6,7 +6,7 @@
 <title>Thunder Hash Family (hash-33)</title>
 <link rel="stylesheet" href="../site.css?v=3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round Keccak-p-shaped permutation Thunder-p with a degree-3 layer in the sponge-forward mode.">
+<meta name="description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round permutation Thunder-p (Keccak-p lane geometry, order ι→ρ→θ→π→ψ) with a degree-3 layer in the sponge-forward mode.">
 <meta property="og:title" content="Thunder Hash Family (hash-33)">
 <meta property="og:description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round Keccak-p-shaped permutation Thunder-p with a degree-3 layer in the sponge-forward mode.">
 <meta property="og:type" content="website">
@@ -53,7 +53,7 @@
 <table>
 <tr><th>item</th><th>value</th></tr>
 <tr><td>mode</td><td>sponge-with-feed-forward <code>Sponge-F^{P,pd10*}</code> (Guo, Hu, Jiang, Fan, Fu, Preneel, Wang — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, published at CRYPTO 2026) — digest is squeezed <em>from the inner (capacity) part</em>; a final-block constant C prevents length extension</td></tr>
-<tr><td>permutation</td><td><b>Thunder-p</b>: 12-round, Keccak-p-shaped 1600-bit (5×5×64) permutation, round <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code>, with degree-3 <code>ψ</code> and double-column-parity <code>θ</code></td></tr>
+<tr><td>permutation</td><td><b>Thunder-p</b>: 12-round, 1600-bit (5×5×64) permutation using the Keccak-p lane geometry; round <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code> (order ι→ρ→θ→π→ψ), with degree-3 <code>ψ</code> and double-column-parity <code>θ</code></td></tr>
 <tr><td>instances</td><td>Thunder-512 / -768 / -1024 (fixed-output hash) and Thunder-XOF-256 / -384 / -512 (XOF)</td></tr>
 <tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF: min{level, ν/2} / min{level, ν}</td></tr>
 <tr><td>KAT</td><td>6/6 instances pass their Known-Answer Test (KAT) vectors — the submitted input→answer pairs (ngcc.dev harness, 2026-09-25 → 09-28)</td></tr>

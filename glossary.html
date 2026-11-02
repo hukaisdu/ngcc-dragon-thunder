@@ -39,7 +39,7 @@
 <tr><td>KAT</td><td>Known-Answer Test: the submission provides “input → expected output” pairs; an implementation passes if it reproduces every answer, showing it matches the specification.</td></tr>
 <tr><td>reference / optimized implementation</td><td>Submissions ship several tiers: reference is a readable transcription of the spec (slow), optimized targets speed. The two performance tables on this site come from these different tiers (and machines) and are not directly comparable.</td></tr>
 <tr><td>constant-time</td><td>Execution time and memory addresses do not depend on secret data — a necessary condition against timing side channels.</td></tr>
-<tr><td>domain separation</td><td>Making internal states for different uses/lengths unconfusable (e.g. Thunder: distinct IVs; Dragon: distinct IVs plus the final-block constant C).</td></tr>
+<tr><td>domain separation</td><td>Making internal states for different uses/lengths unconfusable. Both families use distinct IVs per instance, plus the final-block constant C = 0^{c−1}‖1 (which separates the last block from all others and prevents length extension). Between instances sharing a capacity, only the distinct IVs provide separation.</td></tr>
 <tr><td>lane</td><td>The 1600-bit state is a 5×5 array of 64-bit words; each word is a lane.</td></tr>
 <tr><td>ARX</td><td>Modular Addition, Rotation, XOR — the three instruction types that make up Dragon-p.</td></tr>
 <tr><td>pd10* padding</td><td>The padding rule: append a single 1 bit, then zeros up to the block boundary (extra all-zero block case: see the specification page).</td></tr>

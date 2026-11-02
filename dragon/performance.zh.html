@@ -54,7 +54,7 @@ SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其�
 <tr><td>测量模式</td><td>单核</td><td>单核</td></tr>
 </table>
 
-<h3>速度倍率对比（越高越快；虚线 = 基线）</h3>
+<h3>速度倍率对比（越高越快；虚线 = 基线；接近 1× 处标两位小数）</h3>
 <div class="fig-grid">
 <svg viewBox="0 0 470 350" role="img" aria-label="vs SHA3-512 · x86-64" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
 <rect width="470" height="350" fill="#ffffff"/>
@@ -320,13 +320,13 @@ SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其�
 <rect x="114.0" y="167.3" width="12" height="138.7" fill="#7d2f1e"/>
 <text x="120.0" y="164.8" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#7d2f1e">1.2</text>
 <rect x="128.0" y="195.9" width="12" height="110.1" fill="#d98c76"/>
-<text x="134.0" y="193.4" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.9</text>
+<text x="134.0" y="193.4" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.93</text>
 <rect x="152.0" y="135.6" width="12" height="170.4" fill="#b3452c"/>
 <text x="158.0" y="133.1" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#b3452c">1.4</text>
 <rect x="166.0" y="158.3" width="12" height="147.7" fill="#7d2f1e"/>
 <text x="172.0" y="155.8" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#7d2f1e">1.2</text>
 <rect x="180.0" y="199.4" width="12" height="106.6" fill="#d98c76"/>
-<text x="186.0" y="196.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.9</text>
+<text x="186.0" y="196.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#d98c76">0.90</text>
 <rect x="204.0" y="121.7" width="12" height="184.3" fill="#b3452c"/>
 <text x="210.0" y="119.2" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#b3452c">1.6</text>
 <rect x="218.0" y="151.0" width="12" height="155.0" fill="#7d2f1e"/>
@@ -392,8 +392,7 @@ SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其�
 </div>
 <p class="sub">† SHA3-512 与 SM3 基线为可移植软件实现，未使用 Armv8.2 的 SHA-3 / SM3 指令扩展
 （spec Table 15 脚注）。三个 Dragon 实例在两个平台的全部测试长度上均低于 SHA3-512 基线；
-Dragon-512 / Dragon-768 还在全部长度上低于 SM3；Dragon-1024 从 S4 起高于 SM3
-（x86-64 上 10.44 vs 9.28 cpb），长消息代价接近 SM3（spec §5.1 Observations 与 §6）。
+Dragon-512 / Dragon-768 还在全部长度上低于 SM3；x86-64 上 Dragon-1024 从 S4 起高于 SM3（10.44 vs 9.28 cpb），ARM 上从 S2 起（21.93 vs 20.44）（spec §5.1 Observations 与 §6）。
 实测的 optimized x86 实现每轮置换约 38.8 cycles（设计估算 ≈40，spec 第 33 页）。
 XOF 实例不在软件自评估范围内。</p>
 

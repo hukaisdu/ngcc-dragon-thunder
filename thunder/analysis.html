@@ -55,14 +55,13 @@ reviewed build — other compilers and targets still require checking.</li>
 capacities, rates, IV placement (reverse-order array with compensating loader), feed-forward, message
 layout, padding and the final-block constant all match the spec.</p>
 
-<h2>Output-length domain separation — verified (ngcc.dev)</h2>
-<ul class="links">
-<li><b>Distinct IVs</b> per instance (spec Table 6) — all six load completely different IV lane sets,
-including the pairs that share a capacity (512/XOF-256, 768/XOF-384, 1024/XOF-512).</li>
-<li><b>Distinct rate/capacity split</b> per security level (576/832/1088).</li>
-<li><b>Final-block constant</b> C = 0^{c−1}‖1 — also the length-extension defence, which matters more than
-usual because the digest is read from the inner part.</li>
-</ul>
+<h2>Output-length domain separation</h2>
+<p>Between instances sharing a capacity (e.g. Thunder-512 / Thunder-XOF-256, both c = 576),
+<b>only the distinct IVs</b> (spec IV table) provide separation — all six load completely different
+IV lane sets, verified by ngcc.dev. The rate/capacity split (576/832/1088) distinguishes security
+levels but not these pairs. The final-block constant C = 0^{c−1}‖1 is <em>identical across all
+six instances</em>; it separates the last absorbed block from non-final blocks (the length-extension
+defence) but contributes nothing to inter-instance separation.</p>
 <p>Caveat inherent to XOFs: within one instance, outputs of different lengths are prefixes of one another;
 the three harness-exposed fixed lengths (1280/1152/1024 bits) are not separate hash functions.</p>
 

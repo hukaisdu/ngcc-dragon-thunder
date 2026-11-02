@@ -64,7 +64,7 @@ Dragon-512/768/1024（定长输出）与 Dragon-XOF-256/384/512（XOF）。本�
 <tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF generic 等级 log₂Q = 256/384/512</td></tr>
 <tr><td>自测向量（KAT）</td><td>6/6 实例通过（KAT = Known-Answer Test，已知答案测试——对提交的“输入 → 期望输出”向量对答案；ngcc.dev harness，测量期 2026-09-25 → 09-28）</td></tr>
 <tr><td>实现核对</td><td>未发现与规范的偏差（ngcc.dev 源码审查）</td></tr>
-<tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>2.6×</b>（x86-64：4.87 vs 12.46 cpb）、约 <b>3.5×</b>（ARM：4.47 vs 15.49）；Dragon-512 在全部测试长度、两个平台均低于 SHA3-512 与 SM3（spec §5.1，Tables 14–15）</td></tr>
+<tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>2.6×</b>（x86-64：4.87 vs 12.46 cpb）、约 <b>3.5×</b>（ARM：4.47 vs 15.49）；Dragon-512 在全部测试长度、两个平台均低于 SHA3-512 与 SM3；Dragon-1024 从 S2/S4 起高于 SM3（ARM/x86-64）（spec §5.1）</td></tr>
 </table>
 
 <h2>页面导航</h2>
