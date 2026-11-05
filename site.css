@@ -165,7 +165,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
   --hb-acc: #b3452c; --hb-glow: rgba(179,69,44,.20);
   --hb-base: #f1ebe3; --hb-rgb: 241,235,227; --hb-py: 70%;
   --hb-art: url(assets/hero-banner-dragon-light.webp);
-  --hb-size: cover; --hb-pos: 78% 62%;
+  --hb-size: auto 120%; --hb-pos: 78% 62%;
 
   background-color: var(--hb-base);
   max-width: calc(64rem - 2.4rem); margin: 1.5rem auto 0; /* align with main's padded column */
@@ -176,7 +176,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
 }
 .hero-banner--thunder {
   --hb-acc: #4653b0; --hb-glow: rgba(70,83,176,.20);
-  --hb-base: #e7e1d8; --hb-rgb: 231,225,216; --hb-py: 68%;
+  --hb-base: #e7e1d8; --hb-rgb: 231,225,216; --hb-py: 68%; --hb-size: auto 102%;
   --hb-art: url(assets/hero-banner-thunder-light.webp?v=2);
 }
 
@@ -185,7 +185,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
   content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 62%; z-index: -2;
   background-image: var(--hb-art);
   background-repeat: no-repeat;
-  background-size: auto 120%;
+  background-size: var(--hb-size, auto 120%);
   background-position: right var(--hb-py, 68%);
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 72px);
   mask-image: linear-gradient(90deg, transparent 0, #000 72px);
@@ -257,7 +257,7 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
   --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
 }
 :root[data-theme="dark"] .hero-banner--thunder {
-  --hb-base: #080911; --hb-rgb: 8,9,17; --hb-py: 69%;
+  --hb-base: #080911; --hb-rgb: 8,9,17; --hb-py: 69%; --hb-size: auto 102%;
   --hb-art: url(assets/hero-banner-thunder.webp?v=2);
   --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5);
 }
@@ -274,7 +274,7 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
     --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
   }
   :root:not([data-theme="light"]) .hero-banner--thunder {
-    --hb-base: #080911; --hb-rgb: 8,9,17; --hb-py: 69%;
+    --hb-base: #080911; --hb-rgb: 8,9,17; --hb-py: 69%; --hb-size: auto 102%;
     --hb-art: url(assets/hero-banner-thunder.webp?v=2);
     --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5);
   }
