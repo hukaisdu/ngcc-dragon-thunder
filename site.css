@@ -160,7 +160,6 @@ button.theme-toggle:hover { border-color: var(--acc); }
   /* light defaults */
   --hb-ink: #17212b; --hb-lead: #4b5866;
   --hb-acc: #b3452c; --hb-glow: rgba(179,69,44,.20);
-  --hb-badge-b: rgba(20,32,45,.16); --hb-badge-bg: rgba(255,255,255,.62); --hb-badge-ink: #3c4956;
   --hb-m1: rgba(248,246,243,.97); --hb-m2: rgba(248,246,243,.93);
   --hb-m3: rgba(248,246,243,.60); --hb-m4: rgba(248,246,243,.06);
   --hb-v1: rgba(248,246,243,.97); --hb-v2: rgba(248,246,243,.86); --hb-v3: rgba(248,246,243,.34);
@@ -195,14 +194,9 @@ button.theme-toggle:hover { border-color: var(--acc); }
   text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 0 26px var(--hb-glow);
 }
 .hb-lead { margin: 0 0 1.3rem; max-width: 33rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
-.hero-banner .badges { margin: 0; }
-.hero-banner .badge {
-  border-color: var(--hb-badge-b); background: var(--hb-badge-bg); color: var(--hb-badge-ink);
-}
 /* dark artwork on dark themes */
 :root[data-theme="dark"] .hero-banner {
   --hb-ink: #eef3f8; --hb-lead: #c3cedb;
-  --hb-badge-b: rgba(255,255,255,.22); --hb-badge-bg: rgba(255,255,255,.07); --hb-badge-ink: #dbe4ee;
   --hb-m1: rgba(8,12,17,.95); --hb-m2: rgba(8,12,17,.90);
   --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
   --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
@@ -218,7 +212,6 @@ button.theme-toggle:hover { border-color: var(--acc); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .hero-banner {
     --hb-ink: #eef3f8; --hb-lead: #c3cedb;
-    --hb-badge-b: rgba(255,255,255,.22); --hb-badge-bg: rgba(255,255,255,.07); --hb-badge-ink: #dbe4ee;
     --hb-m1: rgba(8,12,17,.95); --hb-m2: rgba(8,12,17,.90);
     --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
     --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);

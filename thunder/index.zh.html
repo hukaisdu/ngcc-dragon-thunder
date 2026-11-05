@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thunder 杂凑家族 (hash-33)</title>
-<link rel="stylesheet" href="../site.css?v=24">
+<link rel="stylesheet" href="../site.css?v=25">
 <script src="../theme.js?v=2"></script>
 <link rel="icon" type="image/png" href="../assets/favicon-thunder.png">
 <meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮置换 Thunder-p（Keccak-p lane 几何，序 ι→ρ→θ→π→ψ）（三次非线性层 ψ）+ sponge-forward 前馈模式。">
@@ -38,10 +38,6 @@
 <p class="hb-kicker">NGCC Round-1 杂凑候选 · <code>hash-33</code></p>
 <h1>Thunder 杂凑家族</h1>
 <p class="hb-lead">12 轮置换 Thunder-p（Keccak-p lane 几何、三次非线性层 ψ）搭配 sponge-forward 前馈模式。六个实例，自测向量 6/6 通过，硬件吞吐最高比 SHA3-512 高 82%。</p>
-<div class="badges">
-<span class="badge">自测向量 6/6 通过</span>
-<span class="badge">暂无公开漏洞发现*</span>
-</div>
 </div>
 </section>
 
@@ -96,8 +92,6 @@ digest 直接从 inner 部分读出），但置换不同：<b>Thunder-p</b> 沿�
 （本地副本在 <code>../ngcc-site/</code>）</li>
 </ul>
 
-<p class="sub">* “暂无公开漏洞发现”是 ngcc.dev 公开 finding 清单的当前状态（2026-10-28 快照），
-不构成安全性背书；该候选仍在评审中。</p>
 </main>
 <footer class="site"><div class="in">
 <p>规范与参考实现 © Thunder 设计团队（本组），由 NICCS 发布。独立分析与测量来自
