@@ -309,7 +309,7 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
 
 /* ---- responsive containment: wide tables and long inline code must not overflow ---- */
 :not(pre) > code { overflow-wrap: anywhere; }
-img { max-width: 100%; height: auto; }
+img { max-width: 100% !important; height: auto; }
 @media (max-width: 720px) {
   table { display: block; overflow-x: auto; }
 }
