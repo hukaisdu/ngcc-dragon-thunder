@@ -233,8 +233,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
   .hero-banner::before {
     width: auto; inset: 0;
     -webkit-mask-image: none; mask-image: none;
-    background-size: cover;
-    background-position: 78% 62%;
+    background-size: var(--hb-size, cover);
+    background-position: var(--hb-pos, 78% 62%);
   }
   .hero-banner::after {
     background:
@@ -295,4 +295,20 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
   :root:not([data-theme="light"]) .hero-banner::after {
     background: linear-gradient(180deg, rgba(var(--hb-rgb),.99) 0%, rgba(var(--hb-rgb),.92) 42%, rgba(var(--hb-rgb),.45) 100%);
   }
+}
+
+/* ---- narrow screens: per-variant artwork anchor (mobile crops sideways) ---- */
+@media (max-width: 720px) {
+  .hero-banner--dragon { --hb-pos: 72% 62%; }
+  .hero-banner--thunder { --hb-pos: 58% 57%; }
+  :root[data-theme="dark"] .hero-banner--dragon,
+  :root:not([data-theme="light"]) .hero-banner--dragon { --hb-pos: 72% 60%; }
+  :root[data-theme="dark"] .hero-banner--thunder,
+  :root:not([data-theme="light"]) .hero-banner--thunder { --hb-pos: 47% 44%; }
+}
+
+/* ---- responsive containment: wide tables and long inline code must not overflow ---- */
+:not(pre) > code { overflow-wrap: anywhere; }
+@media (max-width: 720px) {
+  table { display: block; overflow-x: auto; }
 }
