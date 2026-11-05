@@ -10,7 +10,7 @@
 <meta property="og:title" content="Thunder Hash Family (hash-33)">
 <meta property="og:description" content="Thunder (hash-33), an NGCC Round-1 hash candidate: the 12-round Keccak-p-shaped permutation Thunder-p with a degree-3 layer in the sponge-forward mode.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/thunder/hero.png">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero.png">
 
 </head>
 <body class="thunder">
@@ -33,7 +33,7 @@
 <div class="badges">
 <span class="badge">NGCC Round 1</span>
 <span class="badge">hash-33</span>
-<span class="badge ok">KAT 6/6 PASS</span>
+<span class="badge">KAT 6/6 pass</span>
 <span class="badge">no published finding*</span>
 </div>
 
@@ -56,7 +56,7 @@
 <tr><td>permutation</td><td><b>Thunder-p</b>: 12-round, 1600-bit (5×5×64) permutation using the Keccak-p lane geometry; round <code>R = ψ ∘ π ∘ θ ∘ ρ ∘ ι</code> (order ι→ρ→θ→π→ψ), with degree-3 <code>ψ</code> and double-column-parity <code>θ</code></td></tr>
 <tr><td>instances</td><td>Thunder-512 / -768 / -1024 (fixed-output hash) and Thunder-XOF-256 / -384 / -512 (XOF)</td></tr>
 <tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF: min{level, ν/2} / min{level, ν}</td></tr>
-<tr><td>KAT</td><td>6/6 instances pass their Known-Answer Test (KAT) vectors — the submitted input→answer pairs (ngcc.dev harness, 2026-09-25 → 09-28)</td></tr>
+<tr><td>KAT</td><td>6/6 instances pass the submitted Known-Answer Test (KAT) vectors (ngcc.dev harness)</td></tr>
 <tr><td>implementation review</td><td>no parameter or constant mismatch found; output-length domain separation verified via three independent mechanisms</td></tr>
 <tr><td>speed (designer self-assessment)</td><td>≈ <b>1.8×</b> faster than SHA3-512 at long messages on x86-64 (6.95 vs 12.46 cpb), ≈ <b>2.0×</b> on ARM (7.62 vs 15.49); Thunder-512 also beats SM3 throughout on x86-64 (6.95 vs 8.45) (spec §5.1, Tables 18–19)</td></tr>
 </table>

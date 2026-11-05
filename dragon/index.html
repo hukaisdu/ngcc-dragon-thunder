@@ -10,7 +10,7 @@
 <meta property="og:title" content="Dragon Hash Family (hash-07)">
 <meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT and performance.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
 
 </head>
 <body class="dragon">
@@ -33,7 +33,7 @@
 <div class="badges">
 <span class="badge">NGCC Round 1</span>
 <span class="badge">hash-07</span>
-<span class="badge ok">KAT 6/6 PASS</span>
+<span class="badge">KAT 6/6 pass</span>
 <span class="badge">no published finding*</span>
 </div>
 
@@ -56,7 +56,7 @@
 <tr><td>permutation</td><td><b>Dragon-p</b>: 16-round ARX on a 5×5 array of 64-bit lanes (1600-bit state); rotations (1, 10, 24, 33, 49)</td></tr>
 <tr><td>instances</td><td>Dragon-512 / -768 / -1024 (fixed-output hash) and Dragon-XOF-256 / -384 / -512 (XOF)</td></tr>
 <tr><td>claimed security</td><td>collision 256/384/512 bits, preimage 512/768/1024 bits (fixed instances); XOF generic level log₂Q = 256/384/512</td></tr>
-<tr><td>KAT</td><td>6/6 instances pass their Known-Answer Test (KAT) vectors — the submitted input→answer pairs (ngcc.dev harness, 2026-09-25 → 09-28)</td></tr>
+<tr><td>KAT</td><td>6/6 instances pass the submitted Known-Answer Test (KAT) vectors (ngcc.dev harness)</td></tr>
 <tr><td>implementation review</td><td>no deviation from the specification found (ngcc.dev source review)</td></tr>
 <tr><td>speed (designer self-assessment)</td><td>≈ <b>2.6×</b> faster than SHA3-512 at long messages on x86-64 (4.87 vs 12.46 cpb), ≈ <b>3.5×</b> on ARM (4.47 vs 15.49); Dragon-512 stays below both baselines at every tested length (spec §5.1, Tables 14–15)</td></tr>
 </table>

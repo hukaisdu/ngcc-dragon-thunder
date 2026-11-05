@@ -10,7 +10,7 @@
 <meta property="og:title" content="Dragon 杂凑家族 (hash-07)">
 <meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量与性能。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://hukaisdu.github.io/ngcc-dragon-thunder/dragon/hero.png">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
 
 </head>
 <body class="dragon">
@@ -33,7 +33,7 @@
 <div class="badges">
 <span class="badge">NGCC Round 1</span>
 <span class="badge">hash-07</span>
-<span class="badge ok">自测向量 6/6 通过</span>
+<span class="badge">自测向量 6/6 通过</span>
 <span class="badge">暂无公开漏洞发现*</span>
 </div>
 
@@ -45,9 +45,7 @@
 
 <p>Dragon 的核心是 <em>sponge-forward</em> 模式：sponge 的 capacity（inner）部分在每次置换前被保存、置换后
 XOR 回去，把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c, h}，因此 1600-bit 状态即可支撑
-1024-bit preimage 目标。置换 <b>Dragon-p</b> 是 5×5×64 lane 上的 16 轮 ARX。全族共六个实例：
-Dragon-512/768/1024（定长输出）与 Dragon-XOF-256/384/512（XOF）。本站汇总其规范、参考实现、KAT、
-性能与第三方分析；素材镜像自 ngcc.dev 与 NICCS（2026-10-30），数字已对照 spec LaTeX 源核验。</p>
+1024-bit preimage 目标。置换 <b>Dragon-p</b> 是 5×5×64 lane 上的 16 轮 ARX。</p>
 
 <h2>动态</h2>
 <ul class="news">
@@ -62,9 +60,9 @@ Dragon-512/768/1024（定长输出）与 Dragon-XOF-256/384/512（XOF）。本�
 <tr><td>置换</td><td><b>Dragon-p</b>：5×5×64 lane（1600-bit 状态）上的 16 轮 ARX；rotations (1, 10, 24, 33, 49)</td></tr>
 <tr><td>实例</td><td>Dragon-512 / -768 / -1024（定长 hash）与 Dragon-XOF-256 / -384 / -512（XOF）</td></tr>
 <tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF generic 等级 log₂Q = 256/384/512</td></tr>
-<tr><td>自测向量（KAT）</td><td>6/6 实例通过（KAT = Known-Answer Test，已知答案测试——对提交的“输入 → 期望输出”向量对答案；ngcc.dev harness，测量期 2026-09-25 → 09-28）</td></tr>
+<tr><td>自测向量（KAT）</td><td>6/6 实例通过提交的 KAT 向量（ngcc.dev harness）</td></tr>
 <tr><td>实现核对</td><td>未发现与规范的偏差（ngcc.dev 源码审查）</td></tr>
-<tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>2.6×</b>（x86-64：4.87 vs 12.46 cpb）、约 <b>3.5×</b>（ARM：4.47 vs 15.49）；Dragon-512 在全部测试长度、两个平台均低于 SHA3-512 与 SM3；Dragon-1024 从 S2/S4 起高于 SM3（ARM/x86-64）（spec §5.1）</td></tr>
+<tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>2.6×</b>（x86-64：4.87 vs 12.46 cpb）、约 <b>3.5×</b>（ARM：4.47 vs 15.49）；Dragon-512 在全部测试长度快于 SHA3-512 与 SM3（spec §5.1）</td></tr>
 </table>
 
 <h2>页面导航</h2>
