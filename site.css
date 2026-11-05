@@ -89,15 +89,37 @@ th.num, td.num { white-space: nowrap; }
   table { font-size: .85rem; }
 }
 
+/* ---- dark theme: manual choice via [data-theme="dark"] on <html>,
+        or system preference when the visitor has not chosen ---- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #dfe5ea; --mut: #93a1ae; --line: #333d47; --bg: #13171c; --soft: #1c2229;
+}
+:root[data-theme="dark"] body.dragon  { --acc: #d97b5f; --acc-soft: #2a1d18; }
+:root[data-theme="dark"] body.thunder { --acc: #93a0e0; --acc-soft: #1e2130; }
+:root[data-theme="dark"] body.landing { --acc: #74b193; --acc-soft: #18251f; }
+:root[data-theme="dark"] code { background: #232b33; }
+:root[data-theme="dark"] .badge.ok { border-color: #3d5a44; color: #8fc49a; background: #16241a; }
+:root[data-theme="dark"] figure.fig img,
+:root[data-theme="dark"] figure.hero img { background: #fff; }
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
     --ink: #dfe5ea; --mut: #93a1ae; --line: #333d47; --bg: #13171c; --soft: #1c2229;
   }
-  body.dragon  { --acc: #d97b5f; --acc-soft: #2a1d18; }
-  body.thunder { --acc: #93a0e0; --acc-soft: #1e2130; }
-  body.landing { --acc: #74b193; --acc-soft: #18251f; }
-  code { background: #232b33; }
-  .badge.ok { border-color: #3d5a44; color: #8fc49a; background: #16241a; }
-  figure.fig img, figure.hero img { background: #fff; }
+  :root:not([data-theme="light"]) body.dragon  { --acc: #d97b5f; --acc-soft: #2a1d18; }
+  :root:not([data-theme="light"]) body.thunder { --acc: #93a0e0; --acc-soft: #1e2130; }
+  :root:not([data-theme="light"]) body.landing { --acc: #74b193; --acc-soft: #18251f; }
+  :root:not([data-theme="light"]) code { background: #232b33; }
+  :root:not([data-theme="light"]) .badge.ok { border-color: #3d5a44; color: #8fc49a; background: #16241a; }
+  :root:not([data-theme="light"]) figure.fig img,
+  :root:not([data-theme="light"]) figure.hero img { background: #fff; }
 }
+
+button.theme-toggle {
+  cursor: pointer; border: 1px solid var(--line); background: var(--soft); color: var(--ink);
+  border-radius: 99px; font: inherit; font-size: .85rem; line-height: 1.4;
+  padding: .05rem .55rem; margin-left: .4rem;
+}
+button.theme-toggle:hover { border-color: var(--acc); }
