@@ -60,6 +60,7 @@ nav.cand a.lang { margin-left: .4rem; padding-left: .9rem; border-left: 1px soli
 main { max-width: 64rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
 h1 { font-size: 1.9rem; line-height: 1.25; margin: .4rem 0 .3rem; }
 h1 .sub, .sub { color: var(--mut); margin: 0 0 1.2rem; font-size: 1.02rem; font-weight: 400; }
+h1 .sub { display: block; margin: .3rem 0 0; font-size: 1rem; }
 h2 { font-size: 1.28rem; margin: 2.1rem 0 .7rem; padding-bottom: .25rem; border-bottom: 2px solid var(--acc); display: inline-block; }
 h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
 
@@ -243,3 +244,20 @@ button.theme-toggle:hover { border-color: var(--acc); }
   .hero-banner h1 { font-size: 1.85rem; }
   .hb-lead { font-size: .96rem; }
 }
+
+/* compact identity band on the inner pages (specification / implementations /
+   performance / analysis): artwork + candidate name only, the page's own h1
+   stays inside <main> */
+.hero-banner--slim .hb-in { padding: 2.4rem 1.2rem 2.1rem; }
+.hero-banner--slim .hb-kicker { margin-bottom: .35rem; }
+.hero-banner--slim h1 { font-size: 1.5rem; margin: 0; letter-spacing: 0; }
+.hero-banner h1 a { color: inherit; text-decoration: none; }
+.hero-banner h1 a:hover { text-decoration: underline; text-underline-offset: .12em; }
+@media (max-width: 720px) {
+  .hero-banner--slim .hb-in { padding: 1.7rem 1.2rem 1.5rem; }
+  .hero-banner--slim h1 { font-size: 1.3rem; }
+}
+
+/* the wide letter-spacing that suits an all-caps latin kicker looks loose on
+   Chinese glyphs — tighten it for the zh pages */
+html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
