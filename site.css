@@ -184,8 +184,8 @@ button.theme-toggle:hover { border-color: var(--acc); }
   background-repeat: no-repeat;
   background-size: var(--hb-size);
   background-position: var(--hb-pos);
-  -webkit-mask-image: linear-gradient(90deg, transparent calc(100% - 820px), #000 calc(100% - 580px));
-  mask-image: linear-gradient(90deg, transparent calc(100% - 820px), #000 calc(100% - 580px));
+  -webkit-mask-image: linear-gradient(90deg, transparent calc(100% - 940px), #000 calc(100% - 760px));
+  mask-image: linear-gradient(90deg, transparent calc(100% - 940px), #000 calc(100% - 760px));
 }
 /* the veil that keeps the copy column clean, plus a soft bottom edge */
 .hero-banner::after {
@@ -193,8 +193,8 @@ button.theme-toggle:hover { border-color: var(--acc); }
   background:
     linear-gradient(180deg, rgba(var(--hb-rgb),0) 82%, rgba(var(--hb-rgb),.30) 100%),
     linear-gradient(90deg,
-      rgba(var(--hb-rgb),.98) 0%, rgba(var(--hb-rgb),.94) 30%,
-      rgba(var(--hb-rgb),.42) 55%, rgba(var(--hb-rgb),.02) 100%);
+      rgba(var(--hb-rgb),.98) 0%, rgba(var(--hb-rgb),.94) 36%,
+      rgba(var(--hb-rgb),.45) 63%, rgba(var(--hb-rgb),.02) 100%);
 }
 
 .hb-in { max-width: 64rem; margin: 0 auto; padding: 4.1rem 1.2rem 3.6rem; }
@@ -227,7 +227,7 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
 /* ---- desktop: show the artwork whole, pinned right, so the subject is never
         sliced by the band's much wider aspect ratio ---- */
 @media (min-width: 721px) {
-  .hero-banner { --hb-size: auto 112%; --hb-pos: right center; }
+  .hero-banner { --hb-size: auto 130%; --hb-pos: right 68%; }
 }
 
 /* ---- narrow screens: fill by height, crop sideways, veil the whole plate ---- */
