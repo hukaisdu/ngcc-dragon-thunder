@@ -23,11 +23,35 @@ pre code { background: none; padding: 0; }
 header.site { border-bottom: 1px solid var(--line); }
 header.site .in {
   max-width: 64rem; margin: 0 auto; padding: .9rem 1.2rem;
-  display: flex; flex-wrap: wrap; gap: .4em 1.6rem; align-items: baseline;
+  display: flex; flex-wrap: wrap; gap: .4em 1.2rem; align-items: center;
 }
-.brand { font-weight: 700; font-size: 1.12rem; color: var(--ink); }
-.brand .id { color: var(--mut); font-weight: 400; font-size: .85rem; margin-left: .45em; }
-nav.cand { display: flex; flex-wrap: wrap; gap: .15em 1.1rem; font-size: .92rem; }
+.brand { font-weight: 700; font-size: 1.12rem; color: var(--ink); display: inline-flex; align-items: center; gap: .5rem; }
+.brand .name { line-height: 1.1; }
+.brand .mark {
+  width: 1.85rem; height: 1.85rem; display: block; flex: 0 0 auto;
+  transition: transform .3s cubic-bezier(.2,.8,.3,1);
+}
+.brand:hover { text-decoration: none; }
+.brand:hover .mark { transform: rotate(-9deg) scale(1.08); }
+/* each mark keeps its own identity colour, independent of page accent */
+.brand .mark--dragon  { --acc: #b3452c; }
+.brand .mark--thunder { --acc: #4653b0; }
+:root[data-theme="dark"] .brand .mark--dragon  { --acc: #d97b5f; }
+:root[data-theme="dark"] .brand .mark--thunder { --acc: #93a0e0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand .mark--dragon  { --acc: #d97b5f; }
+  :root:not([data-theme="light"]) .brand .mark--thunder { --acc: #93a0e0; }
+}
+.brand .id {
+  color: var(--mut); font-weight: 400; font-size: .72rem; margin-left: 0;
+  display: inline-block; padding: .12rem .55rem; border: 1px solid var(--line);
+  border-radius: 99px; background: var(--soft); letter-spacing: .02em; white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand .mark { transition: none; }
+  .brand:hover .mark { transform: none; }
+}
+nav.cand { display: flex; flex-wrap: wrap; gap: .15em .95rem; font-size: .89rem; align-items: center; }
 nav.cand a { color: var(--mut); }
 nav.cand a:hover, nav.cand a[aria-current] { color: var(--acc); }
 nav.cand a.lang { margin-left: .4rem; padding-left: .9rem; border-left: 1px solid var(--line); font-weight: 600; }
@@ -87,6 +111,8 @@ th.num, td.num { white-space: nowrap; }
 @media (max-width: 640px) {
   h1 { font-size: 1.5rem; }
   table { font-size: .85rem; }
+  .brand .name { white-space: nowrap; }
+  .brand .id { display: none; }   /* the h1 subtitle already carries the candidate id */
 }
 
 /* ---- dark theme: manual choice via [data-theme="dark"] on <html>,

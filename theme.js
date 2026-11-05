@@ -43,11 +43,11 @@
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
-      var h = document.querySelector('header.site .in');
+      var h = document.querySelector('nav.cand') || document.querySelector('header.site .in');
       if (h) h.appendChild(makeButton());
     });
   } else {
-    var h = document.querySelector('header.site .in');
+    var h = document.querySelector('nav.cand') || document.querySelector('header.site .in');
     if (h) h.appendChild(makeButton());
   }
 })();
