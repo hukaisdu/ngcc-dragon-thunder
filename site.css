@@ -184,17 +184,17 @@ button.theme-toggle:hover { border-color: var(--acc); }
   background-repeat: no-repeat;
   background-size: var(--hb-size);
   background-position: var(--hb-pos);
-  -webkit-mask-image: linear-gradient(90deg, transparent calc(100% - 720px), #000 calc(100% - 520px));
-  mask-image: linear-gradient(90deg, transparent calc(100% - 720px), #000 calc(100% - 520px));
+  -webkit-mask-image: linear-gradient(90deg, transparent calc(100% - 700px), #000 calc(100% - 560px));
+  mask-image: linear-gradient(90deg, transparent calc(100% - 700px), #000 calc(100% - 560px));
 }
 /* the veil that keeps the copy column clean, plus a soft bottom edge */
 .hero-banner::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:
-    linear-gradient(180deg, rgba(var(--hb-rgb),0) 68%, rgba(var(--hb-rgb),.85) 100%),
+    linear-gradient(180deg, rgba(var(--hb-rgb),0) 82%, rgba(var(--hb-rgb),.30) 100%),
     linear-gradient(90deg,
-      rgba(var(--hb-rgb),.97) 0%, rgba(var(--hb-rgb),.93) 32%,
-      rgba(var(--hb-rgb),.58) 58%, rgba(var(--hb-rgb),.10) 100%);
+      rgba(var(--hb-rgb),.98) 0%, rgba(var(--hb-rgb),.94) 30%,
+      rgba(var(--hb-rgb),.42) 55%, rgba(var(--hb-rgb),.02) 100%);
 }
 
 .hb-in { max-width: 64rem; margin: 0 auto; padding: 4.1rem 1.2rem 3.6rem; }
