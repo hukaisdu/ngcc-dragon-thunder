@@ -208,7 +208,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
   font-weight: 700; color: var(--hb-ink);
   text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 0 26px var(--hb-glow);
 }
-.hb-lead { margin: 0 0 1.3rem; max-width: 33rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
+.hb-lead { margin: 0 0 1.3rem; max-width: 29rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
 .hero-banner h1 a { color: inherit; text-decoration: none; }
 .hero-banner h1 a:hover { text-decoration: underline; text-underline-offset: .12em; }
 
