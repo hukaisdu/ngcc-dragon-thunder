@@ -150,3 +150,96 @@ button.theme-toggle {
   padding: .05rem .55rem; margin-left: .4rem;
 }
 button.theme-toggle:hover { border-color: var(--acc); }
+
+/* ---- hero banner: full-bleed band under the header.
+        light theme -> light artwork + ink text; dark theme -> dark artwork + light text.
+        Every colour below is theme-swappable through the --hb-* variables. ---- */
+.hero-banner {
+  position: relative; isolation: isolate; overflow: hidden;
+  /* light defaults */
+  --hb-ink: #17212b; --hb-lead: #4b5866;
+  --hb-acc: #b3452c; --hb-glow: rgba(179,69,44,.20);
+  --hb-badge-b: rgba(20,32,45,.16); --hb-badge-bg: rgba(255,255,255,.62); --hb-badge-ink: #3c4956;
+  --hb-m1: rgba(248,246,243,.97); --hb-m2: rgba(248,246,243,.93);
+  --hb-m3: rgba(248,246,243,.60); --hb-m4: rgba(248,246,243,.06);
+  --hb-v1: rgba(248,246,243,.97); --hb-v2: rgba(248,246,243,.86); --hb-v3: rgba(248,246,243,.34);
+  --hb-f1: rgba(255,255,255,0);   --hb-f2: rgba(255,255,255,.42);
+  --hb-pos: center 46%;
+  background-color: #f8f6f3;
+  background-repeat: no-repeat;
+  background-position: var(--hb-pos);
+  background-size: cover;
+  border-bottom: 1px solid #e8e3dd;
+  color: var(--hb-ink);
+}
+.hero-banner--dragon  { background-image: url(assets/hero-banner-dragon-light.webp); }
+.hero-banner--thunder { background-image: url(assets/hero-banner-thunder-light.webp); --hb-acc: #4653b0; --hb-glow: rgba(70,83,176,.20); }
+.hero-banner::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, var(--hb-m1) 0%, var(--hb-m2) 34%, var(--hb-m3) 60%, var(--hb-m4) 100%);
+}
+.hero-banner::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 24%; z-index: -1;
+  background: linear-gradient(180deg, var(--hb-f1) 0%, var(--hb-f2) 100%);
+}
+.hb-in { max-width: 64rem; margin: 0 auto; padding: 4.1rem 1.2rem 3.6rem; }
+.hb-kicker {
+  margin: 0 0 .55rem; font-size: .76rem; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--hb-acc);
+}
+.hb-kicker code { background: rgba(127,127,127,.13); color: inherit; padding: .05em .4em; }
+.hero-banner h1 {
+  margin: 0 0 .75rem; font-size: 2.85rem; line-height: 1.15; letter-spacing: -.015em;
+  font-weight: 700; color: var(--hb-ink);
+  text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 0 26px var(--hb-glow);
+}
+.hb-lead { margin: 0 0 1.3rem; max-width: 33rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
+.hero-banner .badges { margin: 0; }
+.hero-banner .badge {
+  border-color: var(--hb-badge-b); background: var(--hb-badge-bg); color: var(--hb-badge-ink);
+}
+/* dark artwork on dark themes */
+:root[data-theme="dark"] .hero-banner {
+  --hb-ink: #eef3f8; --hb-lead: #c3cedb;
+  --hb-badge-b: rgba(255,255,255,.22); --hb-badge-bg: rgba(255,255,255,.07); --hb-badge-ink: #dbe4ee;
+  --hb-m1: rgba(8,12,17,.95); --hb-m2: rgba(8,12,17,.90);
+  --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
+  --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
+  --hb-f1: rgba(10,15,21,0);  --hb-f2: rgba(10,15,21,.55);
+  --hb-pos: center 16%;
+  background-color: #0a0f15; border-bottom-color: #0a0f15;
+}
+:root[data-theme="dark"] .hero-banner--dragon  { background-image: url(assets/hero-banner-dragon.webp); --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5); }
+:root[data-theme="dark"] .hero-banner--thunder { background-image: url(assets/hero-banner-thunder.webp); --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5); }
+:root[data-theme="dark"] .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
+:root[data-theme="dark"] .hb-kicker code { background: rgba(255,255,255,.08); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero-banner {
+    --hb-ink: #eef3f8; --hb-lead: #c3cedb;
+    --hb-badge-b: rgba(255,255,255,.22); --hb-badge-bg: rgba(255,255,255,.07); --hb-badge-ink: #dbe4ee;
+    --hb-m1: rgba(8,12,17,.95); --hb-m2: rgba(8,12,17,.90);
+    --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
+    --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
+    --hb-f1: rgba(10,15,21,0);  --hb-f2: rgba(10,15,21,.55);
+    --hb-pos: center 16%;
+    background-color: #0a0f15; border-bottom-color: #0a0f15;
+  }
+  :root:not([data-theme="light"]) .hero-banner--dragon  { background-image: url(assets/hero-banner-dragon.webp); --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5); }
+  :root:not([data-theme="light"]) .hero-banner--thunder { background-image: url(assets/hero-banner-thunder.webp); --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5); }
+  :root:not([data-theme="light"]) .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
+  :root:not([data-theme="light"]) .hb-kicker code { background: rgba(255,255,255,.08); }
+}
+
+/* narrow screens: crop in on the artwork and stack the copy above it */
+@media (max-width: 720px) {
+  .hero-banner,
+  :root[data-theme="dark"] .hero-banner,
+  :root:not([data-theme="light"]) .hero-banner { --hb-pos: 56% 100%; }
+  .hero-banner::before {
+    background: linear-gradient(180deg, var(--hb-v1) 0%, var(--hb-v2) 52%, var(--hb-v3) 100%);
+  }
+  .hb-in { padding: 2.3rem 1.2rem 2rem; }
+  .hero-banner h1 { font-size: 1.85rem; }
+  .hb-lead { font-size: .96rem; }
+}
