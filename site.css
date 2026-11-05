@@ -164,7 +164,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
   --hb-m3: rgba(248,246,243,.60); --hb-m4: rgba(248,246,243,.06);
   --hb-v1: rgba(248,246,243,.97); --hb-v2: rgba(248,246,243,.86); --hb-v3: rgba(248,246,243,.34);
   --hb-f1: rgba(255,255,255,0);   --hb-f2: rgba(255,255,255,.42);
-  --hb-pos: center 46%;
+  --hb-pos: center 30%;
   background-color: #f8f6f3;
   background-repeat: no-repeat;
   background-position: var(--hb-pos);
@@ -201,7 +201,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
   --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
   --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
   --hb-f1: rgba(10,15,21,0);  --hb-f2: rgba(10,15,21,.55);
-  --hb-pos: center 16%;
+  --hb-pos: center 10%;
   background-color: #0a0f15; border-bottom-color: #0a0f15;
 }
 :root[data-theme="dark"] .hero-banner--dragon  { background-image: url(assets/hero-banner-dragon.webp); --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5); }
@@ -216,7 +216,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
     --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
     --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
     --hb-f1: rgba(10,15,21,0);  --hb-f2: rgba(10,15,21,.55);
-    --hb-pos: center 16%;
+    --hb-pos: center 10%;
     background-color: #0a0f15; border-bottom-color: #0a0f15;
   }
   :root:not([data-theme="light"]) .hero-banner--dragon  { background-image: url(assets/hero-banner-dragon.webp); --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5); }
@@ -241,13 +241,16 @@ button.theme-toggle:hover { border-color: var(--acc); }
 /* compact identity band on the inner pages (specification / implementations /
    performance / analysis): artwork + candidate name only, the page's own h1
    stays inside <main> */
-.hero-banner--slim .hb-in { padding: 2.4rem 1.2rem 2.1rem; }
+.hero-banner--slim .hb-in {
+  padding: 3.6rem 1.2rem 3.2rem; min-height: 14.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
 .hero-banner--slim .hb-kicker { margin-bottom: .35rem; }
 .hero-banner--slim h1 { font-size: 1.5rem; margin: 0; letter-spacing: 0; }
 .hero-banner h1 a { color: inherit; text-decoration: none; }
 .hero-banner h1 a:hover { text-decoration: underline; text-underline-offset: .12em; }
 @media (max-width: 720px) {
-  .hero-banner--slim .hb-in { padding: 1.7rem 1.2rem 1.5rem; }
+  .hero-banner--slim .hb-in { padding: 2.4rem 1.2rem 2.1rem; min-height: 10.5rem; }
   .hero-banner--slim h1 { font-size: 1.3rem; }
 }
 
