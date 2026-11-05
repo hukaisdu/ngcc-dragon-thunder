@@ -163,8 +163,8 @@ button.theme-toggle:hover { border-color: var(--acc); }
   /* light defaults (dragon) */
   --hb-ink: #17212b; --hb-lead: #4b5866;
   --hb-acc: #b3452c; --hb-glow: rgba(179,69,44,.20);
-  --hb-base: #f1ebe3; --hb-rgb: 241,235,227; --hb-py: 70%;
-  --hb-art: url(assets/hero-banner-dragon-light.webp);
+  --hb-base: #f1ebe3; --hb-rgb: 241,235,227; --hb-py: 65%;
+  --hb-art: url(assets/hero-banner-dragon-light.webp?v=2);
   --hb-size: auto 120%; --hb-pos: 78% 62%;
 
   background-color: var(--hb-base);
@@ -252,8 +252,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
   border-color: rgba(255,255,255,.07);
   box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
   --hb-ink: #eef3f8; --hb-lead: #c3cedb;
-  --hb-base: #0b0f12; --hb-rgb: 11,15,18; --hb-py: 58%;
-  --hb-art: url(assets/hero-banner-dragon.webp);
+  --hb-base: #0b0f12; --hb-rgb: 11,15,18; --hb-py: 60%;
+  --hb-art: url(assets/hero-banner-dragon.webp?v=2);
   --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
 }
 :root[data-theme="dark"] .hero-banner--thunder {
@@ -269,8 +269,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
     border-color: rgba(255,255,255,.07);
     box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
     --hb-ink: #eef3f8; --hb-lead: #c3cedb;
-    --hb-base: #0b0f12; --hb-rgb: 11,15,18; --hb-py: 58%;
-    --hb-art: url(assets/hero-banner-dragon.webp);
+    --hb-base: #0b0f12; --hb-rgb: 11,15,18; --hb-py: 60%;
+    --hb-art: url(assets/hero-banner-dragon.webp?v=2);
     --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
   }
   :root:not([data-theme="light"]) .hero-banner--thunder {
