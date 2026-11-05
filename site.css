@@ -168,7 +168,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
   background-color: #f8f6f3;
   background-repeat: no-repeat;
   background-position: var(--hb-pos);
-  background-size: cover;
+  background-size: var(--hb-size, cover);
   border-bottom: 1px solid #e8e3dd;
   color: var(--hb-ink);
 }
@@ -242,7 +242,7 @@ button.theme-toggle:hover { border-color: var(--acc); }
    performance / analysis): artwork + candidate name only, the page's own h1
    stays inside <main> */
 .hero-banner--slim .hb-in {
-  padding: 3.6rem 1.2rem 3.2rem; min-height: 14.5rem;
+  padding: 3.6rem 1.2rem 3.2rem; min-height: 18rem;
   display: flex; flex-direction: column; justify-content: center;
 }
 .hero-banner--slim .hb-kicker { margin-bottom: .35rem; }
@@ -257,3 +257,42 @@ button.theme-toggle:hover { border-color: var(--acc); }
 /* the wide letter-spacing that suits an all-caps latin kicker looks loose on
    Chinese glyphs — tighten it for the zh pages */
 html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
+
+/* ---- crop anchors measured from each artwork's subject centroid
+        (the dragon / thunder god sits at 58-70% of the image height, so the
+        window has to be centred on that band instead of hugging the top) ---- */
+.hero-banner--dragon  { --hb-pos: center 72%; }
+.hero-banner--thunder { --hb-pos: center 71%; }
+:root[data-theme="dark"] .hero-banner--dragon  { --hb-pos: center 64%; }
+:root[data-theme="dark"] .hero-banner--thunder { --hb-pos: center 68%; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero-banner--dragon  { --hb-pos: center 64%; }
+  :root:not([data-theme="light"]) .hero-banner--thunder { --hb-pos: center 68%; }
+}
+
+/* narrow screens fill by height and crop sideways, so the anchor has to move
+   right as well, otherwise the subject falls outside the window */
+@media (max-width: 720px) {
+  .hero-banner,
+  :root[data-theme="dark"] .hero-banner,
+  :root:not([data-theme="light"]) .hero-banner { --hb-pos: 78% 62%; }
+}
+
+/* On desktop the band is far wider than the 2.13:1 artwork, so `cover` can only
+   ever show ~40% of its height and the dragon/god gets sliced. Fit the art to
+   the band height and pin it right instead: the whole subject stays in frame,
+   and the empty left side becomes the text column. */
+@media (min-width: 721px) {
+  .hero-banner,
+  .hero-banner--dragon, .hero-banner--thunder,
+  :root[data-theme="dark"] .hero-banner,
+  :root[data-theme="dark"] .hero-banner--dragon,
+  :root[data-theme="dark"] .hero-banner--thunder,
+  :root:not([data-theme="light"]) .hero-banner,
+  :root:not([data-theme="light"]) .hero-banner--dragon,
+  :root:not([data-theme="light"]) .hero-banner--thunder {
+    --hb-size: auto 100%;
+    --hb-pos: right center;
+  }
+}
