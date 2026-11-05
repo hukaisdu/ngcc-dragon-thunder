@@ -6,9 +6,9 @@
 <title>性能 — Dragon (hash-07)</title>
 <link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
+<meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 本组自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:title" content="性能 — Dragon (hash-07)">
-<meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
+<meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量、性能与第三方分析。 本组自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/performance.zh.html">
 <link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/performance.html">
@@ -32,9 +32,9 @@
 </nav>
 </div></header>
 <main>
-<h1>性能<span class="sub">提交包内的设计团队自评估</span></h1>
+<h1>性能<span class="sub">我们提交包内的自评估</span></h1>
 
-<p>主数据取自<b>提交包内</b>的设计团队自评估（spec §5.1，第 33–35 页，数字已对照 LaTeX 源逐格核验）：
+<p>主数据取自<b>我们提交包内</b>的自评估（spec §5.1，第 33–35 页，数字已对照 LaTeX 源逐格核验）：
 performance-optimized 实现、官方 <code>ngcc_bench</code>、S1–S8 消息长度（32 B–64 KiB）、单核，
 两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588 @ 2.0 GHz）。长消息下
 Dragon-512 在 x86-64 达 4.87 cycles/byte（SHA3-512 为 12.46，约 2.6 倍加速）。硬件综合（Table 16）中
@@ -43,7 +43,7 @@ SHA3-512。注意：软件自评估只覆盖三个定长实例，XOF 不在其�
 
 <div class="note"><b>一句话结论</b>：软件——三个定长实例在两个平台的全部测试长度上均快于 SHA3-512（Dragon-512 长消息 4.87 vs 12.46 cpb，约 <b>2.6×</b>；ARM 4.47 vs 15.49，约 <b>3.5×</b>）；Dragon-512/768 还全长度快于 SM3。<br>硬件——第一版综合（251–258 MHz）吞吐低于 SHA3-512，但周期数最多少 1.8×、功耗约为一半。<br>读表提示：cpb = cycles/byte，<b>越低越快</b>；S1–S8 = 消息长度 32 B → 64 KiB。</div>
 
-<h2>设计团队自评估（提交包，spec §5.1）</h2>
+<h2>本组自评估（提交包，spec §5.1）</h2>
 <p>数值为 cycles/byte（cpb），官方 <code>ngcc_bench</code> 单核模式，消息长度 S1–S8 =
 32, 128, 512, 1024, 4096, 8192, 16384, 65536 字节。
 来源：<a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec.pdf</code> §5.1，Tables 13–15（第 33–35 页）</a>
@@ -491,7 +491,7 @@ XOF 实例不在软件自评估范围内。</p>
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>自评估数据 © Dragon 提交团队（NICCS Round-1 提交包）。</p>
+<p>自评估数据 © Dragon 设计团队（本组 NICCS Round-1 提交包）。</p>
 <p>镜像于 2026-10-30 · 更新于 2026-10-31 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Dragon 首页</a></p>
 </div></footer>
 </body>

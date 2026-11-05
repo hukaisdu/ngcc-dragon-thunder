@@ -6,9 +6,9 @@
 <title>性能 — Thunder (hash-33)</title>
 <link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
+<meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 本组自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:title" content="性能 — Thunder (hash-33)">
-<meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
+<meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 本组自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/performance.zh.html">
 <link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/performance.html">
@@ -32,9 +32,9 @@
 </nav>
 </div></header>
 <main>
-<h1>性能<span class="sub">提交包内的设计团队自评估</span></h1>
+<h1>性能<span class="sub">我们提交包内的自评估</span></h1>
 
-<p>主数据取自<b>提交包内</b>的设计团队自评估（spec §5.1，第 40–43 页，数字已对照 LaTeX 源逐格核验）：
+<p>主数据取自<b>我们提交包内</b>的自评估（spec §5.1，第 40–43 页，数字已对照 LaTeX 源逐格核验）：
 performance-optimized 实现、官方 <code>ngcc_bench</code>、S1–S8 消息长度（32 B–64 KiB）、单核，
 两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588）。长消息下 Thunder-512 在
 x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM 上 7.62（SHA3 为 15.49，约
@@ -44,7 +44,7 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 
 <div class="note"><b>一句话结论</b>：软件——Thunder-512/768 在全部测试长度快于 SHA3-512（512 长消息 6.95 vs 12.46 cpb，约 <b>1.8×</b>；ARM 7.62 vs 15.49，约 <b>2.0×</b>）；x86-64 上 Thunder-512 全程快于 SM3（6.95 vs 8.45）。<br>硬件——三个实例吞吐全面高于 SHA3-512（64 KiB：+82% / +51% / +33%）。<br>读表提示：cpb = cycles/byte，<b>越低越快</b>；S1–S8 = 消息长度 32 B → 64 KiB。</div>
 
-<h2>设计团队自评估（提交包，spec §5.1）</h2>
+<h2>本组自评估（提交包，spec §5.1）</h2>
 <p>数值为 cycles/byte（cpb），官方 <code>ngcc_bench</code> 单核模式，消息长度 S1–S8 =
 32, 128, 512, 1024, 4096, 8192, 16384, 65536 字节。
 来源：<a href="../harness/hash-33/hash-33-spec.pdf#page=40"><code>hash-33-spec.pdf</code> §5.1，Tables 17–19（第 40–43 页）</a>
@@ -487,7 +487,7 @@ ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>自评估数据 © Thunder 提交团队（NICCS Round-1 提交包）。</p>
+<p>自评估数据 © Thunder 设计团队（本组 NICCS Round-1 提交包）。</p>
 <p>镜像于 2026-10-30 · 更新于 2026-10-31 · harness 快照 <code>dc66c6cb</code> · <a href="index.zh.html">Thunder 首页</a></p>
 </div></footer>
 </body>

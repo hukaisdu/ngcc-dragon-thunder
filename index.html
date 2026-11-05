@@ -6,9 +6,9 @@
 <title>NGCC Round-1 hash candidates — Dragon &amp; Thunder</title>
 <link rel="stylesheet" href="site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Study mirror for the NGCC Round-1 hash candidates Dragon (hash-07) and Thunder (hash-33): specifications, code, KAT status, designer self-assessment and independent performance data.">
+<meta name="description" content="Official site of the NGCC Round-1 hash candidates Dragon (hash-07) and Thunder (hash-33), by the design team: specifications, code, KAT status, our self-assessment and independent performance data.">
 <meta property="og:title" content="NGCC Round-1 hash candidates — Dragon &amp; Thunder">
-<meta property="og:description" content="Study mirror for the NGCC Round-1 hash candidates Dragon (hash-07) and Thunder (hash-33): specifications, code, KAT status, designer self-assessment and independent performance data.">
+<meta property="og:description" content="Official site of the NGCC Round-1 hash candidates Dragon (hash-07) and Thunder (hash-33), by the design team: specifications, code, KAT status, our self-assessment and independent performance data.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/index.html">
 <link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/index.html">
@@ -28,7 +28,13 @@
 </nav>
 </div></header>
 <main>
-<h1>Dragon &amp; Thunder<span class="sub">NGCC Round-1 cryptographic hash candidates — study pages</span></h1>
+<h1>Dragon &amp; Thunder<span class="sub">NGCC Round-1 cryptographic hash candidates — the design team's site</span></h1>
+
+<p>Dragon (<code>hash-07</code>) and Thunder (<code>hash-33</code>) are two hash candidates we designed and
+submitted to the Chinese Next Generation Commercial Cryptographic (NGCC) algorithms program, Round 1.
+This site is maintained by the design team: one page set per candidate (specification / implementations /
+performance / analysis), with independent third-party analysis from <a href="https://ngcc.dev">ngcc.dev</a>
+and all performance figures re-verified cell-by-cell against the LaTeX source of our submitted specifications.</p>
 
 <div class="cards">
 <div class="card dragon">
@@ -36,14 +42,14 @@
 <p><code>hash-07</code> · permutation-based (ARX)</p>
 <p>1600-bit state, 16-round Dragon-p, sponge-forward mode. Six instances:
 Dragon-512/768/1024 and Dragon-XOF-256/384/512. 4.87 cycles/byte at 64 KiB on x86-64
-(designer self-assessment, spec Table 14).</p>
+(our self-assessment, spec Table 14).</p>
 </div>
 <div class="card thunder">
 <h3><a href="thunder/index.html">Thunder Hash Family</a></h3>
 <p><code>hash-33</code> · permutation-based</p>
 <p>1600-bit state, 12-round Thunder-p with degree-3 nonlinearity, sponge-forward mode. Six instances:
 Thunder-512/768/1024 and Thunder-XOF-256/384/512. 6.95 cycles/byte at 64 KiB on x86-64
-(designer self-assessment, spec Table 18).</p>
+(our self-assessment, spec Table 18).</p>
 </div>
 </div>
 
@@ -56,7 +62,7 @@ Thunder-512/768/1024 and Thunder-XOF-256/384/512. 6.95 cycles/byte at 64 KiB on 
 <tr><td>ASIC throughput vs SHA3-512 (64 KiB)</td><td>lower — 0.38× / 0.33× / 0.25× (512/768/1024)</td><td>higher — +82% / +51% / +33% (512/768/1024)</td></tr>
 <tr><td>max claimed security</td><td colspan="2">collision 512 bits · preimage 1024 bits (same for both)</td></tr>
 </table>
-<p class="sub">Software figures are designer self-assessments (spec §5.1, cpb = cycles per byte, lower is faster);
+<p class="sub">Software figures are our self-assessments (spec §5.1, cpb = cycles per byte, lower is faster);
 ASIC figures from spec §5.2 (UMC 55 nm). Details: <a href="dragon/performance.html">Dragon performance</a> ·
 <a href="thunder/performance.html">Thunder performance</a>.</p>
 
@@ -75,18 +81,18 @@ full extracted submission trees (<code>hash-07/</code>, <code>hash-33/</code>), 
 
 <h2>Sources and credit</h2>
 <ul class="links">
-<li>Specifications, reference code and test vectors: the Dragon and Thunder submission teams, distributed by
+<li>Specifications, reference code and test vectors: our team (the Dragon and Thunder designers), distributed by
 <a href="https://www.niccs.org.cn/en/">NICCS</a> (official Round-1
 <a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Dragon.zip">Dragon</a> /
 <a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Thunder.zip">Thunder</a> archives).</li>
 <li>Independent security review, constant-time audits and performance measurements:
 <a href="https://ngcc.dev">ngcc.dev</a> (Markku-Juhani Saarinen), site update 2026-10-28;
 see also <a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>.</li>
-<li>This mirror and the study pages are maintained by Kai Hu (胡凯) for research collaboration.</li>
+<li>Both algorithms are designed by our team; this site is maintained by Kai Hu (胡凯).</li>
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>Materials © NICCS and the submission teams · analysis by ngcc.dev · pages maintained for research collaboration.</p>
+<p>Materials © NICCS and the design team (us) · independent analysis by ngcc.dev · site maintained by the designers.</p>
 <p>Mirrored 2026-10-30 · harness snapshot <code>dc66c6cb</code> · <a href="README.md">repository README</a></p>
 </div></footer>
 </body>

@@ -6,9 +6,9 @@
 <title>NGCC Round-1 杂凑候选 — Dragon 与 Thunder</title>
 <link rel="stylesheet" href="site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
-<meta name="description" content="NGCC Round-1 杂凑候选 Dragon (hash-07) 与 Thunder (hash-33) 的研究镜像站：规范、实现、自测向量、设计团队自评估与独立性能数据，中英双语。">
+<meta name="description" content="NGCC Round-1 杂凑候选 Dragon (hash-07) 与 Thunder (hash-33) 的官方资料站（设计团队维护）：规范、实现、自测向量、本组自评估与第三方性能数据，中英双语。">
 <meta property="og:title" content="NGCC Round-1 杂凑候选 — Dragon 与 Thunder">
-<meta property="og:description" content="NGCC Round-1 杂凑候选 Dragon (hash-07) 与 Thunder (hash-33) 的研究镜像站：规范、实现、自测向量、设计团队自评估与独立性能数据，中英双语。">
+<meta property="og:description" content="NGCC Round-1 杂凑候选 Dragon (hash-07) 与 Thunder (hash-33) 的官方资料站（设计团队维护）：规范、实现、自测向量、本组自评估与第三方性能数据，中英双语。">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/index.zh.html">
 <link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/index.html">
@@ -28,25 +28,25 @@
 </nav>
 </div></header>
 <main>
-<h1>Dragon 与 Thunder<span class="sub">NGCC Round-1 杂凑候选算法 — 研究资料站</span></h1>
+<h1>Dragon 与 Thunder<span class="sub">NGCC Round-1 杂凑候选算法 — 设计团队资料站</span></h1>
 
-<p>Dragon（候选编号 <code>hash-07</code>）与 Thunder（<code>hash-33</code>）是中国 Next Generation
-Commercial Cryptographic (NGCC) algorithms program Round 1 的两个 hash 候选。本站是研究用资料镜像与导读：
-每个候选一套页面（规范 / 实现 / 性能 / 分析），素材取自 ngcc.dev 的独立分析与 NICCS 官方提交包，
-镜像日期 2026-10-30，全部数字已对照提交 spec 的 LaTeX 源逐格核验。</p>
+<p>Dragon（候选编号 <code>hash-07</code>）与 Thunder（<code>hash-33</code>）是本组设计、提交至中国 Next Generation
+Commercial Cryptographic (NGCC) algorithms program Round 1 的两个 hash 候选。本站由设计团队维护：
+每个候选一套页面（规范 / 实现 / 性能 / 分析），第三方分析取自 ngcc.dev，原始材料为我们的 NICCS 官方提交包，
+全部数字已对照提交 spec 的 LaTeX 源逐格核验。</p>
 
 <div class="cards">
 <div class="card dragon">
 <h3><a href="dragon/index.zh.html">Dragon 杂凑家族</a></h3>
 <p><code>hash-07</code> · permutation-based（ARX）</p>
 <p>1600-bit 状态，16 轮 Dragon-p，sponge-forward 模式。六个实例：Dragon-512/768/1024 与
-Dragon-XOF-256/384/512。x86-64 长消息 4.87 cycles/byte（设计团队自评估，spec Table 14）。</p>
+Dragon-XOF-256/384/512。x86-64 长消息 4.87 cycles/byte（本组自评估，spec Table 14）。</p>
 </div>
 <div class="card thunder">
 <h3><a href="thunder/index.zh.html">Thunder 杂凑家族</a></h3>
 <p><code>hash-33</code> · permutation-based</p>
 <p>1600-bit 状态，12 轮 Thunder-p（三次非线性层 ψ），sponge-forward 模式。六个实例：Thunder-512/768/1024 与
-Thunder-XOF-256/384/512。x86-64 长消息 6.95 cycles/byte（设计团队自评估，spec Table 18）。</p>
+Thunder-XOF-256/384/512。x86-64 长消息 6.95 cycles/byte（本组自评估，spec Table 18）。</p>
 </div>
 </div>
 
@@ -59,7 +59,7 @@ Thunder-XOF-256/384/512。x86-64 长消息 6.95 cycles/byte（设计团队自评
 <tr><td>ASIC 吞吐 vs SHA3-512（64 KiB）</td><td>更低 — 0.38× / 0.33× / 0.25×（512/768/1024）</td><td>更高 — +82% / +51% / +33%（512/768/1024）</td></tr>
 <tr><td>最高安全目标</td><td colspan="2">collision 512 bit · preimage 1024 bit（两者相同）</td></tr>
 </table>
-<p class="sub">软件数字为设计团队自评估（spec §5.1，cpb = cycles/byte，越低越快）；ASIC 数字来自 spec §5.2
+<p class="sub">软件数字为本组自评估（spec §5.1，cpb = cycles/byte，越低越快）；ASIC 数字来自 spec §5.2
 （UMC 55 nm）。详见 <a href="dragon/performance.zh.html">Dragon 性能</a> ·
 <a href="thunder/performance.zh.html">Thunder 性能</a>。</p>
 
@@ -77,18 +77,18 @@ x86_1 / arm_1 性能明细与测量方法）。</li>
 
 <h2>来源与致谢</h2>
 <ul class="links">
-<li>规范、参考实现与 test vector：Dragon、Thunder 提交团队，由 <a href="https://www.niccs.org.cn/en/">NICCS</a>
+<li>规范、参考实现与 test vector：本组（Dragon 与 Thunder 的设计团队），由 <a href="https://www.niccs.org.cn/en/">NICCS</a>
 发布（官方 Round-1
 <a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Dragon.zip">Dragon</a> /
 <a href="https://www.niccs.org.cn/niccs/Proposal/Cryptographic%20Hash%20Algorithms/Round%201%20candidates/Thunder.zip">Thunder</a> 原档）。</li>
 <li>独立安全审查、constant-time 审查与性能测量：<a href="https://ngcc.dev">ngcc.dev</a>
 （Markku-Juhani Saarinen），站点更新 2026-10-28；另见
 <a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>。</li>
-<li>本镜像与研究页面由 Kai Hu（胡凯）维护，仅供研究协作使用。</li>
+<li>两个算法均由本组设计；本站由设计团队维护（胡凯）。</li>
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>材料版权归 NICCS 与各提交团队 · 分析与测量来自 ngcc.dev · 本页面仅为研究协作目的维护。</p>
+<p>材料版权归 NICCS 与本组（设计团队）· 独立分析与测量来自 ngcc.dev · 本站由设计团队维护。</p>
 <p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="README.md">仓库 README</a></p>
 </div></footer>
 </body>

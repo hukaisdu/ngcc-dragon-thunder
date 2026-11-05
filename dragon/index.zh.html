@@ -66,14 +66,14 @@ XOR 回去，把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c,
 <tr><td>安全目标</td><td>collision 256/384/512 bit、preimage 512/768/1024 bit（定长实例）；XOF generic 等级 log₂Q = 256/384/512</td></tr>
 <tr><td>自测向量（KAT）</td><td>6/6 实例通过提交的 KAT 向量（ngcc.dev harness）</td></tr>
 <tr><td>实现核对</td><td>未发现与规范的偏差（ngcc.dev 源码审查）</td></tr>
-<tr><td>速度（设计团队自评估）</td><td>长消息比 SHA3-512 快约 <b>2.6×</b>（x86-64：4.87 vs 12.46 cpb）、约 <b>3.5×</b>（ARM：4.47 vs 15.49）；Dragon-512 在全部测试长度快于 SHA3-512 与 SM3（spec §5.1）</td></tr>
+<tr><td>速度（本组自评估）</td><td>长消息比 SHA3-512 快约 <b>2.6×</b>（x86-64：4.87 vs 12.46 cpb）、约 <b>3.5×</b>（ARM：4.47 vs 15.49）；Dragon-512 在全部测试长度快于 SHA3-512 与 SM3（spec §5.1）</td></tr>
 </table>
 
 <h2>页面导航</h2>
 <ul class="links">
 <li>想快速了解算法 → <a href="specification.zh.html">规范</a>（参数表、模式与置换、轮常数）</li>
 <li>想自己跑代码 → <a href="implementations.zh.html">实现</a>（依赖 + 两条命令，几分钟跑通 KAT）</li>
-<li>想看性能数字 → <a href="performance.zh.html">性能</a>（设计团队自评估 + 硬件表）</li>
+<li>想看性能数字 → <a href="performance.zh.html">性能</a>（本组自评估 + 硬件表）</li>
 <li>想跟进安全性 → <a href="analysis.zh.html">分析</a>（第三方状态、constant-time、本组结果）</li>
 <li>术语不熟 → <a href="../glossary.zh.html">术语表</a></li>
 </ul>
@@ -94,8 +94,8 @@ XOR 回去，把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c,
 不构成安全性背书；该候选仍在评审中。</p>
 </main>
 <footer class="site"><div class="in">
-<p>规范与参考实现 © Dragon 提交团队，由 NICCS 发布。独立分析与测量来自
-<a href="https://ngcc.dev">ngcc.dev</a>（M.-J. Saarinen）。本研究镜像由 Kai Hu（胡凯）维护，仅供研究协作。</p>
+<p>规范与参考实现 © Dragon 设计团队（本组），由 NICCS 发布。独立分析与测量来自
+<a href="https://ngcc.dev">ngcc.dev</a>（M.-J. Saarinen）。本站由设计团队（本组）维护：胡凯。</p>
 <p>镜像于 2026-10-30 · harness 快照 <code>dc66c6cb</code> · <a href="../index.zh.html">站点首页</a></p>
 </div></footer>
 </body>

@@ -32,11 +32,11 @@
 </nav>
 </div></header>
 <main>
-<h1>Performance<span class="sub">designer self-assessment from the submission package</span></h1>
+<h1>Performance<span class="sub">our self-assessment from the submission package</span></h1>
 
 <div class="note"><b>One-line takeaways</b><br>Software: all three fixed-output instances beat SHA3-512 at every tested length on both platforms (Dragon-512 long messages 4.87 vs 12.46 cpb, ≈ <b>2.6×</b>; ARM 4.47 vs 15.49, ≈ <b>3.5×</b>); Dragon-512/768 also stay below SM3 throughout.<br>Hardware: the first synthesis (251–258 MHz) trails SHA3-512 in throughput, though cycle counts are up to 1.8× lower and power roughly halves.<br>How to read: cpb = cycles per byte, <b>lower is faster</b>; S1–S8 = message lengths 32 B → 64 KiB.</div>
 
-<h2>Design-team self-assessment (submission package, spec §5.1)</h2>
+<h2>Our self-assessment (submission package, spec §5.1)</h2>
 <p>Values are cycles per byte (cpb) measured with the official <code>ngcc_bench</code> in single-core
 mode over the self-assessment message sizes S1–S8 = 32, 128, 512, 1024, 4096, 8192, 16384, 65536 bytes.
 Source: <a href="../harness/hash-07/hash-07-spec.pdf#page=33"><code>hash-07-spec.pdf</code> §5.1, Tables 13–15 (pp. 33–35)</a> —
@@ -485,7 +485,7 @@ official <code>ngcc_bench</code>) ships under <code>Dragon/Others/</code> (mirro
 </ul>
 </main>
 <footer class="site"><div class="in">
-<p>Self-assessment data © the Dragon submission team (NICCS Round-1 submission package).</p>
+<p>Self-assessment data © the Dragon design team, from our NICCS Round-1 submission package.</p>
 <p>Mirrored 2026-10-30 · updated 2026-10-31 · harness snapshot <code>dc66c6cb</code> · <a href="index.html">Dragon home</a></p>
 </div></footer>
 </body>
