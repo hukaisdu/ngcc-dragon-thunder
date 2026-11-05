@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>分析 — Thunder (hash-33)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 第三方安全状态、constant-time 审查与实现核对注记。">
 <meta property="og:title" content="分析 — Thunder (hash-33)">
 <meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 第三方安全状态、constant-time 审查与实现核对注记。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/analysis.zh.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/analysis.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/analysis.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/analysis.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero-og.jpg">
 
 </head>
 <body class="thunder">
@@ -63,10 +67,13 @@ final-block 常数 C = 0^{c−1}‖1 在六个实例中<em>完全相同</em>；�
 <h2>值得记住的几点</h2>
 <ul class="links">
 <li>IV 常数（spec 的 IV 表）<b>没有给出导出规则</b>——已在生效 LaTeX 源中全文确认；这是一个值得注意的
-透明度缺口，不是 break。对比：Dragon 的 IV 有明文的 SM3 counter-mode 导出程序。</li>
+透明度缺口，不是 break。对比：<a href="../dragon/analysis.zh.html">Dragon 的 IV</a> 有明文的
+SM3 counter-mode 导出程序。</li>
 <li>ψ 的代数次数为 3（Keccak 的 χ 为 2），θ 使用双列校验——做 trail / differential 搜索时相关。</li>
 <li>相关文献：“Chinese NGCC Algorithms: The First Week of AI Cryptanalysis”，
-<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>。</li>
+<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>——覆盖全部 119 个 NGCC Round-1
+候选的首周 AI 辅助分析综述（191 项公开 finding，78 项 Critical）；文中对 Thunder 未报告 finding，
+与 ngcc.dev 公开清单一致。</li>
 </ul>
 
 <h2>本组结果</h2>

@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Specification — Dragon (hash-07)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Parameters, sponge-forward mode and the permutation, with round constants.">
 <meta property="og:title" content="Specification — Dragon (hash-07)">
 <meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Parameters, sponge-forward mode and the permutation, with round constants.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/specification.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/specification.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/specification.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/specification.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 
 </head>
 <body class="dragon">
@@ -58,7 +62,7 @@ fixed digest than <code>XOF-512</code>. The implementation itself supports arbit
 <h2>Mode: sponge-forward (spec Fig. 1)</h2>
 <p>An ordinary sponge in which the <em>inner</em> (capacity) part of the pre-permutation state is fed
 forward and XORed back into the inner part after every permutation call. This raises (second-)preimage
-security to ≈ min{c, h} instead of the classical c/2, so a 1600-bit state suffices for a 1024-bit
+security to ≈ min{c, h} (in the ideal-permutation model) instead of the classical c/2, so a 1600-bit state suffices for a 1024-bit
 preimage target. Padding is <code>pd10*</code>; a domain constant C is XORed into the last block
 (the lowest bit of lane S[0,0]). The mode and its security analysis are due to Guo, Hu, Jiang, Fan, Fu,
 Preneel and Wang (<a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>, published at CRYPTO 2026).</p>

@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NGCC Round-1 杂凑候选 — Dragon 与 Thunder</title>
-<link rel="stylesheet" href="site.css?v=3">
+<link rel="stylesheet" href="site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
 <meta name="description" content="NGCC Round-1 杂凑候选 Dragon (hash-07) 与 Thunder (hash-33) 的研究镜像站：规范、实现、自测向量、设计团队自评估与独立性能数据，中英双语。">
 <meta property="og:title" content="NGCC Round-1 杂凑候选 — Dragon 与 Thunder">
 <meta property="og:description" content="NGCC Round-1 杂凑候选 Dragon (hash-07) 与 Thunder (hash-33) 的研究镜像站：规范、实现、自测向量、设计团队自评估与独立性能数据，中英双语。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/index.zh.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/index.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/index.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/index.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 
 </head>
 <body class="landing">
@@ -45,6 +49,19 @@ Dragon-XOF-256/384/512。x86-64 长消息 4.87 cycles/byte（设计团队自评�
 Thunder-XOF-256/384/512。x86-64 长消息 6.95 cycles/byte（设计团队自评估，spec Table 18）。</p>
 </div>
 </div>
+
+<h2>并排对比</h2>
+<table>
+<tr><th></th><th>Dragon (hash-07)</th><th>Thunder (hash-33)</th></tr>
+<tr><td>置换</td><td>Dragon-p — 16 轮 ARX，5×5×64 lane</td><td>Thunder-p — 12 轮，Keccak-p lane 几何，3 次 ψ，双列校验 θ</td></tr>
+<tr><td>模式</td><td colspan="2">sponge-forward <code>Sponge-F^{P,pd10*}</code>（两者相同 — <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>）</td></tr>
+<tr><td>软件长消息（x86-64 / ARM）</td><td>4.87 / 4.47 cpb — 约 2.6× / 3.5× SHA3-512</td><td>6.95 / 7.62 cpb — 约 1.8× / 2.0× SHA3-512</td></tr>
+<tr><td>ASIC 吞吐 vs SHA3-512（64 KiB）</td><td>更低 — 0.38× / 0.33× / 0.25×（512/768/1024）</td><td>更高 — +82% / +51% / +33%（512/768/1024）</td></tr>
+<tr><td>最高安全目标</td><td colspan="2">collision 512 bit · preimage 1024 bit（两者相同）</td></tr>
+</table>
+<p class="sub">软件数字为设计团队自评估（spec §5.1，cpb = cycles/byte，越低越快）；ASIC 数字来自 spec §5.2
+（UMC 55 nm）。详见 <a href="dragon/performance.zh.html">Dragon 性能</a> ·
+<a href="thunder/performance.zh.html">Thunder 性能</a>。</p>
 
 <h2>仓库内容</h2>
 <ul class="links">

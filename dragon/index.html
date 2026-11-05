@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dragon Hash Family (hash-07)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT and performance.">
 <meta property="og:title" content="Dragon Hash Family (hash-07)">
 <meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT and performance.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 
 </head>
 <body class="dragon">
@@ -38,7 +42,7 @@
 </div>
 
 <figure class="hero">
-<img src="hero.png?v=5" alt="A Chinese serpentine dragon in terracotta red and ink gray, weaving through a 5×5 grid of lanes with trailing dot streams" width="1536" height="1024">
+<img src="hero.webp" alt="A Chinese serpentine dragon in terracotta red and ink gray, weaving through a 5×5 grid of lanes with trailing dot streams" width="1536" height="1024">
 </figure>
 
 <div class="note"><b>TL;DR</b> — Dragon = the 16-round ARX permutation Dragon-p in the sponge-forward mode; six instances (512/768/1024 + three XOFs). In software the whole family beats SHA3-512 at every tested length (Dragon-512 ≈ 2.6× at long messages); the first hardware synthesis closes at 251–258 MHz, so its ASIC throughput is currently below SHA3-512. Security targets up to 512-bit collision / 1024-bit preimage.</div>

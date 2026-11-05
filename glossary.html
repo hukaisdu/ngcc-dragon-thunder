@@ -8,9 +8,13 @@
 <meta property="og:title" content="Glossary — NGCC Dragon & Thunder">
 <meta property="og:description" content="Sponge, capacity, rate, XOF, cpb, KAT, constant-time and other terms in plain English.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='0.9em'%20font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="site.css?v=3">
+<link rel="stylesheet" href="site.css?v=4">
 </head>
 <body class="landing">
 <header class="site"><div class="in">
@@ -27,7 +31,7 @@
 <table>
 <tr><th style="width:11rem">term</th><th>meaning</th></tr>
 <tr><td>sponge</td><td>The hash construction mode: message blocks are absorbed into a state, output bits are squeezed out. SHA3 is a sponge.</td></tr>
-<tr><td>sponge-forward</td><td>The mode used by Dragon/Thunder: the capacity part is saved before each permutation call and XORed back afterwards. This lifts preimage security from c/2 to ≈ min{c, h}, so c = h + 64 suffices (a plain sponge needs c ≥ 2h). See <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>.</td></tr>
+<tr><td>sponge-forward</td><td>The mode used by Dragon/Thunder: the capacity part is saved before each permutation call and XORed back afterwards. This lifts preimage security from c/2 to ≈ min{c, h} (ideal-permutation model), so c = h + 64 suffices (a plain sponge needs c ≥ 2h). See <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>.</td></tr>
 <tr><td>permutation</td><td>An invertible transformation on a fixed-length bit string; here a multi-round map on the 1600-bit state (Dragon-p: 16 ARX rounds; Thunder-p: 12 Keccak-p-shaped rounds).</td></tr>
 <tr><td>capacity (c) / rate (r)</td><td>The two parts of the sponge state: r bits are absorbed/squeezed per block, c bits are the internal security margin, r + c = 1600. Larger c: more security, slower.</td></tr>
 <tr><td>absorb / squeeze</td><td>Absorbing: XOR a message block into the state and apply the permutation; squeezing: read output bits out. XOFs squeeze repeatedly.</td></tr>

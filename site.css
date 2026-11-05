@@ -88,3 +88,16 @@ th.num, td.num { white-space: nowrap; }
   h1 { font-size: 1.5rem; }
   table { font-size: .85rem; }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --ink: #dfe5ea; --mut: #93a1ae; --line: #333d47; --bg: #13171c; --soft: #1c2229;
+  }
+  body.dragon  { --acc: #d97b5f; --acc-soft: #2a1d18; }
+  body.thunder { --acc: #93a0e0; --acc-soft: #1e2130; }
+  body.landing { --acc: #74b193; --acc-soft: #18251f; }
+  code { background: #232b33; }
+  .badge.ok { border-color: #3d5a44; color: #8fc49a; background: #16241a; }
+  figure.fig img, figure.hero img { background: #fff; }
+}

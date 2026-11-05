@@ -8,9 +8,13 @@
 <meta property="og:title" content="术语表 — NGCC Dragon & Thunder">
 <meta property="og:description" content="sponge、capacity、rate、XOF、cpb、KAT、constant-time 等术语的简明中文解释。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.zh.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/glossary.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='0.9em'%20font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="site.css?v=3">
+<link rel="stylesheet" href="site.css?v=4">
 </head>
 <body class="landing">
 <header class="site"><div class="in">
@@ -27,7 +31,7 @@
 <table>
 <tr><th style="width:11rem">术语</th><th>解释</th></tr>
 <tr><td>sponge（海绵结构）</td><td>一种构造 hash 的模式：消息按块写入状态（absorb），再从状态读出输出（squeeze）。SHA3 就是 sponge。</td></tr>
-<tr><td>sponge-forward（前馈 sponge）</td><td>Dragon/Thunder 用的模式：每次置换<em>前</em>保存 capacity 部分、置换<em>后</em> XOR 回去。把 preimage 安全性从 c/2 提升到约 min{c, h}，因此 c = h + 64 就够（经典 sponge 要 c ≥ 2h）。见 <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>。</td></tr>
+<tr><td>sponge-forward（前馈 sponge）</td><td>Dragon/Thunder 用的模式：每次置换<em>前</em>保存 capacity 部分、置换<em>后</em> XOR 回去。把 preimage 安全性从 c/2 提升到约 min{c, h}（ideal-permutation 模型下），因此 c = h + 64 就够（经典 sponge 要 c ≥ 2h）。见 <a href="https://eprint.iacr.org/2025/1006">ePrint 2025/1006</a>。</td></tr>
 <tr><td>permutation（置换）</td><td>对固定长度比特串的可逆变换，这里是 1600-bit 状态上的多轮变换（Dragon-p 16 轮 ARX；Thunder-p 12 轮 Keccak-p 形状）。</td></tr>
 <tr><td>capacity（c）/ rate（r）</td><td>sponge 状态的两部分：r 是每块吸收/挤出的比特数，c 是内部“安全余量”，r + c = 1600。c 越大越安全、越慢。</td></tr>
 <tr><td>absorb / squeeze</td><td>吸收：消息块 XOR 进状态再过置换；挤出：从状态读出输出比特。XOF 的多次挤出即“要多少给多少”。</td></tr>

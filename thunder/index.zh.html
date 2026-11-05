@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thunder 杂凑家族 (hash-33)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮置换 Thunder-p（Keccak-p lane 几何，序 ι→ρ→θ→π→ψ）（三次非线性层 ψ）+ sponge-forward 前馈模式。">
 <meta property="og:title" content="Thunder 杂凑家族 (hash-33)">
 <meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/index.zh.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/index.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/index.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/index.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero-og.jpg">
 
 </head>
 <body class="thunder">
@@ -38,7 +42,7 @@
 </div>
 
 <figure class="hero">
-<img src="hero.png?v=3" alt="靛蓝与墨灰的北欧雷神举锤引雷，下方是 5×5 lane 状态格" width="1536" height="1024">
+<img src="hero.webp" alt="靛蓝与墨灰的北欧雷神举锤引雷，下方是 5×5 lane 状态格" width="1536" height="1024">
 </figure>
 
 <div class="note"><b>太长不看</b>：Thunder = Keccak-p 骨架的 12 轮置换 Thunder-p（三次非线性层 ψ、双列校验 θ）+ sponge-forward 前馈模式，六个实例。软件上 Thunder-512/768 全长度快于 SHA3-512（512 长消息约 1.8×，ARM 约 2.0×）；硬件吞吐全面高于 SHA3-512（64 KiB 最高 +82%）。安全目标最高 512-bit collision / 1024-bit preimage。</div>

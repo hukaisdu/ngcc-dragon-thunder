@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>性能 — Thunder (hash-33)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:title" content="性能 — Thunder (hash-33)">
 <meta property="og:description" content="Thunder（hash-33），NGCC Round-1 杂凑候选：12 轮 Keccak-p 形状置换 Thunder-p（三次非线性层 ψ）+ sponge-forward 前馈模式。 设计团队自评估（S1–S8，x86-64 与 ARM）与 ASIC 硬件表。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/performance.zh.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/performance.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/performance.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/thunder/performance.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/thunder/hero-og.jpg">
 
 </head>
 <body class="thunder">
@@ -365,7 +369,7 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <h3>x86-64 — Intel Xeon Platinum 8358（spec Table 18）</h3>
 <div class="table-wrap">
 <table>
-<tr><th>实例</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
+<tr><th>实例 (cpb)</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
 <tr><td>SM3(256)</td><td class="num">70.06</td><td class="num">36.74</td><td class="num">14.43</td><td class="num">9.28</td><td class="num">8.59</td><td class="num">8.51</td><td class="num">8.47</td><td class="num">8.45</td></tr>
 <tr><td>SHA3-512</td><td class="num">103.73</td><td class="num">34.97</td><td class="num">20.43</td><td class="num">13.46</td><td class="num">12.49</td><td class="num">12.48</td><td class="num">12.47</td><td class="num">12.46</td></tr>
 <tr><td><code>Thunder-512</code></td><td class="num">34.92</td><td class="num">17.90</td><td class="num">10.11</td><td class="num">8.52</td><td class="num">7.32</td><td class="num">7.12</td><td class="num">7.02</td><td class="num">6.95</td></tr>
@@ -377,7 +381,7 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <h3>ARM — Rockchip RK3588（spec Table 19）</h3>
 <div class="table-wrap">
 <table>
-<tr><th>实例</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
+<tr><th>实例 (cpb)</th><th class="num">S1 (32 B)</th><th class="num">S2 (128 B)</th><th class="num">S3 (512 B)</th><th class="num">S4 (1 KiB)</th><th class="num">S5 (4 KiB)</th><th class="num">S6 (8 KiB)</th><th class="num">S7 (16 KiB)</th><th class="num">S8 (64 KiB)</th></tr>
 <tr><td>SM3(256)†</td><td class="num">94.80</td><td class="num">20.44</td><td class="num">11.00</td><td class="num">9.42</td><td class="num">8.26</td><td class="num">8.05</td><td class="num">7.95</td><td class="num">7.88</td></tr>
 <tr><td>SHA3-512†</td><td class="num">67.58</td><td class="num">25.59</td><td class="num">19.41</td><td class="num">17.32</td><td class="num">15.74</td><td class="num">15.60</td><td class="num">15.54</td><td class="num">15.49</td></tr>
 <tr><td><code>Thunder-512</code></td><td class="num">62.96</td><td class="num">23.36</td><td class="num">11.48</td><td class="num">9.52</td><td class="num">8.05</td><td class="num">7.79</td><td class="num">7.68</td><td class="num">7.62</td></tr>
@@ -445,7 +449,7 @@ ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例
 </table>
 <h3>32 B 消息</h3>
 <table>
-<tr><th>实例</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
+<tr><th>实例</th><th class="num">周期数</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
 <tr><td>SHA3-512</td><td class="num">38</td><td class="num">8020</td><td class="num">179.48</td></tr>
 <tr><td><code>Thunder-512</code></td><td class="num">26</td><td class="num">10587</td><td class="num">151.02</td></tr>
 <tr><td><code>Thunder-768</code></td><td class="num">30</td><td class="num">8797</td><td class="num">120.91</td></tr>
@@ -453,7 +457,7 @@ ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例
 </table>
 <h3>1 KiB 消息</h3>
 <table>
-<tr><th>实例</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
+<tr><th>实例</th><th class="num">周期数</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
 <tr><td>SHA3-512</td><td class="num">512</td><td class="num">19048</td><td class="num">426.27</td></tr>
 <tr><td><code>Thunder-512</code></td><td class="num">261</td><td class="num">33749</td><td class="num">481.42</td></tr>
 <tr><td><code>Thunder-768</code></td><td class="num">294</td><td class="num">28726</td><td class="num">394.82</td></tr>
@@ -461,7 +465,7 @@ ARM 实现因寄存器压力与栈溢出略慢（spec 第 41 页）。XOF 实例
 </table>
 <h3>64 KiB 消息</h3>
 <table>
-<tr><th>实例</th><th class="num">周期</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
+<tr><th>实例</th><th class="num">周期数</th><th class="num">TP (Mbps)</th><th class="num">TP/Area (Mbps/kGE)</th></tr>
 <tr><td>SHA3-512</td><td class="num">30976</td><td class="num">20150</td><td class="num">450.93</td></tr>
 <tr><td><code>Thunder-512</code></td><td class="num">15381</td><td class="num">36652</td><td class="num">522.83</td></tr>
 <tr><td><code>Thunder-768</code></td><td class="num">17766</td><td class="num">30423</td><td class="num">418.15</td></tr>

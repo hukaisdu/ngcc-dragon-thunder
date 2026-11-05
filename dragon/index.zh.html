@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dragon 杂凑家族 (hash-07)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量与性能。">
 <meta property="og:title" content="Dragon 杂凑家族 (hash-07)">
 <meta property="og:description" content="Dragon（hash-07），NGCC Round-1 杂凑候选：16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式——规范、实现、自测向量与性能。">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.zh.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/index.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 
 </head>
 <body class="dragon">
@@ -38,13 +42,13 @@
 </div>
 
 <figure class="hero">
-<img src="hero.png?v=5" alt="赭红与墨灰的中国龙穿行于 5×5 lane 状态格之间，身后拖着点流" width="1536" height="1024">
+<img src="hero.webp" alt="赭红与墨灰的中国龙穿行于 5×5 lane 状态格之间，身后拖着点流" width="1536" height="1024">
 </figure>
 
 <div class="note"><b>太长不看</b>：Dragon = 16 轮 ARX 置换 Dragon-p + sponge-forward 前馈模式，六个实例（512/768/1024 + 三个 XOF）。软件上全家族在全部测试长度快于 SHA3-512（Dragon-512 长消息约 2.6×）；硬件第一版综合频率受限（251–258 MHz），吞吐暂低于 SHA3-512。安全目标最高 512-bit collision / 1024-bit preimage。</div>
 
 <p>Dragon 的核心是 <em>sponge-forward</em> 模式：sponge 的 capacity（inner）部分在每次置换前被保存、置换后
-XOR 回去，把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c, h}，因此 1600-bit 状态即可支撑
+XOR 回去，把 (second-)preimage 安全性从经典的 c/2 提升到约 min{c, h}（ideal-permutation 模型下），因此 1600-bit 状态即可支撑
 1024-bit preimage 目标。置换 <b>Dragon-p</b> 是 5×5×64 lane 上的 16 轮 ARX。</p>
 
 <h2>动态</h2>

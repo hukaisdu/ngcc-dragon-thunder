@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Analysis — Dragon (hash-07)</title>
-<link rel="stylesheet" href="../site.css?v=3">
+<link rel="stylesheet" href="../site.css?v=4">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%90%89%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Third-party security status, constant-time audit and implementation review notes.">
 <meta property="og:title" content="Analysis — Dragon (hash-07)">
 <meta property="og:description" content="Dragon (hash-07), an NGCC Round-1 hash candidate: the 16-round ARX permutation Dragon-p in the sponge-forward mode — specs, code, KAT, performance and third-party analysis. Third-party security status, constant-time audit and implementation review notes.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero.png">
+<link rel="canonical" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/analysis.html">
+<link rel="alternate" hreflang="en" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/analysis.html">
+<link rel="alternate" hreflang="zh-CN" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/analysis.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://ciphermind.design/ngcc-dragon-thunder/dragon/analysis.html">
+<meta property="og:image" content="https://ciphermind.design/ngcc-dragon-thunder/dragon/hero-og.jpg">
 
 </head>
 <body class="dragon">
@@ -65,8 +69,13 @@ length; the fixed one-shot digest is one squeeze block (1280/1152/1024 bits) —
 <a href="specification.html">Specification</a>.</li>
 <li><code>CryptHash()</code> (fixed instances) ignores <code>digest_len_bits</code>: smaller values overflow
 the output buffer, larger ones are silently truncated.</li>
+<li>IV transparency: Dragon's IVs come with an explicit SM3 counter-mode derivation program in the spec
+(ngcc.dev has not recomputed it). Contrast: <a href="../thunder/analysis.html">Thunder's IVs</a> state no
+derivation rule at all — a transparency gap there, a checkable claim here.</li>
 <li>Related: “Chinese NGCC Algorithms: The First Week of AI Cryptanalysis”,
-<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a>.</li>
+<a href="https://eprint.iacr.org/2026/2266">IACR ePrint 2026/2266</a> — a survey of the first week of
+AI-assisted cryptanalysis across all 119 NGCC Round-1 candidates (191 published findings, 78 rated
+critical). It reports no finding for Dragon, consistent with the ngcc.dev inventory.</li>
 </ul>
 
 <h2>Our results</h2>
