@@ -168,7 +168,10 @@ button.theme-toggle:hover { border-color: var(--acc); }
   --hb-size: cover; --hb-pos: 78% 62%;
 
   background-color: var(--hb-base);
-  border-bottom: 1px solid var(--hb-base);
+  max-width: 64rem; margin: 1.5rem auto 0;
+  border-radius: 12px;
+  border: 1px solid rgba(20,26,33,.06);
+  box-shadow: 0 1px 2px rgba(20,26,33,.04), 0 10px 28px rgba(20,26,33,.07);
   color: var(--hb-ink);
 }
 .hero-banner--thunder {
@@ -179,13 +182,13 @@ button.theme-toggle:hover { border-color: var(--acc); }
 
 /* the artwork layer, feathered along its left edge */
 .hero-banner::before {
-  content: ""; position: absolute; inset: 0; z-index: -2;
+  content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 46%; z-index: -2;
   background-image: var(--hb-art);
   background-repeat: no-repeat;
-  background-size: var(--hb-size);
-  background-position: var(--hb-pos);
-  -webkit-mask-image: linear-gradient(90deg, transparent calc(100% - 940px), #000 calc(100% - 760px));
-  mask-image: linear-gradient(90deg, transparent calc(100% - 940px), #000 calc(100% - 760px));
+  background-size: cover;
+  background-position: right center;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 36px);
+  mask-image: linear-gradient(90deg, transparent 0, #000 36px);
 }
 /* the veil that keeps the copy column clean, plus a soft bottom edge */
 .hero-banner::after {
@@ -197,7 +200,10 @@ button.theme-toggle:hover { border-color: var(--acc); }
       rgba(var(--hb-rgb),.45) 63%, rgba(var(--hb-rgb),.02) 100%);
 }
 
-.hb-in { max-width: 64rem; margin: 0 auto; padding: 4.1rem 1.2rem 3.6rem; }
+.hb-in {
+  min-height: 20rem; padding: 2rem 2rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
 .hb-kicker {
   margin: 0 0 .55rem; font-size: .76rem; font-weight: 600;
   letter-spacing: .16em; text-transform: uppercase; color: var(--hb-acc);
@@ -208,15 +214,12 @@ button.theme-toggle:hover { border-color: var(--acc); }
   font-weight: 700; color: var(--hb-ink);
   text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 0 26px var(--hb-glow);
 }
-.hb-lead { margin: 0 0 1.3rem; max-width: 29rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
+.hb-lead { margin: 0 0 1.3rem; max-width: 30rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
 .hero-banner h1 a { color: inherit; text-decoration: none; }
 .hero-banner h1 a:hover { text-decoration: underline; text-underline-offset: .12em; }
 
 /* ---- inner pages: same artwork, holder content ---- */
-.hero-banner--slim .hb-in {
-  padding: 3.6rem 1.2rem 3.2rem; min-height: 18rem;
-  display: flex; flex-direction: column; justify-content: center;
-}
+.hero-banner--slim .hb-in { min-height: 15rem; }
 .hero-banner--slim .hb-kicker { margin-bottom: .35rem; }
 .hero-banner--slim h1 { font-size: 1.5rem; margin: 0; letter-spacing: 0; }
 
@@ -224,16 +227,14 @@ button.theme-toggle:hover { border-color: var(--acc); }
    Chinese glyphs — tighten it for the zh pages */
 html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
 
-/* ---- desktop: show the artwork whole, pinned right, so the subject is never
-        sliced by the band's much wider aspect ratio ---- */
-@media (min-width: 721px) {
-  .hero-banner { --hb-size: auto 130%; --hb-pos: right 68%; }
-}
-
 /* ---- narrow screens: fill by height, crop sideways, veil the whole plate ---- */
 @media (max-width: 720px) {
-  .hero-banner { --hb-size: cover; --hb-pos: 78% 62%; }
-  .hero-banner::before { -webkit-mask-image: none; mask-image: none; }
+  .hero-banner { margin: 0 .75rem; }
+  .hero-banner::before {
+    width: auto; inset: 0;
+    -webkit-mask-image: none; mask-image: none;
+    background-position: 78% 62%;
+  }
   .hero-banner::after {
     background:
       linear-gradient(180deg, rgba(var(--hb-rgb),.99) 0%, rgba(var(--hb-rgb),.92) 42%, rgba(var(--hb-rgb),.45) 100%);
@@ -247,6 +248,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
 
 /* ---- dark themes: dark artwork, light copy, colours sampled from the art ---- */
 :root[data-theme="dark"] .hero-banner {
+  border-color: rgba(255,255,255,.07);
+  box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
   --hb-ink: #eef3f8; --hb-lead: #c3cedb;
   --hb-base: #0b0f12; --hb-rgb: 11,15,18;
   --hb-art: url(assets/hero-banner-dragon.webp);
@@ -262,6 +265,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .hero-banner {
+    border-color: rgba(255,255,255,.07);
+    box-shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
     --hb-ink: #eef3f8; --hb-lead: #c3cedb;
     --hb-base: #0b0f12; --hb-rgb: 11,15,18;
     --hb-art: url(assets/hero-banner-dragon.webp);
