@@ -176,8 +176,8 @@ button.theme-toggle:hover { border-color: var(--acc); }
 }
 .hero-banner--thunder {
   --hb-acc: #4653b0; --hb-glow: rgba(70,83,176,.20);
-  --hb-base: #f8f7f2; --hb-rgb: 248,247,242; --hb-px: left; --hb-py: 90%; --hb-size: auto 127%;
-  --hb-art: url(assets/hero-banner-thunder-classic.webp);
+  --hb-base: #dbcebd; --hb-rgb: 219,206,189; --hb-px: left; --hb-py: 38%; --hb-size: auto 127%;
+  --hb-art: url(assets/hero-banner-thunder-classic.webp?v=2);
 }
 
 /* the artwork layer, feathered along its left edge */
@@ -257,8 +257,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
   --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
 }
 :root[data-theme="dark"] .hero-banner--thunder {
-  --hb-base: #0c111c; --hb-rgb: 12,17,28; --hb-px: left; --hb-py: 28%; --hb-size: auto 127%;
-  --hb-art: url(assets/hero-banner-thunder-classic-dark.webp);
+  --hb-base: #050e1a; --hb-rgb: 5,14,26; --hb-px: left; --hb-py: 0%; --hb-size: auto 127%;
+  --hb-art: url(assets/hero-banner-thunder-classic-dark.webp?v=2);
   --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5);
 }
 :root[data-theme="dark"] .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
@@ -274,8 +274,8 @@ html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
     --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
   }
   :root:not([data-theme="light"]) .hero-banner--thunder {
-    --hb-base: #0c111c; --hb-rgb: 12,17,28; --hb-px: left; --hb-py: 28%; --hb-size: auto 127%;
-    --hb-art: url(assets/hero-banner-thunder-classic-dark.webp);
+    --hb-base: #050e1a; --hb-rgb: 5,14,26; --hb-px: left; --hb-py: 0%; --hb-size: auto 127%;
+    --hb-art: url(assets/hero-banner-thunder-classic-dark.webp?v=2);
     --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5);
   }
   :root:not([data-theme="light"]) .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
