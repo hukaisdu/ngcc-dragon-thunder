@@ -153,35 +153,50 @@ button.theme-toggle {
 button.theme-toggle:hover { border-color: var(--acc); }
 
 /* ---- hero banner: full-bleed band under the header.
-        light theme -> light artwork + ink text; dark theme -> dark artwork + light text.
-        Every colour below is theme-swappable through the --hb-* variables. ---- */
+        The artwork lives on its own layer (::before) and the band's background
+        colour is sampled from that artwork, so the picture melts into the band
+        instead of ending on a visible seam. Every colour is theme-swappable
+        through the --hb-* variables. ---- */
 .hero-banner {
   position: relative; isolation: isolate; overflow: hidden;
-  /* light defaults */
+
+  /* light defaults (dragon) */
   --hb-ink: #17212b; --hb-lead: #4b5866;
   --hb-acc: #b3452c; --hb-glow: rgba(179,69,44,.20);
-  --hb-m1: rgba(248,246,243,.97); --hb-m2: rgba(248,246,243,.93);
-  --hb-m3: rgba(248,246,243,.60); --hb-m4: rgba(248,246,243,.06);
-  --hb-v1: rgba(248,246,243,.97); --hb-v2: rgba(248,246,243,.86); --hb-v3: rgba(248,246,243,.34);
-  --hb-f1: rgba(255,255,255,0);   --hb-f2: rgba(255,255,255,.42);
-  --hb-pos: center 30%;
-  background-color: #f8f6f3;
-  background-repeat: no-repeat;
-  background-position: var(--hb-pos);
-  background-size: var(--hb-size, cover);
-  border-bottom: 1px solid #e8e3dd;
+  --hb-base: #f1ebe3; --hb-rgb: 241,235,227;
+  --hb-art: url(assets/hero-banner-dragon-light.webp);
+  --hb-size: cover; --hb-pos: 78% 62%;
+
+  background-color: var(--hb-base);
+  border-bottom: 1px solid var(--hb-base);
   color: var(--hb-ink);
 }
-.hero-banner--dragon  { background-image: url(assets/hero-banner-dragon-light.webp); }
-.hero-banner--thunder { background-image: url(assets/hero-banner-thunder-light.webp); --hb-acc: #4653b0; --hb-glow: rgba(70,83,176,.20); }
+.hero-banner--thunder {
+  --hb-acc: #4653b0; --hb-glow: rgba(70,83,176,.20);
+  --hb-base: #e7e1d8; --hb-rgb: 231,225,216;
+  --hb-art: url(assets/hero-banner-thunder-light.webp);
+}
+
+/* the artwork layer, feathered along its left edge */
 .hero-banner::before {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(90deg, var(--hb-m1) 0%, var(--hb-m2) 34%, var(--hb-m3) 60%, var(--hb-m4) 100%);
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background-image: var(--hb-art);
+  background-repeat: no-repeat;
+  background-size: var(--hb-size);
+  background-position: var(--hb-pos);
+  -webkit-mask-image: linear-gradient(90deg, transparent calc(100% - 720px), #000 calc(100% - 520px));
+  mask-image: linear-gradient(90deg, transparent calc(100% - 720px), #000 calc(100% - 520px));
 }
+/* the veil that keeps the copy column clean, plus a soft bottom edge */
 .hero-banner::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 24%; z-index: -1;
-  background: linear-gradient(180deg, var(--hb-f1) 0%, var(--hb-f2) 100%);
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(var(--hb-rgb),0) 68%, rgba(var(--hb-rgb),.85) 100%),
+    linear-gradient(90deg,
+      rgba(var(--hb-rgb),.97) 0%, rgba(var(--hb-rgb),.93) 32%,
+      rgba(var(--hb-rgb),.58) 58%, rgba(var(--hb-rgb),.10) 100%);
 }
+
 .hb-in { max-width: 64rem; margin: 0 auto; padding: 4.1rem 1.2rem 3.6rem; }
 .hb-kicker {
   margin: 0 0 .55rem; font-size: .76rem; font-weight: 600;
@@ -194,105 +209,84 @@ button.theme-toggle:hover { border-color: var(--acc); }
   text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 0 26px var(--hb-glow);
 }
 .hb-lead { margin: 0 0 1.3rem; max-width: 33rem; font-size: 1.02rem; line-height: 1.65; color: var(--hb-lead); }
-/* dark artwork on dark themes */
-:root[data-theme="dark"] .hero-banner {
-  --hb-ink: #eef3f8; --hb-lead: #c3cedb;
-  --hb-m1: rgba(8,12,17,.95); --hb-m2: rgba(8,12,17,.90);
-  --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
-  --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
-  --hb-f1: rgba(10,15,21,0);  --hb-f2: rgba(10,15,21,.55);
-  --hb-pos: center 10%;
-  background-color: #0a0f15; border-bottom-color: #0a0f15;
-}
-:root[data-theme="dark"] .hero-banner--dragon  { background-image: url(assets/hero-banner-dragon.webp); --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5); }
-:root[data-theme="dark"] .hero-banner--thunder { background-image: url(assets/hero-banner-thunder.webp); --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5); }
-:root[data-theme="dark"] .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
-:root[data-theme="dark"] .hb-kicker code { background: rgba(255,255,255,.08); }
+.hero-banner h1 a { color: inherit; text-decoration: none; }
+.hero-banner h1 a:hover { text-decoration: underline; text-underline-offset: .12em; }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .hero-banner {
-    --hb-ink: #eef3f8; --hb-lead: #c3cedb;
-    --hb-m1: rgba(8,12,17,.95); --hb-m2: rgba(8,12,17,.90);
-    --hb-m3: rgba(8,12,17,.55); --hb-m4: rgba(8,12,17,.05);
-    --hb-v1: rgba(8,12,17,.94); --hb-v2: rgba(8,12,17,.82); --hb-v3: rgba(8,12,17,.35);
-    --hb-f1: rgba(10,15,21,0);  --hb-f2: rgba(10,15,21,.55);
-    --hb-pos: center 10%;
-    background-color: #0a0f15; border-bottom-color: #0a0f15;
-  }
-  :root:not([data-theme="light"]) .hero-banner--dragon  { background-image: url(assets/hero-banner-dragon.webp); --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5); }
-  :root:not([data-theme="light"]) .hero-banner--thunder { background-image: url(assets/hero-banner-thunder.webp); --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5); }
-  :root:not([data-theme="light"]) .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
-  :root:not([data-theme="light"]) .hb-kicker code { background: rgba(255,255,255,.08); }
-}
-
-/* narrow screens: crop in on the artwork and stack the copy above it */
-@media (max-width: 720px) {
-  .hero-banner,
-  :root[data-theme="dark"] .hero-banner,
-  :root:not([data-theme="light"]) .hero-banner { --hb-pos: 56% 100%; }
-  .hero-banner::before {
-    background: linear-gradient(180deg, var(--hb-v1) 0%, var(--hb-v2) 52%, var(--hb-v3) 100%);
-  }
-  .hb-in { padding: 2.3rem 1.2rem 2rem; }
-  .hero-banner h1 { font-size: 1.85rem; }
-  .hb-lead { font-size: .96rem; }
-}
-
-/* compact identity band on the inner pages (specification / implementations /
-   performance / analysis): artwork + candidate name only, the page's own h1
-   stays inside <main> */
+/* ---- inner pages: same artwork, holder content ---- */
 .hero-banner--slim .hb-in {
   padding: 3.6rem 1.2rem 3.2rem; min-height: 18rem;
   display: flex; flex-direction: column; justify-content: center;
 }
 .hero-banner--slim .hb-kicker { margin-bottom: .35rem; }
 .hero-banner--slim h1 { font-size: 1.5rem; margin: 0; letter-spacing: 0; }
-.hero-banner h1 a { color: inherit; text-decoration: none; }
-.hero-banner h1 a:hover { text-decoration: underline; text-underline-offset: .12em; }
-@media (max-width: 720px) {
-  .hero-banner--slim .hb-in { padding: 2.4rem 1.2rem 2.1rem; min-height: 10.5rem; }
-  .hero-banner--slim h1 { font-size: 1.3rem; }
-}
 
 /* the wide letter-spacing that suits an all-caps latin kicker looks loose on
    Chinese glyphs — tighten it for the zh pages */
 html[lang="zh-CN"] .hb-kicker { letter-spacing: .06em; }
 
-/* ---- crop anchors measured from each artwork's subject centroid
-        (the dragon / thunder god sits at 58-70% of the image height, so the
-        window has to be centred on that band instead of hugging the top) ---- */
-.hero-banner--dragon  { --hb-pos: center 72%; }
-.hero-banner--thunder { --hb-pos: center 71%; }
-:root[data-theme="dark"] .hero-banner--dragon  { --hb-pos: center 64%; }
-:root[data-theme="dark"] .hero-banner--thunder { --hb-pos: center 68%; }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .hero-banner--dragon  { --hb-pos: center 64%; }
-  :root:not([data-theme="light"]) .hero-banner--thunder { --hb-pos: center 68%; }
+/* ---- desktop: show the artwork whole, pinned right, so the subject is never
+        sliced by the band's much wider aspect ratio ---- */
+@media (min-width: 721px) {
+  .hero-banner { --hb-size: auto 100%; --hb-pos: right center; }
 }
 
-/* narrow screens fill by height and crop sideways, so the anchor has to move
-   right as well, otherwise the subject falls outside the window */
+/* ---- narrow screens: fill by height, crop sideways, veil the whole plate ---- */
+@media (max-width: 720px) {
+  .hero-banner { --hb-size: cover; --hb-pos: 78% 62%; }
+  .hero-banner::before { -webkit-mask-image: none; mask-image: none; }
+  .hero-banner::after {
+    background:
+      linear-gradient(180deg, rgba(var(--hb-rgb),.99) 0%, rgba(var(--hb-rgb),.92) 42%, rgba(var(--hb-rgb),.45) 100%);
+  }
+  .hb-in { padding: 2.3rem 1.2rem 2rem; }
+  .hero-banner h1 { font-size: 1.85rem; }
+  .hb-lead { font-size: .96rem; }
+  .hero-banner--slim .hb-in { padding: 2.4rem 1.2rem 2.1rem; min-height: 10.5rem; }
+  .hero-banner--slim h1 { font-size: 1.3rem; }
+}
+
+/* ---- dark themes: dark artwork, light copy, colours sampled from the art ---- */
+:root[data-theme="dark"] .hero-banner {
+  --hb-ink: #eef3f8; --hb-lead: #c3cedb;
+  --hb-base: #0b0f12; --hb-rgb: 11,15,18;
+  --hb-art: url(assets/hero-banner-dragon.webp);
+  --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
+}
+:root[data-theme="dark"] .hero-banner--thunder {
+  --hb-base: #080911; --hb-rgb: 8,9,17;
+  --hb-art: url(assets/hero-banner-thunder.webp);
+  --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5);
+}
+:root[data-theme="dark"] .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
+:root[data-theme="dark"] .hb-kicker code { background: rgba(255,255,255,.08); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero-banner {
+    --hb-ink: #eef3f8; --hb-lead: #c3cedb;
+    --hb-base: #0b0f12; --hb-rgb: 11,15,18;
+    --hb-art: url(assets/hero-banner-dragon.webp);
+    --hb-acc: #ff8a5c; --hb-glow: rgba(255,116,64,.5);
+  }
+  :root:not([data-theme="light"]) .hero-banner--thunder {
+    --hb-base: #080911; --hb-rgb: 8,9,17;
+    --hb-art: url(assets/hero-banner-thunder.webp);
+    --hb-acc: #93a8ff; --hb-glow: rgba(110,150,255,.5);
+  }
+  :root:not([data-theme="light"]) .hero-banner h1 { text-shadow: 0 0 22px var(--hb-glow), 0 0 60px rgba(0,0,0,.35); }
+  :root:not([data-theme="light"]) .hb-kicker code { background: rgba(255,255,255,.08); }
+}
+
+/* narrow screens override the dark-theme artwork sizing, so repeat the block */
 @media (max-width: 720px) {
   .hero-banner,
   :root[data-theme="dark"] .hero-banner,
-  :root:not([data-theme="light"]) .hero-banner { --hb-pos: 78% 62%; }
-}
-
-/* On desktop the band is far wider than the 2.13:1 artwork, so `cover` can only
-   ever show ~40% of its height and the dragon/god gets sliced. Fit the art to
-   the band height and pin it right instead: the whole subject stays in frame,
-   and the empty left side becomes the text column. */
-@media (min-width: 721px) {
-  .hero-banner,
-  .hero-banner--dragon, .hero-banner--thunder,
-  :root[data-theme="dark"] .hero-banner,
-  :root[data-theme="dark"] .hero-banner--dragon,
-  :root[data-theme="dark"] .hero-banner--thunder,
-  :root:not([data-theme="light"]) .hero-banner,
-  :root:not([data-theme="light"]) .hero-banner--dragon,
-  :root:not([data-theme="light"]) .hero-banner--thunder {
-    --hb-size: auto 100%;
-    --hb-pos: right center;
+  :root:not([data-theme="light"]) .hero-banner { --hb-size: cover; --hb-pos: 78% 62%; }
+  .hero-banner::before,
+  :root[data-theme="dark"] .hero-banner::before,
+  :root:not([data-theme="light"]) .hero-banner::before { -webkit-mask-image: none; mask-image: none; }
+  .hero-banner::after,
+  :root[data-theme="dark"] .hero-banner::after,
+  :root:not([data-theme="light"]) .hero-banner::after {
+    background: linear-gradient(180deg, rgba(var(--hb-rgb),.99) 0%, rgba(var(--hb-rgb),.92) 42%, rgba(var(--hb-rgb),.45) 100%);
   }
 }
