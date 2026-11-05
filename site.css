@@ -28,19 +28,20 @@ header.site .in {
 .brand { font-weight: 700; font-size: 1.12rem; color: var(--ink); display: inline-flex; align-items: center; gap: .5rem; }
 .brand .name { line-height: 1.1; }
 .brand .mark {
-  width: 1.85rem; height: 1.85rem; display: block; flex: 0 0 auto;
+  width: 2rem; height: 2rem; display: block; flex: 0 0 auto;
   transition: transform .3s cubic-bezier(.2,.8,.3,1);
 }
 .brand:hover { text-decoration: none; }
 .brand:hover .mark { transform: rotate(-9deg) scale(1.08); }
 /* each mark keeps its own identity colour, independent of page accent */
-.brand .mark--dragon  { --acc: #b3452c; }
-.brand .mark--thunder { --acc: #4653b0; }
-:root[data-theme="dark"] .brand .mark--dragon  { --acc: #d97b5f; }
-:root[data-theme="dark"] .brand .mark--thunder { --acc: #93a0e0; }
+/* ring emblems: single flat colour each, flattened from generated artwork */
+.brand .mark--dragon  { background: url(assets/dragon-mark.png) center / contain no-repeat; }
+.brand .mark--thunder { background: url(assets/thunder-mark.png) center / contain no-repeat; }
+:root[data-theme="dark"] .brand .mark--dragon  { background-image: url(assets/dragon-mark-dark.png); }
+:root[data-theme="dark"] .brand .mark--thunder { background-image: url(assets/thunder-mark-dark.png); }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .brand .mark--dragon  { --acc: #d97b5f; }
-  :root:not([data-theme="light"]) .brand .mark--thunder { --acc: #93a0e0; }
+  :root:not([data-theme="light"]) .brand .mark--dragon  { background-image: url(assets/dragon-mark-dark.png); }
+  :root:not([data-theme="light"]) .brand .mark--thunder { background-image: url(assets/thunder-mark-dark.png); }
 }
 .brand .id {
   color: var(--mut); font-weight: 400; font-size: .72rem; margin-left: 0;
