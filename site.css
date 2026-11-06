@@ -15,7 +15,7 @@ body {
 }
 a { color: var(--acc); text-decoration: none; }
 a:hover { text-decoration: underline; }
-code, pre, kbd { font: 0.92em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+code, pre, kbd { font: 0.95em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 code { background: #f1f2f0; padding: .08em .35em; border-radius: 3px; }
 pre { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: .9em 1.1em; overflow-x: auto; }
 pre code { background: none; padding: 0; }
@@ -52,32 +52,34 @@ header.site .in {
   .brand .mark { transition: none; }
   .brand:hover .mark { transform: none; }
 }
-nav.cand { display: flex; flex-wrap: wrap; gap: .15em .95rem; font-size: .89rem; align-items: center; }
+nav.cand { display: flex; flex-wrap: wrap; gap: .15em .95rem; font-size: .95rem; align-items: center; }
 nav.cand a { color: var(--mut); }
 nav.cand a:hover, nav.cand a[aria-current] { color: var(--acc); }
 nav.cand a.lang { margin-left: .4rem; padding-left: .9rem; border-left: 1px solid var(--line); font-weight: 600; }
 
 main { max-width: 64rem; margin: 0 auto; padding: 1.6rem 1.2rem 3rem; }
+/* comfortable reading measure for prose; tables & charts keep the full column */
+main > p, main > ul, main > ol, main > .note, main > .zh { max-width: 46rem; }
 h1 { font-size: 1.9rem; line-height: 1.25; margin: .4rem 0 .3rem; }
 h1 .sub, .sub { color: var(--mut); margin: 0 0 1.2rem; font-size: 1.02rem; font-weight: 400; }
 h1 .sub { display: block; margin: .3rem 0 0; font-size: 1rem; }
-h2 { font-size: 1.28rem; margin: 2.1rem 0 .7rem; padding-bottom: .25rem; border-bottom: 2px solid var(--acc); display: inline-block; }
-h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
+h2 { font-size: 1.42rem; margin: 2.1rem 0 .7rem; padding-bottom: .25rem; border-bottom: 2px solid var(--acc); display: inline-block; }
+h3 { font-size: 1.16rem; margin: 1.5rem 0 .5rem; }
 
-table { border-collapse: collapse; width: 100%; margin: .8rem 0 1.2rem; font-size: .93rem; }
+table { border-collapse: collapse; width: 100%; margin: .8rem 0 1.2rem; font-size: .98rem; }
 th, td { border: 1px solid var(--line); padding: .4rem .6rem; text-align: left; vertical-align: top; }
 th { background: var(--soft); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 figure.fig { margin: 1.2rem auto; text-align: center; }
 figure.fig img { display: block; margin: 0 auto; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
-figure.fig figcaption { font-size: .8rem; color: var(--mut); margin-top: .4rem; }
+figure.fig figcaption { font-size: .88rem; color: var(--mut); margin-top: .4rem; }
 .fig-grid { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.1rem 0; }
 .fig-grid figure.fig { flex: 1 1 18rem; margin: 0; }
 .chart-flex { margin: .6rem 0 1.2rem; }
 .chart-flex svg, main > svg { display: block; width: 100%; height: auto; }
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .table-wrap table { margin-top: .2rem; }
-table.table-wide { font-size: .78rem; }
+table.table-wide { font-size: .88rem; }
 table.table-wide th, table.table-wide td { padding: .3rem .35rem; }
 
 .zh {
@@ -87,7 +89,7 @@ table.table-wide th, table.table-wide td { padding: .3rem .35rem; }
 .zh .tag { font-size: .78rem; letter-spacing: .12em; color: var(--acc); font-weight: 700; }
 
 .badges { display: flex; flex-wrap: wrap; gap: .45rem; margin: .8rem 0 1.2rem; }
-.badge { border: 1px solid var(--line); border-radius: 99px; padding: .12rem .7rem; font-size: .82rem; color: var(--mut); background: var(--soft); }
+.badge { border: 1px solid var(--line); border-radius: 99px; padding: .16rem .75rem; font-size: .86rem; color: var(--mut); background: var(--soft); }
 .badge.ok { border-color: #9db8a0; color: #3c6b42; background: #eef5ef; }
 
 figure.hero { margin: 1.1rem 0 1.5rem; }
@@ -106,13 +108,13 @@ ul.links li { margin: .35rem 0; }
 .card.thunder h3 a { color: #4653b0; }
 .card p { margin: .3rem 0 .6rem; color: var(--mut); font-size: .92rem; }
 
-footer.site { border-top: 1px solid var(--line); color: var(--mut); font-size: .85rem; }
+footer.site { border-top: 1px solid var(--line); color: var(--mut); font-size: .9rem; }
 footer.site .in { max-width: 64rem; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
 th.num, td.num { white-space: nowrap; }
 
 @media (max-width: 640px) {
   h1 { font-size: 1.5rem; }
-  table { font-size: .85rem; }
+  table { font-size: .92rem; }
   .brand .name { white-space: nowrap; }
   .brand .id { display: none; }   /* the h1 subtitle already carries the candidate id */
 }
