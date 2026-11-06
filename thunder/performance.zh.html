@@ -45,7 +45,7 @@
 
 <p>主数据取自<b>我们提交包内</b>的自评估（spec §5.1，第 40–43 页，数字已对照 LaTeX 源逐格核验）：
 performance-optimized 实现、官方 <code>ngcc_bench</code>、S1–S8 消息长度（32 B–64 KiB）、单核，
-两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588）。长消息下 Thunder-512 在
+两个平台（Intel Xeon Platinum 8358 @ 2.60 GHz 与 Rockchip RK3588 @ 2.0 GHz）。长消息下 Thunder-512 在
 x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM 上 7.62（SHA3 为 15.49，约
 2.0 倍）；Thunder-512/768 在全部测试长度上均快于 SHA3-512；x86-64 上 Thunder-512 全程快于 SM3(256)。
 硬件综合（Table 20）三个实例吞吐全部高于 SHA3-512（64 KiB：+82% / +51% / +33%）。
@@ -62,7 +62,7 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 
 <table>
 <tr><th>条目</th><th>x86-64 平台（Table 17）</th><th>ARM 平台（Table 17）</th></tr>
-<tr><td>处理器</td><td>Intel Xeon(R) Platinum 8358 CPU @ 2.60 GHz</td><td>Rockchip RK3588</td></tr>
+<tr><td>处理器</td><td>Intel Xeon(R) Platinum 8358 CPU @ 2.60 GHz</td><td>Rockchip RK3588 @ 2.0 GHz</td></tr>
 <tr><td>操作系统</td><td>Ubuntu 22.04 LTS（内核 6.8.0）</td><td>Ubuntu 22.04（内核 5.10.160）</td></tr>
 <tr><td>编译器 / 构建</td><td>GCC 11.4 / CMake 3.22.1</td><td>GCC 9.4 / CMake 3.16.3</td></tr>
 <tr><td>测量模式</td><td>单核</td><td>单核</td></tr>
@@ -85,12 +85,12 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="68.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">32</text>
 <text x="120.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">128</text>
 <text x="172.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">512</text>
-<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1K</text>
-<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4K</text>
-<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8K</text>
-<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16K</text>
-<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64K</text>
-<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">msg bytes</text>
+<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1 KiB</text>
+<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4 KiB</text>
+<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8 KiB</text>
+<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16 KiB</text>
+<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64 KiB</text>
+<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">消息长度（字节）</text>
 <rect x="48.0" y="87.4" width="12" height="218.6" fill="#4653b0"/>
 <text x="54.0" y="84.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#4653b0">3.0</text>
 <rect x="62.0" y="87.4" width="12" height="218.6" fill="#2e3775"/>
@@ -139,14 +139,15 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="432.0" y="204.7" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#2e3775">1.3</text>
 <rect x="440.0" y="239.6" width="12" height="66.4" fill="#93a0dd"/>
 <text x="446.0" y="237.1" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#93a0dd">0.90</text>
+<text transform="rotate(-90 12 209)" x="12" y="209" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">加速比（×）</text>
 <rect x="42" y="28" width="10" height="10" fill="#4653b0"/>
-<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">512</text>
-<rect x="82.5" y="28" width="10" height="10" fill="#2e3775"/>
-<text x="95.5" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">768</text>
-<rect x="123.0" y="28" width="10" height="10" fill="#93a0dd"/>
-<text x="136.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">1024</text>
-<line x1="170.0" y1="33" x2="184.0" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
-<text x="187.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SHA3-512</text>
+<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-512</text>
+<rect x="126" y="28" width="10" height="10" fill="#2e3775"/>
+<text x="139" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-768</text>
+<rect x="210" y="28" width="10" height="10" fill="#93a0dd"/>
+<text x="223" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-1024</text>
+<line x1="296" y1="33" x2="310" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="313" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SHA3-512</text>
 </svg>
 <svg viewBox="0 0 470 350" role="img" aria-label="vs SHA3-512 · ARM" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
 <rect width="470" height="350" fill="#ffffff"/>
@@ -161,12 +162,12 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="68.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">32</text>
 <text x="120.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">128</text>
 <text x="172.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">512</text>
-<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1K</text>
-<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4K</text>
-<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8K</text>
-<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16K</text>
-<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64K</text>
-<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">msg bytes</text>
+<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1 KiB</text>
+<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4 KiB</text>
+<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8 KiB</text>
+<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16 KiB</text>
+<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64 KiB</text>
+<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">消息长度（字节）</text>
 <rect x="48.0" y="190.5" width="12" height="115.5" fill="#4653b0"/>
 <text x="54.0" y="188.0" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#4653b0">1.07</text>
 <rect x="62.0" y="191.7" width="12" height="114.3" fill="#2e3775"/>
@@ -215,14 +216,15 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="432.0" y="139.2" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#2e3775">1.5</text>
 <rect x="440.0" y="196.9" width="12" height="109.1" fill="#93a0dd"/>
 <text x="446.0" y="194.4" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#93a0dd">1.01</text>
+<text transform="rotate(-90 12 209)" x="12" y="209" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">加速比（×）</text>
 <rect x="42" y="28" width="10" height="10" fill="#4653b0"/>
-<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">512</text>
-<rect x="82.5" y="28" width="10" height="10" fill="#2e3775"/>
-<text x="95.5" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">768</text>
-<rect x="123.0" y="28" width="10" height="10" fill="#93a0dd"/>
-<text x="136.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">1024</text>
-<line x1="170.0" y1="33" x2="184.0" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
-<text x="187.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SHA3-512</text>
+<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-512</text>
+<rect x="126" y="28" width="10" height="10" fill="#2e3775"/>
+<text x="139" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-768</text>
+<rect x="210" y="28" width="10" height="10" fill="#93a0dd"/>
+<text x="223" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-1024</text>
+<line x1="296" y1="33" x2="310" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="313" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SHA3-512</text>
 </svg>
 <svg viewBox="0 0 470 350" role="img" aria-label="vs SM3 · x86-64" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
 <rect width="470" height="350" fill="#ffffff"/>
@@ -237,12 +239,12 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="68.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">32</text>
 <text x="120.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">128</text>
 <text x="172.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">512</text>
-<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1K</text>
-<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4K</text>
-<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8K</text>
-<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16K</text>
-<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64K</text>
-<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">msg bytes</text>
+<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1 KiB</text>
+<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4 KiB</text>
+<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8 KiB</text>
+<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16 KiB</text>
+<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64 KiB</text>
+<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">消息长度（字节）</text>
 <rect x="48.0" y="92.3" width="12" height="213.7" fill="#4653b0"/>
 <text x="54.0" y="89.8" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#4653b0">2.0</text>
 <rect x="62.0" y="92.2" width="12" height="213.8" fill="#2e3775"/>
@@ -291,14 +293,15 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="432.0" y="206.5" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#2e3775">0.91</text>
 <rect x="440.0" y="240.8" width="12" height="65.2" fill="#93a0dd"/>
 <text x="446.0" y="238.3" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#93a0dd">0.6</text>
+<text transform="rotate(-90 12 209)" x="12" y="209" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">加速比（×）</text>
 <rect x="42" y="28" width="10" height="10" fill="#4653b0"/>
-<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">512</text>
-<rect x="82.5" y="28" width="10" height="10" fill="#2e3775"/>
-<text x="95.5" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">768</text>
-<rect x="123.0" y="28" width="10" height="10" fill="#93a0dd"/>
-<text x="136.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">1024</text>
-<line x1="170.0" y1="33" x2="184.0" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
-<text x="187.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SM3</text>
+<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-512</text>
+<rect x="126" y="28" width="10" height="10" fill="#2e3775"/>
+<text x="139" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-768</text>
+<rect x="210" y="28" width="10" height="10" fill="#93a0dd"/>
+<text x="223" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-1024</text>
+<line x1="296" y1="33" x2="310" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="313" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SM3</text>
 </svg>
 <svg viewBox="0 0 470 350" role="img" aria-label="vs SM3 · ARM" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
 <rect width="470" height="350" fill="#ffffff"/>
@@ -311,12 +314,12 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="68.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">32</text>
 <text x="120.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">128</text>
 <text x="172.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">512</text>
-<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1K</text>
-<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4K</text>
-<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8K</text>
-<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16K</text>
-<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64K</text>
-<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">msg bytes</text>
+<text x="224.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">1 KiB</text>
+<text x="276.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">4 KiB</text>
+<text x="328.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">8 KiB</text>
+<text x="380.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">16 KiB</text>
+<text x="432.0" y="319" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8.5" fill="#5c6b7a">64 KiB</text>
+<text x="42" y="334" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">消息长度（字节）</text>
 <rect x="48.0" y="87.4" width="12" height="218.6" fill="#4653b0"/>
 <text x="54.0" y="84.9" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#4653b0">1.5</text>
 <rect x="62.0" y="89.5" width="12" height="216.5" fill="#2e3775"/>
@@ -365,14 +368,15 @@ x86-64 达 6.95 cycles/byte（SHA3-512 为 12.46，约 1.8 倍加速）、ARM �
 <text x="432.0" y="190.7" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#2e3775">0.8</text>
 <rect x="440.0" y="231.1" width="12" height="74.9" fill="#93a0dd"/>
 <text x="446.0" y="228.6" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="7" font-weight="600" fill="#93a0dd">0.5</text>
+<text transform="rotate(-90 12 209)" x="12" y="209" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="8" fill="#8a9aa8">加速比（×）</text>
 <rect x="42" y="28" width="10" height="10" fill="#4653b0"/>
-<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">512</text>
-<rect x="82.5" y="28" width="10" height="10" fill="#2e3775"/>
-<text x="95.5" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">768</text>
-<rect x="123.0" y="28" width="10" height="10" fill="#93a0dd"/>
-<text x="136.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">1024</text>
-<line x1="170.0" y1="33" x2="184.0" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
-<text x="187.0" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SM3</text>
+<text x="55" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-512</text>
+<rect x="126" y="28" width="10" height="10" fill="#2e3775"/>
+<text x="139" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-768</text>
+<rect x="210" y="28" width="10" height="10" fill="#93a0dd"/>
+<text x="223" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">Thunder-1024</text>
+<line x1="296" y1="33" x2="310" y2="33" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="313" y="36.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC',sans-serif" font-size="9" fill="#5c6b7a">= SM3</text>
 </svg>
 </div>
 <h3>x86-64 — Intel Xeon Platinum 8358（spec Table 18）</h3>
